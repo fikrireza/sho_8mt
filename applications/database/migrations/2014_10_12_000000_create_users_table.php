@@ -15,7 +15,8 @@ class CreateUsersTable extends Migration
     {
         Schema::create('fra_users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nama');
+            $table->string('nama', 50);
+            $table->string('avatar', 255)->default('/images/avatar/user.png');
             $table->string('email')->unique();
             $table->string('password');
             $table->rememberToken();
