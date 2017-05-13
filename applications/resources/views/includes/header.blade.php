@@ -9,12 +9,12 @@
       <ul class="nav navbar-nav navbar-right">
         <li class="">
           <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-            <img src="" alt="">Fikri Reza
+            <img src="" alt="">{{ Auth::user()->nama }}
             <span class=" fa fa-angle-down"></span>
           </a>
           <ul class="dropdown-menu dropdown-usermenu pull-right">
             <li><a href=""> Profile</a></li>
-            <li><a href=""><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+            <li><a href="{{ route('auth.logout') }}"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
           </ul>
         </li>
       </ul>

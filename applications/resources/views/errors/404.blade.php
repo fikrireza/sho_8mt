@@ -1,4 +1,4 @@
-@extends('backend.layout.master')
+@extends('layout.master')
 
 @section('title')
   <title>BMT Ta'Awun | Not Found</title>
