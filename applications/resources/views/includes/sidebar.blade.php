@@ -9,10 +9,10 @@
     <!-- menu profile quick info -->
     <div class="profile">
       <div class="profile_pic">
-        <img src="" alt="..." class="img-circle profile_img">
+        <img src="{{ asset('images/avatar').'/'.Auth::user()->avatar}}" alt="..." class="img-circle profile_img">
       </div>
       <div class="profile_info">
-        <span>Welcome,</span>
+        <span>Welcome, {{ Auth::user()->nama }}</span>
         <h2></h2>
       </div>
     </div>
@@ -25,25 +25,27 @@
       <div class="menu_section">
         <h3>General</h3>
         <ul class="nav side-menu">
-          <li class="">
-            <a href=""><i class="fa fa-home"></i> Beranda </a>
+          <li class="{{ Route::currentRouteNamed('dashboard') ? 'active' : '' }}">
+            <a href="{{ route('dashboard') }}"><i class="fa fa-home"></i> Beranda </a>
           </li>
           <li class="">
             <a>
               <i class="fa fa-beer"></i> Menu Transaksi <span class="fa fa-chevron-down"></span>
             </a>
             <ul class="nav child_menu" style="">
+              @if (session('status') == 'pbmt')
               <li class="">
-                <a href="">Daftar BMT</a>
+                <a href="{{ route('daftar.index')}}">Daftar BMT</a>
+              </li>
+              @endif
+              <li class="">
+                <a href="{{ route('anggota.index') }}">Daftar Anggota</a>
               </li>
               <li class="">
-                <a href="">Daftar Anggota</a>
+                <a href="index.html">Daftar Peserta</a>
               </li>
               <li class="">
-                <a href="">Daftar Peserta</a>
-              </li>
-              <li class="">
-                <a href="">Bayar Iuran</a>
+                <a href="index.html">Bayar Iuran</a>
               </li>
             </ul>
           </li>
@@ -53,15 +55,15 @@
             </a>
             <ul class="nav child_menu" style="">
               <li class="">
-                <a href="">Info Peserta</a>
+                <a href="index.html">Info Peserta</a>
               </li>
               <li class="">
-                <a href="">Info Tagihan</a>
+                <a href="index.html">Info Tagihan</a>
               </li>
             </ul>
           </li>
           <li class="">
-            <a href=""><i class="fa fa-inbox"></i> Laporan </a>
+            <a href="index.html"><i class="fa fa-inbox"></i> Laporan </a>
           </li>
           <li class="">
             <a>
@@ -69,13 +71,13 @@
             </a>
             <ul class="nav child_menu" style="">
               <li class="">
-                <a href="">Data BMT</a>
+                <a href="index.html">Data BMT</a>
               </li>
               <li class="">
-                <a href="">Data Rekening</a>
+                <a href="index.html">Data Rekening</a>
               </li>
               <li class="">
-                <a href="">Data Anggota</a>
+                <a href="index.html">Data Anggota</a>
               </li>
             </ul>
           </li>
@@ -85,13 +87,13 @@
         <h3>Extra</h3>
         <ul class="nav side-menu">
           <li class="">
-            <a href=""><i class="fa fa-inbox"></i> Akses Log </a>
+            <a href="index.html"><i class="fa fa-inbox"></i> Akses Log </a>
           </li>
           <li class="">
-            <a href=""><i class="fa fa-users"></i> Users </a>
+            <a href="index.html"><i class="fa fa-users"></i> Users </a>
           </li>
         </ul>
-        
+
       </div>
     </div>
     <!-- /sidebar menu -->
