@@ -24,6 +24,7 @@
           {{ csrf_field() }}
           <div class="item form-group {{ $errors->has('no_induk') ? 'has-error' : ''}}">
             <input type="hidden" name="id" value="{{ $getBMT->id }}">
+            <input type="hidden" name="aktor" value="{{ Auth::user()->id }}">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">No. Induk <span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
               <input id="no_induk" class="form-control col-md-7 col-xs-12" data-validate-length-range="10" name="no_induk" placeholder="Contoh : " required="required" type="text" value="{{ old('no_induk', $getBMT->no_induk) }}">

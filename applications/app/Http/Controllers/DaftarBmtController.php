@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Bmt;
 use App\Models\BmtAnggota;
+use App\Models\LogAkses;
 
 use Auth;
 use Validator;
@@ -91,6 +92,8 @@ class DaftarBmtController extends Controller
           'telp' => $request->telp,
           'nama_kontak' => $request->nama_kontak,
           'nomor_kontak' => $request->nomor_kontak,
+          'email' => $request->email,
+          'aktor' => Auth::user()->id,
         ]);
 
         $anggota = BmtAnggota::create([
@@ -102,6 +105,8 @@ class DaftarBmtController extends Controller
           'tanggal_lahir' => $request->tanggal_lahir,
           'lokasi_usaha' => $request->lokasi_usaha,
           'jenis_usaha' => $request->jenis_usaha,
+          'email' => $request->email,
+          'aktor' => Auth::user()->id,
         ]);
 
         $user = User::create([
@@ -112,6 +117,11 @@ class DaftarBmtController extends Controller
           'confirmed' => 0,
           'confirmation_code' => str_random(30).time(),
           'password'  => Hash::make('12345678QWER'),
+        ]);
+
+        $logAkses = LogAkses::create([
+          'aksi'  => Auth::user()->bmt_id.' | '.Auth::user()->nama.' | Menambahkan BMT',
+          'aktor' => Auth::user()->id,
         ]);
 
       });
@@ -166,6 +176,10 @@ class DaftarBmtController extends Controller
         $input = $request->all();
         $update->fill($input)->update();
 
+        $logAkses = LogAkses::create([
+          'aksi'  => Auth::user()->bmt_id.' | '.Auth::user()->nama.' | Mengubah BMT',
+          'aktor' => Auth::user()->id,
+        ]);
 
         return redirect()->route('daftar.index')->with('berhasil', "Berhasil Mengubah BMT");
 
