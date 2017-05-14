@@ -43,10 +43,7 @@
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <h2>Daftar Anggota </h2>
-        <ul class="nav panel_toolbox">
-          <a href="{{ route('anggota.tambah') }}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Tambah</a>
-        </ul>
+        <a href="{{ route('anggota.tambah') }}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Tambah</a>
         <div class="clearfix"></div>
       </div>
       <div class="x_content table-responsive">
@@ -57,6 +54,7 @@
               <th>BMT</th>
               <th>No. Ktp</th>
               <th>Nama</th>
+              <th>Email</th>
               <th>Alamat</th>
               <th>Tempat Lahir</th>
               <th>Tanggal Lahir</th>
@@ -75,6 +73,7 @@
               <td>{{ $key->bmt->no_induk }} | {{ $key->bmt->nama }}</td>
               <td>{{ $key->no_ktp }}</td>
               <td>{{ $key->nama }}</td>
+              <td>{{ ($key->email) ? $key->email : '-' }}</td>
               <td>{{ $key->alamat }}</td>
               <td>{{ $key->tempat_lahir }}</td>
               <td>{{ $key->tanggal_lahir }}</td>

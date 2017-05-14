@@ -9,7 +9,7 @@ class BmtAnggota extends Model
     protected $table = 'fra_bmt_anggota';
 
     protected $fillable = ['bmt_id','no_ktp','nama','alamat','tempat_lahir','tanggal_lahir',
-                          'lokasi_usaha','jenis_usaha','flag_status'];
+                          'lokasi_usaha','jenis_usaha','email','aktor','flag_status'];
 
 
     public function bmt()

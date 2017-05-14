@@ -1,7 +1,7 @@
 @extends('layout.master')
 
 @section('title')
-  <title>BMT Taawun | Daftar Anggota</title>
+  <title>BMT Taawun | Ubah Data Anggota</title>
 @endsection
 
 @section('headscript')
@@ -17,10 +17,12 @@
         <div class="clearfix"></div>
       </div>
       <div class="x_content">
-        <form action="{{ route('anggota.store') }}" method="POST" class="form-horizontal form-label-left" enctype="multipart/form-data" novalidate>
+        <form action="{{ route('anggota.edit') }}" method="POST" class="form-horizontal form-label-left" enctype="multipart/form-data" novalidate>
           {{ csrf_field() }}
           <h2>Data Keanggotaan</h2>
           <div class="ln_solid"></div>
+          <input type="hidden" name="anggota_id" value="{{ $getAnggota->id }}">
+          <input type="hidden" name="aktor" value="{{ Auth::user()->id }}">
           @if (session('status') === 'pbmt')
           <div class="item form-group {{ $errors->has('bmt_id') ? 'has-error' : ''}}">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">BMT <span class="required">*</span></label>
@@ -28,7 +30,7 @@
               <select class="form-control select2_single" name="bmt_id">
                 <option value=""></option>
                 @foreach ($getBMT as $key)
-                  <option value="{{ $key->id }}">{{ $key->no_induk}} - {{ $key->nama }}</option>
+                  <option value="{{ $key->id }}" @if ($key->id == $getAnggota->bmt_id) selected="" @endif>{{ $key->no_induk}} - {{ $key->nama }}</option>
                 @endforeach
               </select>
               @if($errors->has('bmt_id'))
@@ -43,29 +45,29 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">No Ktp <span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input type="text" id="no_ktp" name="no_ktp" required="required" data-validate-minmax="7,17" class="form-control col-md-7 col-xs-12" placeholder="Contoh : 3175093309409009" value="{{ old('no_ktp') }}">
+              <input type="text" id="no_ktp" name="no_ktp" required="required" data-validate-minmax="7,17" class="form-control col-md-7 col-xs-12" placeholder="Contoh : 3175093309409009" value="{{ old('no_ktp', $getAnggota->no_ktp) }}">
               @if($errors->has('no_ktp'))
                 <code><span style="color:red; font-size:12px;">{{ $errors->first('no_ktp')}}</span></code>
               @endif
             </div>
           </div>
-          <div class="item form-group {{ $errors->has('nama_anggota') ? 'has-error' : ''}}">
+          <div class="item form-group {{ $errors->has('nama') ? 'has-error' : ''}}">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Nama<span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input id="nama_anggota" class="form-control col-md-7 col-xs-12" data-validate-length-range="3" name="nama_anggota" placeholder="Contoh : e.g John Doe" required="required" type="text" value="{{ old('nama_anggota') }}">
-              @if($errors->has('nama_anggota'))
-                <code><span style="color:red; font-size:12px;">{{ $errors->first('nama_anggota')}}</span></code>
+              <input id="nama" class="form-control col-md-7 col-xs-12" data-validate-length-range="3" name="nama" placeholder="Contoh : e.g John Doe" required="required" type="text" value="{{ old('nama', $getAnggota->nama) }}">
+              @if($errors->has('nama'))
+                <code><span style="color:red; font-size:12px;">{{ $errors->first('nama')}}</span></code>
               @endif
             </div>
           </div>
-          <div class="item form-group {{ $errors->has('alamat_anggota') ? 'has-error' : ''}}">
+          <div class="item form-group {{ $errors->has('alamat') ? 'has-error' : ''}}">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea">Alamat <span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <textarea id="alamat_anggota" required="required" name="alamat_anggota" class="form-control col-md-7 col-xs-12" placeholder="Contoh : Alamat">{{ old('alamat_anggota') }}</textarea>
-              @if($errors->has('alamat_anggota'))
-                <code><span style="color:red; font-size:12px;">{{ $errors->first('alamat_anggota')}}</span></code>
+              <textarea id="alamat" required="required" name="alamat" class="form-control col-md-7 col-xs-12" placeholder="Contoh : Alamat">{{ old('alamat', $getAnggota->alamat) }}</textarea>
+              @if($errors->has('alamat'))
+                <code><span style="color:red; font-size:12px;">{{ $errors->first('alamat')}}</span></code>
               @endif
             </div>
           </div>
@@ -73,7 +75,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Tempat Lahir<span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input id="tempat_lahir" class="form-control col-md-7 col-xs-12" data-validate-length-range="3" name="tempat_lahir" placeholder="Contoh : e.g John Doe" required="required" type="text" value="{{ old('tempat_lahir') }}">
+              <input id="tempat_lahir" class="form-control col-md-7 col-xs-12" data-validate-length-range="3" name="tempat_lahir" placeholder="Contoh : e.g John Doe" required="required" type="text" value="{{ old('tempat_lahir', $getAnggota->tempat_lahir) }}">
               @if($errors->has('tempat_lahir'))
                 <code><span style="color:red; font-size:12px;">{{ $errors->first('tempat_lahir')}}</span></code>
               @endif
@@ -83,7 +85,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12">Tanggal Lahir <span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input id="tanggal_lahir" name="tanggal_lahir" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" value="{{ old('tanggal_lahir') }}" readonly="">
+              <input id="tanggal_lahir" name="tanggal_lahir" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" value="{{ old('tanggal_lahir', $getAnggota->tanggal_lahir) }}" readonly="">
               @if($errors->has('tanggal_lahir'))
                 <code><span style="color:red; font-size:12px;">{{ $errors->first('tanggal_lahir')}}</span></code>
               @endif
@@ -93,7 +95,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Lokasi Usaha<span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input id="lokasi_usaha" class="form-control col-md-7 col-xs-12" data-validate-length-range="3" name="lokasi_usaha" placeholder="Contoh : e.g John Doe" required="required" type="text" value="{{ old('lokasi_usaha') }}">
+              <input id="lokasi_usaha" class="form-control col-md-7 col-xs-12" data-validate-length-range="3" name="lokasi_usaha" placeholder="Contoh : e.g John Doe" required="required" type="text" value="{{ old('lokasi_usaha', $getAnggota->lokasi_usaha) }}">
               @if($errors->has('lokasi_usaha'))
                 <code><span style="color:red; font-size:12px;">{{ $errors->first('lokasi_usaha')}}</span></code>
               @endif
@@ -103,7 +105,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Jenis Usaha<span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input id="jenis_usaha" class="form-control col-md-7 col-xs-12" data-validate-length-range="3" name="jenis_usaha" placeholder="Contoh : e.g John Doe" required="required" type="text" value="{{ old('jenis_usaha') }}">
+              <input id="jenis_usaha" class="form-control col-md-7 col-xs-12" data-validate-length-range="3" name="jenis_usaha" placeholder="Contoh : e.g John Doe" required="required" type="text" value="{{ old('jenis_usaha', $getAnggota->jenis_usaha) }}">
               @if($errors->has('jenis_usaha'))
                 <code><span style="color:red; font-size:12px;">{{ $errors->first('jenis_usaha')}}</span></code>
               @endif
@@ -113,7 +115,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Email<span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input id="email" class="form-control col-md-7 col-xs-12" data-validate-length-range="3" name="email" placeholder="Contoh : e.g John Doe" required="required" type="text" value="{{ old('email') }}">
+              <input id="email" class="form-control col-md-7 col-xs-12" data-validate-length-range="3" name="email" placeholder="Contoh : e.g John Doe" required="required" type="text" value="{{ old('email', $getAnggota->email) }}">
               @if($errors->has('email'))
                 <code><span style="color:red; font-size:12px;">{{ $errors->first('email')}}</span></code>
               @endif
