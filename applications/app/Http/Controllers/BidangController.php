@@ -72,7 +72,7 @@ class BidangController extends Controller
         $save->save();
 
         $log = new LogAkses;
-        $log->aksi = 'Menambahkan Bidang Baru';
+        $log->aksi = 'Menambahkan Bidang Baru '.$request->nama_bidang;
         $log->aktor = 1;
         $log->save();
 
@@ -126,5 +126,36 @@ class BidangController extends Controller
 
         return redirect()->route('bidang.index')->with('berhasil', 'Berhasil Mengubah Bidang');
 
+    }
+
+    public function publish($id)
+    {
+      $getBidang = Bidang::find($id);
+
+        if(!$getBidang){
+          return view('backend.errors.404');
+        }
+
+        if ($getBidang->flag_status == 1) {
+          $getBidang->flag_status = 0;
+          $getBidang->update();
+
+          $log = new LogAkses;
+          $log->aksi = 'Unpublish Bidang '.$getBidang->nama_bidang;
+          $log->aktor = 1;
+          $log->save();
+
+          return redirect()->route('bidang.index')->with('berhasil', 'Berhasil Unpublish '.$getBidang->nama_bidang);
+        }else{
+          $getBidang->flag_status = 1;
+          $getBidang->update();
+
+          $log = new LogAkses;
+          $log->aksi = 'Publish Bidang '.$getBidang->nama_bidang;
+          $log->aktor = 1;
+          $log->save();
+
+          return redirect()->route('bidang.index')->with('berhasil', 'Berhasil Publish '.$getBidang->nama_bidang);
+        }
     }
 }

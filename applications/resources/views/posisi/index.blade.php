@@ -1,11 +1,12 @@
 @extends('layout.master')
 
 @section('title')
-  <title>BMT Taawun | Bidang</title>
+  <title>BMT Taawun | Posisi</title>
 @endsection
 
 @section('headscript')
 <link href="{{ asset('public/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" rel="stylesheet">
+<link href="{{ asset('public/vendors/select2/dist/css/select2.min.css') }}" rel="stylesheet">
 <link href="{{ asset('public/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css') }}" rel="stylesheet">
 <link href="{{ asset('public/vendors/pnotify/dist/pnotify.css') }}" rel="stylesheet">
 <link href="{{ asset('public/vendors/pnotify/dist/pnotify.nonblock.css') }}" rel="stylesheet">
@@ -39,41 +40,46 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
         </button>
-        <h4 class="modal-title" id="myModalLabel2">Ubah Data Bidang</h4>
+        <h4 class="modal-title" id="myModalLabel2">Ubah Data Posisi</h4>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal form-label-left" action="{{ route('bidang.edit')}}" method="post">
+        <form class="form-horizontal form-label-left" action="{{ route('posisi.edit')}}" method="post">
           {{ csrf_field() }}
-          <input type="hidden" name="id" id="id_bidang" value="">
-          <div class="item form-group {{ $errors->has('edit_kode_bidang') ? 'has-error' : ''}}">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Kode Bidang <span class="required">*</span>
+          <input type="hidden" name="id" id="id_posisi" value="">
+          <div class="item form-group {{ $errors->has('id_bidang') ? 'has-error' : ''}}">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Bidang <span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input id="edit_kode_bidang" class="form-control col-md-7 col-xs-12" name="edit_kode_bidang" required="required" type="text" value="{{ old('edit_kode_bidang') }}" readonly="">
-              @if($errors->has('edit_kode_bidang'))
-                <code><span style="color:red; font-size:12px;">{{ $errors->first('edit_kode_bidang')}}</span></code>
+              <select class="form-control col-md-7 col-xs-12 select2" name="id_bidang" required="">
+                <option value="">--Pilih--</option>
+                @foreach ($getBidang as $key)
+                <option value="{{ $key->id }}" id="edit_id_bidang">{{ $key->nama_bidang}}</option>
+                @endforeach
+              </select>
+              @if($errors->has('id_bidang'))
+                <code><span style="color:red; font-size:12px;">{{ $errors->first('id_bidang')}}</span></code>
               @endif
             </div>
           </div>
 
-          <div class="item form-group {{ $errors->has('edit_nama_bidang') ? 'has-error' : ''}}">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Nama Bidang <span class="required">*</span>
+          <div class="item form-group {{ $errors->has('edit_kode_posisi') ? 'has-error' : ''}}">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Kode posisi <span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input id="edit_nama_bidang" class="form-control col-md-7 col-xs-12" name="edit_nama_bidang" required="required" type="text" value="{{ old('edit_nama_bidang') }}">
-              @if($errors->has('edit_nama_bidang'))
-                <code><span style="color:red; font-size:12px;">{{ $errors->first('edit_nama_bidang')}}</span></code>
+              <input id="edit_kode_posisi" class="form-control col-md-7 col-xs-12" name="edit_kode_posisi" required="required" type="text" value="{{ old('edit_kode_posisi') }}" readonly="">
+              @if($errors->has('edit_kode_posisi'))
+                <code><span style="color:red; font-size:12px;">{{ $errors->first('edit_kode_posisi')}}</span></code>
               @endif
             </div>
           </div>
 
-          <div class="item form-group {{ $errors->has('edit_deskripsi') ? 'has-error' : ''}}">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea">Deskripsi <span class="required">*</span>
+          <div class="item form-group {{ $errors->has('edit_nama_posisi') ? 'has-error' : ''}}">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Nama posisi <span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <textarea id="edit_deskripsi" required="required" name="edit_deskripsi" class="form-control col-md-7 col-xs-12" placeholder="Contoh : Menangani Seluruh Pegawai">{{ old('edit_deskripsi') }}</textarea>
-              @if($errors->has('edit_deskripsi'))
-                <code><span style="color:red; font-size:12px;">{{ $errors->first('edit_deskripsi')}}</span></code>
+              <input id="edit_nama_posisi" class="form-control col-md-7 col-xs-12" name="edit_nama_posisi" required="required" type="text" value="{{ old('edit_nama_posisi') }}">
+              @if($errors->has('edit_nama_posisi'))
+                <code><span style="color:red; font-size:12px;">{{ $errors->first('edit_nama_posisi')}}</span></code>
               @endif
             </div>
           </div>
@@ -94,7 +100,7 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
         </button>
-        <h4 class="modal-title" id="myModalLabel2">Unpublish Bidang</h4>
+        <h4 class="modal-title" id="myModalLabel2">Unpublish posisi</h4>
       </div>
       <div class="modal-body">
         <h4>Yakin ?</h4>
@@ -114,7 +120,7 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
         </button>
-        <h4 class="modal-title" id="myModalLabel2">Publish Bidang</h4>
+        <h4 class="modal-title" id="myModalLabel2">Publish posisi</h4>
       </div>
       <div class="modal-body">
         <h4>Yakin ?</h4>
@@ -130,7 +136,7 @@
 
 <div class="page-title">
   <div class="title_left">
-    <h3>Semua Bidang<small></small></h3>
+    <h3>Semua posisi<small></small></h3>
   </div>
 </div>
 
@@ -139,7 +145,7 @@
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <a href="{{ route('bidang.tambah') }}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Tambah</a>
+        <a href="{{ route('posisi.tambah') }}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Tambah</a>
         <div class="clearfix"></div>
       </div>
       <div class="x_content table-responsive">
@@ -147,9 +153,9 @@
           <thead>
             <tr role="row">
               <th>No</th>
-              <th>Kode Bidang</th>
-              <th>Nama Bidang</th>
-              <th>Deskripsi</th>
+              <th>Bidang</th>
+              <th>Kode Posisi</th>
+              <th>Nama Posisi</th>
               <th>Status</th>
               <th>Aksi</th>
             </tr>
@@ -158,12 +164,12 @@
             @php
               $no = 1;
             @endphp
-            @foreach ($getBidang as $key)
+            @foreach ($getPosisi as $key)
             <tr>
               <td>{{ $no }}</td>
-              <td>{{ $key->kode_bidang }}</td>
-              <td>{{ $key->nama_bidang }}</td>
-              <td>{{ $key->deskripsi }}</td>
+              <td>{{ $key->bidang->nama_bidang }}</td>
+              <td>{{ $key->kode_posisi }}</td>
+              <td>{{ $key->nama_posisi }}</td>
               <td>@if ($key->flag_status == 1)
                 <a href="" class="unpublish" data-value="{{ $key->id }}" data-toggle="modal" data-target=".modal-unpublish"><span class="btn btn-xs btn-success btn-sm"><i class="fa fa-thumbs-o-up"></i></span></a>
               @else
@@ -190,44 +196,50 @@
 <script src="{{ asset('public/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
 <script src="{{ asset('public/vendors/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
 <script src="{{ asset('public/vendors/datatables.net-scroller/js/datatables.scroller.min.js') }}"></script>
+<script src="{{ asset('public/vendors/select2/dist/js/select2.full.min.js')}}"></script>
 
 <script type="text/javascript">
   $('#daftartabel').DataTable();
 
+  $(".select2").select2({
+    placeholder: "Pilih Kategori",
+    allowClear: true
+  });
+
   $('#daftartabel').on('click','.ubah', function(){
     var a = $(this).data('value');
     $.ajax({
-      url: "{{ url('/') }}/bidang/ubah/"+a,
+      url: "{{ url('/') }}/posisi/ubah/"+a,
       dataType: 'json',
       success: function(data){
-        var id_bidang = data.id;
-        var kode_bidang = data.kode_bidang;
-        var nama_bidang = data.nama_bidang;
-        var deskripsi = data.deskripsi;
+        var id_posisi = data.id;
+        var id_bidang = data.id_bidang;
+        var kode_posisi = data.kode_posisi;
+        var nama_posisi = data.nama_posisi;
 
-        $('#id_bidang').attr('value', id_bidang);
-        $('#edit_kode_bidang').attr('value', kode_bidang);
-        $('#edit_nama_bidang').attr('value', nama_bidang);
-        $('#edit_deskripsi').attr('value', deskripsi);
+        $('#id_posisi').attr('value', id_posisi);
+        $('#edit_id_bidang').attr('value', id_bidang);
+        $('#edit_kode_posisi').attr('value', kode_posisi);
+        $('#edit_nama_posisi').attr('value', nama_posisi);
       }
     });
   });
 
   $('#daftartabel').on('click','.unpublish', function(){
     var a = $(this).data('value');
-    $('#setUnpublish').attr('href', "{{ url('/') }}/bidang/publish/"+a);
+    $('#setUnpublish').attr('href', "{{ url('/') }}/posisi/publish/"+a);
   });
 
   $(function(){
     $('a.publish').click(function(){
       var a = $(this).data('value');
-      $('#setPublish').attr('href', "{{ url('/') }}/bidang/publish/"+a);
+      $('#setPublish').attr('href', "{{ url('/') }}/posisi/publish/"+a);
     });
   });
 
 </script>
 
-@if($errors->has('edit_nama_bidang') || $errors->has('edit_deskripsi') || $errors->has('edit_kode_bidang'))
+@if($errors->has('edit_nama_posisi') || $errors->has('edit_deskripsi') || $errors->has('edit_kode_posisi'))
 <script type="text/javascript">
   $('#modal-ubah').modal('show');
 </script>

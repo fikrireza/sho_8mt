@@ -23,13 +23,6 @@ Route::get('logout-process', 'Auth\LoginController@logout')->name('auth.logout')
 
   Route::get('home', 'DashboardController@index')->name('dashboard');
 
-  // Daftar BMT
-  Route::get('daftar', 'DaftarBmtController@index')->name('daftar.index');
-  Route::get('daftar/tambah', 'DaftarBmtController@tambah')->name('daftar.tambah');
-  Route::post('daftar/tambah', 'DaftarBmtController@store')->name('daftar.store');
-  Route::get('daftar/ubah/{id}', 'DaftarBmtController@ubah')->name('daftar.ubah');
-  Route::post('daftar/ubah', 'DaftarBmtController@edit')->name('daftar.edit');
-
   // Anggota BMT
   Route::get('anggota', 'DaftarAnggotaController@index')->name('anggota.index');
   Route::get('anggota/tambah', 'DaftarAnggotaController@tambah')->name('anggota.tambah');
@@ -43,4 +36,13 @@ Route::get('logout-process', 'Auth\LoginController@logout')->name('auth.logout')
   Route::post('bidang/tambah', 'BidangController@store')->name('bidang.store');
   Route::get('bidang/ubah/{id}', 'BidangController@ubah')->name('bidang.ubah');
   Route::post('bidang/ubah', 'BidangController@edit')->name('bidang.edit');
+  Route::get('bidang/publish/{id}', 'BidangController@publish')->name('bidang.publish');
+
+  // Posisi
+  Route::get('posisi', 'PosisiController@index')->name('posisi.index');
+  Route::get('posisi/tambah', 'PosisiController@tambah')->name('posisi.tambah');
+  Route::post('posisi/tambah', 'PosisiController@store')->name('posisi.store');
+  Route::get('posisi/ubah/{id}', 'PosisiController@ubah')->name('posisi.ubah');
+  Route::post('posisi/ubah', 'PosisiController@edit')->name('posisi.edit');
+  Route::get('posisi/publish/{id}', 'PosisiController@publish')->name('posisi.publish');
 // });

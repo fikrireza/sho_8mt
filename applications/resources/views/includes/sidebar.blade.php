@@ -71,10 +71,10 @@
             </a>
             <ul class="nav child_menu" style="">
               <li class="">
-                <a href="{{ route('bidang.index')}}">Bidang</a>
+                <a href="{{ route('bidang.index') }}">Bidang</a>
               </li>
               <li class="">
-                <a href="index.html">Posisi</a>
+                <a href="{{ route('posisi.index') }}">Posisi</a>
               </li>
               <li class="">
                 <a href="index.html">Plafon</a>
