@@ -33,11 +33,6 @@
               <i class="fa fa-beer"></i> Menu Transaksi <span class="fa fa-chevron-down"></span>
             </a>
             <ul class="nav child_menu" style="">
-              @if (session('status') == 'pbmt')
-              <li class="">
-                <a href="{{ route('daftar.index')}}">Daftar BMT</a>
-              </li>
-              @endif
               <li class="">
                 <a href="{{ route('anggota.index') }}">Daftar Anggota</a>
               </li>
@@ -65,19 +60,24 @@
           <li class="">
             <a href="index.html"><i class="fa fa-inbox"></i> Laporan </a>
           </li>
+        </ul>
+      </div>
+      <div class="menu_section">
+        <h3>Master</h3>
+        <ul class="nav side-menu">
           <li class="">
             <a>
-              <i class="fa fa-desktop"></i> Properti <span class="fa fa-chevron-down"></span>
+              <i class="fa fa-gear"></i> Master Data <span class="fa fa-chevron-down"></span>
             </a>
             <ul class="nav child_menu" style="">
               <li class="">
-                <a href="index.html">Data BMT</a>
+                <a href="{{ route('bidang.index')}}">Bidang</a>
               </li>
               <li class="">
-                <a href="index.html">Data Rekening</a>
+                <a href="index.html">Posisi</a>
               </li>
               <li class="">
-                <a href="index.html">Data Anggota</a>
+                <a href="index.html">Plafon</a>
               </li>
             </ul>
           </li>

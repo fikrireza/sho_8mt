@@ -24,11 +24,7 @@ class DaftarAnggotaController extends Controller
 
       public function index()
       {
-          if(session('status') === 'bmt'){
-            $getAnggota = Anggota::where('status', 2)->get();
-          }else{
-            $getAnggota = Anggota::get();
-          }
+          $getAnggota = Anggota::get();
 
           return view('daftarAnggota.index', compact('getAnggota'));
       }

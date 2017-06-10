@@ -22,17 +22,17 @@
           <h2>Data Keanggotaan</h2>
           <div class="ln_solid"></div>
           @if (session('status') === 'pbmt')
-          <div class="item form-group {{ $errors->has('bmt_id') ? 'has-error' : ''}}">
+          <div class="item form-group {{ $errors->has('id_posisi') ? 'has-error' : ''}}">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">BMT <span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <select class="form-control select2_single" name="bmt_id">
+              <select class="form-control select2_single" name="id_posisi">
                 <option value=""></option>
-                @foreach ($getBMT as $key)
-                  <option value="{{ $key->id }}">{{ $key->no_induk}} - {{ $key->nama }}</option>
+                @foreach ($getPosisi as $key)
+                  <option value="{{ $key->id }}">{{ $key->nama_posisi}} - {{ $key->bidang->nama_bidang }}</option>
                 @endforeach
               </select>
-              @if($errors->has('bmt_id'))
-                <code><span style="color:red; font-size:12px;">{{ $errors->first('bmt_id')}}</span></code>
+              @if($errors->has('id_posisi'))
+                <code><span style="color:red; font-size:12px;">{{ $errors->first('id_posisi')}}</span></code>
               @endif
             </div>
           </div>

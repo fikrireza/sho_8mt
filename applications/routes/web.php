@@ -36,4 +36,11 @@ Route::get('logout-process', 'Auth\LoginController@logout')->name('auth.logout')
   Route::post('anggota/tambah', 'DaftarAnggotaController@store')->name('anggota.store');
   Route::get('anggota/ubah/{id}', 'DaftarAnggotaController@ubah')->name('anggota.ubah');
   Route::post('anggota/ubah', 'DaftarAnggotaController@edit')->name('anggota.edit');
+
+  // Bidang
+  Route::get('bidang', 'BidangController@index')->name('bidang.index');
+  Route::get('bidang/tambah', 'BidangController@tambah')->name('bidang.tambah');
+  Route::post('bidang/tambah', 'BidangController@store')->name('bidang.store');
+  Route::get('bidang/ubah/{id}', 'BidangController@ubah')->name('bidang.ubah');
+  Route::post('bidang/ubah', 'BidangController@edit')->name('bidang.edit');
 // });

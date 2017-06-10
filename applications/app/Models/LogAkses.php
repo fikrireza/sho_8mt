@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class LogAkses extends Model
 {
-    protected $table = 'fra_log_akses';
+    protected $table = 'bmt_log_akses';
 
     protected $fillable = ['aksi','aktor'];
 }
