@@ -19,7 +19,7 @@ Route::get('logout-process', 'Auth\LoginController@logout')->name('auth.logout')
 // END Auth
 
 // Middleware backend for pbmt and bmt
-Route::group(['middleware' => ['administrator']], function () {
+// Route::group(['middleware' => ['administrator']], function () {
 
   Route::get('home', 'DashboardController@index')->name('dashboard');
 
@@ -36,4 +36,4 @@ Route::group(['middleware' => ['administrator']], function () {
   Route::post('anggota/tambah', 'DaftarAnggotaController@store')->name('anggota.store');
   Route::get('anggota/ubah/{id}', 'DaftarAnggotaController@ubah')->name('anggota.ubah');
   Route::post('anggota/ubah', 'DaftarAnggotaController@edit')->name('anggota.edit');
-});
+// });

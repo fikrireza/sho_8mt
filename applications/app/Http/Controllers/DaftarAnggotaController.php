@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\User;
-use App\Models\Bmt;
-use App\Models\BmtAnggota;
+use App\Models\Anggota;
+use App\Models\Posisi;
+use App\Models\Bidang;
 use App\Models\LogAkses;
 
 use Auth;
@@ -18,12 +19,15 @@ use Hash;
 class DaftarAnggotaController extends Controller
 {
 
+      // Anggota = 1; PBMT
+      // Peserta = 2; BMT
+
       public function index()
       {
           if(session('status') === 'bmt'){
-            $getAnggota = BmtAnggota::where('bmt_id', '=', Auth::user()->bmt_id)->get();
+            $getAnggota = Anggota::where('status', 2)->get();
           }else{
-            $getAnggota = BmtAnggota::get();
+            $getAnggota = Anggota::get();
           }
 
           return view('daftarAnggota.index', compact('getAnggota'));
@@ -31,11 +35,12 @@ class DaftarAnggotaController extends Controller
 
       public function tambah()
       {
-          if(session('status') === 'pbmt'){
-            $getBMT = Bmt::where('flag_status', 1)->get();
-          }
+          $getPosisi = Posisi::get();
+          $getBidang = Bidang::get();
 
-          return view('daftarAnggota.tambah', compact('getBMT'));
+
+
+          return view('daftarAnggota.tambah', compact('getPosisi', 'getBidang'));
       }
 
       public function store(Request $request)

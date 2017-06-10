@@ -13,14 +13,14 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('fra_users', function (Blueprint $table) {
+        Schema::create('bmt_users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nama', 50);
             $table->string('avatar', 255)->default('user.png');
             $table->string('email')->unique();
             $table->string('password');
             $table->integer('role_id')->unsigned();
-            $table->integer('bmt_id')->unsigned()->nullable();;
+            $table->integer('anggota_id')->unsigned()->nullable();;
             $table->integer('confirmed')->unsigned()->default(0);
             $table->string('confirmation_code')->nullable();
             $table->integer('login_count')->unsigned()->default(0);

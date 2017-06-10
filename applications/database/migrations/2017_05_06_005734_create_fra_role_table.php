@@ -13,7 +13,7 @@ class CreateFraRoleTable extends Migration
      */
     public function up()
     {
-      Schema::create('fra_roles', function (Blueprint $table) {
+      Schema::create('bmt_roles', function (Blueprint $table) {
         $table->increments('id');
         $table->string('title', 50);
         $table->string('slug', 15);

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLogAksesTable extends Migration
+class CreatePosisiTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ class CreateLogAksesTable extends Migration
      */
     public function up()
     {
-        Schema::create('bmt_log_akses', function(Blueprint $table){
+        Schema::create('bmt_posisi', function(Blueprint $table){
           $table->increments('id');
-          $table->string('aksi');
-          $table->string('aktor');
+          $table->integer('id_bidang')->unsigned();
+          $table->string('kode_posisi');
+          $table->string('nama_posisi');
+          $table->integer('id_aktor')->unsigned();
+          $table->integer('flag_status')->unsigned();
           $table->timestamps();
         });
     }
