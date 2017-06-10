@@ -19,7 +19,7 @@ Route::get('logout-process', 'Auth\LoginController@logout')->name('auth.logout')
 // END Auth
 
 // Middleware backend for pbmt and bmt
-// Route::group(['middleware' => ['administrator']], function () {
+Route::group(['middleware' => ['administrator']], function () {
 
   Route::get('home', 'DashboardController@index')->name('dashboard');
 
@@ -45,4 +45,4 @@ Route::get('logout-process', 'Auth\LoginController@logout')->name('auth.logout')
   Route::get('posisi/ubah/{id}', 'PosisiController@ubah')->name('posisi.ubah');
   Route::post('posisi/ubah', 'PosisiController@edit')->name('posisi.edit');
   Route::get('posisi/publish/{id}', 'PosisiController@publish')->name('posisi.publish');
-// });
+});

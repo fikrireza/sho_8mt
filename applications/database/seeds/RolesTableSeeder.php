@@ -11,7 +11,7 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
-      DB::table('fra_roles')->insert(array(
+      DB::table('bmt_roles')->insert(array(
         array('title'=>'PBMT', 'slug'=>'pbmt'),
         array('title'=>'BMT', 'slug'=>'bmt')
       ));
