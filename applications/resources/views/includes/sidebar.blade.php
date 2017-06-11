@@ -33,12 +33,19 @@
               <i class="fa fa-beer"></i> Menu Transaksi <span class="fa fa-chevron-down"></span>
             </a>
             <ul class="nav child_menu" style="">
+              @if (session('status') == 'pbmt')
+              <li class="">
+                <a href="{{ route('daftar.index') }}">Daftar BMT</a>
+              </li>
               <li class="">
                 <a href="{{ route('anggota.index') }}">Daftar Anggota</a>
               </li>
+              @endif
+              @if (session('status') == 'bmt' || session('status') == 'pbmt')
               <li class="">
                 <a href="index.html">Daftar Peserta</a>
               </li>
+              @endif
               <li class="">
                 <a href="index.html">Bayar Iuran</a>
               </li>
@@ -62,6 +69,7 @@
           </li>
         </ul>
       </div>
+      @if (session('status') == 'pbmt')
       <div class="menu_section">
         <h3>Master</h3>
         <ul class="nav side-menu">
@@ -83,6 +91,7 @@
           </li>
         </ul>
       </div>
+      @endif
       <div class="menu_section">
         <h3>Extra</h3>
         <ul class="nav side-menu">

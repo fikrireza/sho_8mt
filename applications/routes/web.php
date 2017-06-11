@@ -23,6 +23,13 @@ Route::group(['middleware' => ['administrator']], function () {
 
   Route::get('home', 'DashboardController@index')->name('dashboard');
 
+  // Daftar BMT
+  Route::get('daftar', 'DaftarBmtController@index')->name('daftar.index');
+  Route::get('daftar/tambah', 'DaftarBmtController@tambah')->name('daftar.tambah');
+  Route::post('daftar/tambah', 'DaftarBmtController@store')->name('daftar.store');
+  Route::get('daftar/ubah/{id}', 'DaftarBmtController@ubah')->name('daftar.ubah');
+  Route::post('daftar/ubah', 'DaftarBmtController@edit')->name('daftar.edit');
+
   // Anggota BMT
   Route::get('anggota', 'DaftarAnggotaController@index')->name('anggota.index');
   Route::get('anggota/tambah', 'DaftarAnggotaController@tambah')->name('anggota.tambah');

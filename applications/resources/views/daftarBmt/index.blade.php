@@ -62,6 +62,7 @@
               <th>Telp</th>
               <th>Nama Kontak</th>
               <th>Nomor Kontak</th>
+              <th>Email</th>
               <th>Aksi</th>
             </tr>
           </thead>
@@ -72,14 +73,15 @@
             @foreach ($getBMT as $key)
             <tr>
               <td>{{ $no }}</td>
-              <td>{{ $key->no_induk }}</td>
-              <td>{{ $key->nama }}</td>
-              <td>{{ $key->alamat }}</td>
-              <td>{{ $key->mpd }}</td>
-              <td>{{ $key->mpw }}</td>
-              <td>{{ $key->telp }}</td>
-              <td>{{ $key->nama_kontak }}</td>
-              <td>{{ $key->nomor_kontak }}</td>
+              <td>{{ $key->no_induk_bmt }}</td>
+              <td>{{ $key->nama_bmt }}</td>
+              <td>{{ $key->alamat_bmt }}</td>
+              <td>{{ $key->mpd_bmt }}</td>
+              <td>{{ $key->mpw_bmt }}</td>
+              <td>{{ $key->telp_bmt }}</td>
+              <td>{{ $key->nama_kontak_bmt }}</td>
+              <td>{{ $key->nomor_kontak_bmt }}</td>
+              <td>{{ $key->email_bmt }}</td>
               <td><a href="{{ route('daftar.ubah', $key->id) }}" class="btn btn-xs btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-pencil"></i> </a></td>
             </tr>
             @php

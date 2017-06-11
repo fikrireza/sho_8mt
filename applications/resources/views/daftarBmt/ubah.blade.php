@@ -22,88 +22,96 @@
       <div class="x_content">
         <form action="{{ route('daftar.edit') }}" method="POST" class="form-horizontal form-label-left" enctype="multipart/form-data" novalidate>
           {{ csrf_field() }}
-          <div class="item form-group {{ $errors->has('no_induk') ? 'has-error' : ''}}">
+          <div class="item form-group {{ $errors->has('no_induk_bmt') ? 'has-error' : ''}}">
             <input type="hidden" name="id" value="{{ $getBMT->id }}">
-            <input type="hidden" name="aktor" value="{{ Auth::user()->id }}">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">No. Induk <span class="required">*</span></label>
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">No. Induk BMT <span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input id="no_induk" class="form-control col-md-7 col-xs-12" data-validate-length-range="10" name="no_induk" placeholder="Contoh : " required="required" type="text" value="{{ old('no_induk', $getBMT->no_induk) }}">
-              @if($errors->has('no_induk'))
-                <code><span style="color:red; font-size:12px;">{{ $errors->first('no_induk')}}</span></code>
+              <input id="no_induk_bmt" class="form-control col-md-7 col-xs-12" data-validate-length-range="10" name="no_induk_bmt" placeholder="Contoh : " required="required" type="text" value="{{ old('no_induk_bmt', $getBMT->no_induk_bmt) }}">
+              @if($errors->has('no_induk_bmt'))
+                <code><span style="color:red; font-size:12px;">{{ $errors->first('no_induk_bmt')}}</span></code>
               @endif
             </div>
           </div>
-          <div class="item form-group {{ $errors->has('nama') ? 'has-error' : ''}}">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Nama <span class="required">*</span>
+          <div class="item form-group {{ $errors->has('nama_bmt') ? 'has-error' : ''}}">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Nama BMT <span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input id="nama" class="form-control col-md-7 col-xs-12" data-validate-length-range="3" name="nama" placeholder="Contoh : e.g John Doe" required="required" type="text" value="{{ old('nama', $getBMT->nama) }}">
-              @if($errors->has('nama'))
-                <code><span style="color:red; font-size:12px;">{{ $errors->first('nama')}}</span></code>
+              <input id="nama_bmt" class="form-control col-md-7 col-xs-12" data-validate-length-range="3" name="nama_bmt" placeholder="Contoh : e.g John Doe" required="required" type="text" value="{{ old('nama_bmt', $getBMT->nama_bmt) }}">
+              @if($errors->has('nama_bmt'))
+                <code><span style="color:red; font-size:12px;">{{ $errors->first('nama_bmt')}}</span></code>
               @endif
             </div>
           </div>
-          <div class="item form-group {{ $errors->has('alamat') ? 'has-error' : ''}}">
+          <div class="item form-group {{ $errors->has('alamat_bmt') ? 'has-error' : ''}}">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea">Alamat <span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <textarea id="alamat" required="required" name="alamat" class="form-control col-md-7 col-xs-12" placeholder="Contoh : Alamat">{{ old('alamat', $getBMT->alamat) }}</textarea>
-              @if($errors->has('alamat'))
-                <code><span style="color:red; font-size:12px;">{{ $errors->first('alamat')}}</span></code>
+              <textarea id="alamat_bmt" required="required" name="alamat_bmt" class="form-control col-md-7 col-xs-12" placeholder="Contoh : Alamat">{{ old('alamat_bmt', $getBMT->alamat_bmt) }}</textarea>
+              @if($errors->has('alamat_bmt'))
+                <code><span style="color:red; font-size:12px;">{{ $errors->first('alamat_bmt')}}</span></code>
               @endif
             </div>
           </div>
-          <div class="item form-group {{ $errors->has('mpd') ? 'has-error' : ''}}">
+          <div class="item form-group {{ $errors->has('mpd_bmt') ? 'has-error' : ''}}">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Mpd <span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input id="mpd" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="mpd" placeholder="Contoh : e.g John Doe" required="required" type="text" value="{{ old('mpd', $getBMT->mpd) }}">
-              @if($errors->has('mpd'))
-                <code><span style="color:red; font-size:12px;">{{ $errors->first('mpd')}}</span></code>
+              <input id="mpd_bmt" class="form-control col-md-7 col-xs-12" name="mpd_bmt" placeholder="Contoh : e.g John Doe" required="required" type="text" value="{{ old('mpd_bmt', $getBMT->mpd_bmt) }}">
+              @if($errors->has('mpd_bmt'))
+                <code><span style="color:red; font-size:12px;">{{ $errors->first('mpd_bmt')}}</span></code>
               @endif
             </div>
           </div>
-          <div class="item form-group {{ $errors->has('mpw') ? 'has-error' : ''}}">
+          <div class="item form-group {{ $errors->has('mpw_bmt') ? 'has-error' : ''}}">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Mpw <span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input id="mpw" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="mpw" placeholder="Contoh : e.g John Doe" required="required" type="text" value="{{ old('mpw', $getBMT->mpw) }}">
-              @if($errors->has('mpw'))
-                <code><span style="color:red; font-size:12px;">{{ $errors->first('mpw')}}</span></code>
+              <input id="mpw_bmt" class="form-control col-md-7 col-xs-12" name="mpw_bmt" placeholder="Contoh : e.g John Doe" required="required" type="text" value="{{ old('mpw_bmt', $getBMT->mpw_bmt) }}">
+              @if($errors->has('mpw_bmt'))
+                <code><span style="color:red; font-size:12px;">{{ $errors->first('mpw_bmt')}}</span></code>
               @endif
             </div>
           </div>
-          <div class="item form-group {{ $errors->has('telp') ? 'has-error' : ''}}">
+          <div class="item form-group {{ $errors->has('telp_bmt') ? 'has-error' : ''}}">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">Telp <span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input type="text" id="telp" name="telp" required="required" data-validate-minmax="7,15" class="form-control col-md-7 col-xs-12" placeholder="Contoh : 02177839878" value="{{ old('telp', $getBMT->telp) }}">
-              @if($errors->has('telp'))
-                <code><span style="color:red; font-size:12px;">{{ $errors->first('telp')}}</span></code>
+              <input type="text" id="telp_bmt" name="telp_bmt" required="required" class="form-control col-md-7 col-xs-12" placeholder="Contoh : 02177839878" value="{{ old('telp_bmt', $getBMT->telp_bmt) }}">
+              @if($errors->has('telp_bmt'))
+                <code><span style="color:red; font-size:12px;">{{ $errors->first('telp_bmt')}}</span></code>
               @endif
             </div>
           </div>
-          <div class="item form-group {{ $errors->has('nama_kontak') ? 'has-error' : ''}}">
+          <div class="item form-group {{ $errors->has('nama_kontak_bmt') ? 'has-error' : ''}}">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Nama Kontak <span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input id="nama_kontak" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="nama_kontak" placeholder="Contoh : e.g John Doe" required="required" type="text" value="{{ old('nama_kontak', $getBMT->nama_kontak) }}">
-              @if($errors->has('nama_kontak'))
-                <code><span style="color:red; font-size:12px;">{{ $errors->first('nama_kontak')}}</span></code>
+              <input id="nama_kontak_bmt" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="nama_kontak_bmt" placeholder="Contoh : e.g John Doe" required="required" type="text" value="{{ old('nama_kontak_bmt', $getBMT->nama_kontak_bmt) }}">
+              @if($errors->has('nama_kontak_bmt'))
+                <code><span style="color:red; font-size:12px;">{{ $errors->first('nama_kontak_bmt')}}</span></code>
               @endif
             </div>
           </div>
-          <div class="item form-group {{ $errors->has('nomor_kontak') ? 'has-error' : ''}}">
+          <div class="item form-group {{ $errors->has('nomor_kontak_bmt') ? 'has-error' : ''}}">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">Nomor Kontak <span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input type="text" id="nomor_kontak" name="nomor_kontak" required="required" data-validate-minmax="7,15" class="form-control col-md-7 col-xs-12" placeholder="Contoh : 02177839878" value="{{ old('nomor_kontak', $getBMT->nomor_kontak) }}">
-              @if($errors->has('nomor_kontak'))
-                <code><span style="color:red; font-size:12px;">{{ $errors->first('nomor_kontak')}}</span></code>
+              <input type="text" id="nomor_kontak_bmt" name="nomor_kontak_bmt" required="required" data-validate-minmax="7,15" class="form-control col-md-7 col-xs-12" placeholder="Contoh : 02177839878" value="{{ old('nomor_kontak_bmt', $getBMT->nomor_kontak_bmt) }}">
+              @if($errors->has('nomor_kontak_bmt'))
+                <code><span style="color:red; font-size:12px;">{{ $errors->first('nomor_kontak_bmt')}}</span></code>
               @endif
             </div>
           </div>
-
+          <div class="item form-group {{ $errors->has('email_bmt') ? 'has-error' : ''}}">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Email BMT<span class="required">*</span>
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <input id="email_bmt" class="form-control col-md-7 col-xs-12" name="email_bmt" placeholder="Contoh : bmt@gmail.com" required="required" type="text" value="{{ old('email_bmt', $getBMT->email_bmt) }}">
+              @if($errors->has('email_bmt'))
+                <code><span style="color:red; font-size:12px;">{{ $errors->first('email_bmt')}}</span></code>
+              @endif
+            </div>
+          </div>
 
           <div class="ln_solid"></div>
           <div class="form-group">
