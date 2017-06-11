@@ -141,8 +141,14 @@
             <div class="col-md-6 col-sm-6 col-xs-12">
               <select class="form-control col-md-7 col-xs-12 select2_single" name="id_posisi" id="id_posisi">
                 <option value="">--Pilih--</option>
-                @foreach ($getPosisi as $key)
-                  <option value="{{ $key->id }}">{{ $key->bidang->nama_bidang }} | {{ $key->nama_posisi}}</option>
+                @foreach($getBidang as $bidang)
+                  <optgroup label="{{ $bidang->nama_bidang }}">
+                    @foreach($getPosisi as $posisi)
+                      @if($posisi->id_bidang === $bidang->id)
+                        <option value="{{ $posisi->id }}" {{ old('id_posisi') == $posisi->id ? 'selected=""' : ''}}>{{ $posisi->nama_posisi }}</option>
+                      @endif
+                    @endforeach
+                  </optgroup>
                 @endforeach
               </select>
               @if($errors->has('id_posisi'))
@@ -164,8 +170,8 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Jenis Kelamin<span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              L: <input type="radio" class="flat" name="jenis_kelamin" id="jenis_kelaminL" value="L" />
-              P: <input type="radio" class="flat" name="jenis_kelamin" id="jenis_kelaminP" value="P" />
+              L: <input type="radio" class="flat" name="jenis_kelamin" id="jenis_kelaminL" value="L" {{ old('jenis_kelamin') == 'L' ? 'checked=""' : ''}} />
+              P: <input type="radio" class="flat" name="jenis_kelamin" id="jenis_kelaminP" value="P" {{ old('jenis_kelamin') == 'P' ? 'checked=""' : ''}} />
               @if($errors->has('jenis_kelamin'))
                 <code><span style="color:red; font-size:12px;">{{ $errors->first('jenis_kelamin')}}</span></code>
               @endif

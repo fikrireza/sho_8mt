@@ -51,8 +51,9 @@ class DaftarBmtController extends Controller
         }
 
         $getPosisi = Posisi::get();
+        $getBidang = Posisi::get();
 
-        return view('daftarBmt.tambah', compact('kode_bmt', 'kode_anggota', 'getPosisi'));
+        return view('daftarBmt.tambah', compact('kode_bmt', 'kode_anggota', 'getPosisi', 'getBidang'));
     }
 
     public function store(Request $request)
@@ -154,15 +155,16 @@ class DaftarBmtController extends Controller
           'nama' => $request->nama_anggota,
           'email' => $request->email,
           'role_id' => 1,
-          'anggota_id'  => $anggota->id,
+          'id_anggota'  => $anggota->id,
+          'id_bmt'  => $bmt->id,
           'confirmed' => 0,
           'confirmation_code' => str_random(30).time(),
           'login_count' => 0,
-          'password'  => Hash::make('12345678QWER'),
+          'password'  => Hash::make('12345678qwer'),
         ]);
 
         $logAkses = LogAkses::create([
-          'aksi'  => Auth::user()->kode_anggota.' | '.Auth::user()->nama_anggota.' | Menambahkan BMT '.$request->nama_bmt,
+          'aksi'  => Auth::user()->kode_anggota.' | '.Auth::user()->nama.' | Menambahkan BMT '.$request->nama_bmt,
           'aktor' => Auth::user()->id,
         ]);
 

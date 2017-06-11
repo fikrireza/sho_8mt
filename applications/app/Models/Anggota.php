@@ -9,7 +9,7 @@ class Anggota extends Model
     protected $table = 'bmt_anggota';
 
     protected $fillable = ['kode_anggota','id_posisi','id_bmt','nama_anggota','jenis_kelamin','alamat',
-                          'kode_pos','no_telp','tempat_lahir','tanggal_lahir','jenis_identitas','no_ktp',
+                          'kode_pos','no_telp','tempat_lahir','tanggal_lahir','jenis_usaha','lokasi_usaha','no_ktp',
                           'status_pernikahan','foto','email','id_aktor','flag_status'];
 
     public function posisi()
@@ -19,6 +19,6 @@ class Anggota extends Model
 
     public function bmt()
     {
-        return $this->belongsTo('App\Model\Bmt', 'id_bmt');
+        return $this->belongsTo('App\Models\Bmt', 'id_bmt');
     }
 }

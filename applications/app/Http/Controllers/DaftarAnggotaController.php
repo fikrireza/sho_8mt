@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\User;
+use App\Models\Bmt;
 use App\Models\Anggota;
 use App\Models\Posisi;
 use App\Models\Bidang;
@@ -24,32 +25,52 @@ class DaftarAnggotaController extends Controller
 
       public function index()
       {
-          $getAnggota = Anggota::get();
+          if(session('status') == 'pbmt'){
+            $getAnggota = Anggota::get();
+          }else{
+            $getAnggota = Anggota::where('id_bmt', Auth::user()->id_bmt)->get();
+          }
 
           return view('daftarAnggota.index', compact('getAnggota'));
       }
 
       public function tambah()
       {
+          $getBmt = BMT::get();
           $getPosisi = Posisi::get();
           $getBidang = Bidang::get();
 
+          $tahun = date('y');
+          $bulan = date('m');
+          $rand = rand(100,999);
 
+          $kode_anggota = 'BMTANG/'.$tahun.'/'.$bulan.'/'.$rand;
+          $cek_kode_anggota = Anggota::where('kode_anggota', $kode_anggota)->first();
 
-          return view('daftarAnggota.tambah', compact('getPosisi', 'getBidang'));
+          if(!$cek_kode_anggota){
+            $kode_anggota;
+          }else{
+            $kode_anggota = 'Kode Anggota BMT Habis - Contact Fikri Please';
+          }
+
+          return view('daftarAnggota.tambah', compact('getBmt', 'getPosisi', 'getBidang', 'kode_anggota'));
       }
 
       public function store(Request $request)
       {
 
         $message = [
-          'bmt_id.required' => 'Wajib Di isi',
+          'id_bmt.required' => 'Wajib Di isi',
           'no_ktp.required' => 'Wajib Di isi',
           'no_ktp.unique' => 'No Ktp Sudah Terdaftar',
           'no_ktp.min' => 'Terlalu Pendek',
           'no_ktp.numeric' => 'Nomor Ktp',
           'nama_anggota.required' => 'Wajib Di isi',
+          'kode_anggota.required' => 'Wajib Di isi',
+          'kode_pos.required' => 'Wajib Di isi',
           'alamat_anggota.required' => 'Wajib Di isi',
+          'no_telp.required' => 'Wajib Di isi',
+          'jenis_kelamin.required' => 'Wajib Di isi',
           'tempat_lahir.required' => 'Wajib Di isi',
           'tanggal_lahir.required' => 'Wajib Di isi',
           'lokasi_usaha.required' => 'Wajib Di isi',
@@ -59,12 +80,18 @@ class DaftarAnggotaController extends Controller
         ];
 
         $validator = Validator::make($request->all(), [
-          'bmt_id' => 'required',
-          'no_ktp' => 'required|numeric|min:15|unique:fra_bmt_anggota',
+          'id_bmt' => 'required',
+          // 'id_posisi' => 'required',
+          'kode_anggota'  => 'required|unique:bmt_anggota',
+          'no_ktp' => 'required|numeric|min:15|unique:bmt_anggota',
           'nama_anggota' => 'required',
+          'jenis_kelamin' => 'required',
+          'kode_pos'  => 'required',
           'alamat_anggota' => 'required',
+          'no_telp' => 'required',
           'tempat_lahir' => 'required',
           'tanggal_lahir' => 'required',
+          'status_pernikahan' => 'required',
           'lokasi_usaha' => 'required',
           'jenis_usaha' => 'required',
           'email' => 'required|email'
@@ -75,28 +102,36 @@ class DaftarAnggotaController extends Controller
           return redirect()->route('anggota.tambah')->withErrors($validator)->withInput();
         }
 
+
         DB::transaction(function() use($request){
 
-          $anggota = BmtAnggota::create([
-            'bmt_id' => $request->bmt_id,
+          $anggota = Anggota::create([
+            'id_bmt' => $request->id_bmt,
+            'id_posisi' => $request->id_posisi,
+            'kode_anggota' => $request->kode_anggota,
             'no_ktp' => $request->no_ktp,
-            'nama' => $request->nama_anggota,
+            'nama_anggota' => $request->nama_anggota,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'kode_pos' => $request->kode_pos,
             'alamat' => $request->alamat_anggota,
+            'no_telp' => $request->no_telp,
             'tempat_lahir' => $request->tempat_lahir,
             'tanggal_lahir' => $request->tanggal_lahir,
+            'status_pernikahan' => $request->status_pernikahan,
             'lokasi_usaha' => $request->lokasi_usaha,
             'jenis_usaha' => $request->jenis_usaha,
             'email' => $request->email,
-            'aktor' => Auth::user()->id,
+            'id_aktor' => Auth::user()->id,
+            'flag_status' => 1,
           ]);
 
           $logAkses = LogAkses::create([
-            'aksi'  => Auth::user()->bmt_id.' | '.Auth::user()->nama.' | Menambahkan Anggota BMT',
+            'aksi'  => Auth::user()->nama.' | Menambahkan Anggota BMT '.$request->nama_anggota,
             'aktor' => Auth::user()->id,
           ]);
         });
 
-        return redirect()->route('anggota.index')->with('berhasil', "Berhasil Menambahkan Anggota BMT");
+        return redirect()->route('anggota.index')->with('berhasil', "Berhasil Menambahkan Anggota BMT ".$request->nama_anggota);
 
       }
 
@@ -104,40 +139,52 @@ class DaftarAnggotaController extends Controller
       {
           if(session('status') === 'pbmt'){
             $getBMT = Bmt::where('flag_status', 1)->get();
+            $getPosisi = Posisi::get();
+            $getBidang = Bidang::get();
           }
 
-          $getAnggota = BmtAnggota::find($id);
+          $getAnggota = Anggota::find($id);
 
-          return view('daftarAnggota.ubah', compact('getBMT', 'getAnggota'));
+          return view('daftarAnggota.ubah', compact('getBMT', 'getAnggota', 'getPosisi', 'getBidang'));
       }
 
       public function edit(Request $request)
       {
           $message = [
-            'bmt_id.required' => 'Wajib Di isi',
+            'id_bmt.required' => 'Wajib Di isi',
             'no_ktp.required' => 'Wajib Di isi',
             'no_ktp.unique' => 'No Ktp Sudah Terdaftar',
             'no_ktp.min' => 'Terlalu Pendek',
             'no_ktp.numeric' => 'Nomor Ktp',
-            'nama.required' => 'Wajib Di isi',
+            'nama_anggota.required' => 'Wajib Di isi',
             'alamat.required' => 'Wajib Di isi',
             'tempat_lahir.required' => 'Wajib Di isi',
             'tanggal_lahir.required' => 'Wajib Di isi',
             'lokasi_usaha.required' => 'Wajib Di isi',
             'jenis_usaha.required' => 'Wajib Di isi',
+            'jenis_kelamin.required' => 'Wajib Di isi',
+            'status_pernikahan.required' => 'Wajib Di isi',
+            // 'id_posisi.required' => 'Wajib Di isi',
+            'no_telp.required' => 'Wajib Di isi',
             'email.required' => 'Wajib Di isi',
             'email.email' => 'Format Email',
           ];
 
           $validator = Validator::make($request->all(), [
-            'bmt_id' => 'required',
-            'no_ktp' => 'required|numeric|min:15|unique:fra_bmt_anggota,no_ktp,'.$request->anggota_id,
-            'nama' => 'required',
+            'id_bmt' => 'required',
+            'kode_anggota'  => 'required|unique:bmt_anggota,no_ktp,'.$request->id,
+            // 'id_posisi' => 'required',
+            'no_ktp' => 'required|numeric|min:15|unique:bmt_anggota,no_ktp,'.$request->id,
+            'nama_anggota' => 'required',
+            'jenis_kelamin' => 'required',
             'alamat' => 'required',
+            'kode_pos'  => 'required',
+            'no_telp' => 'required',
             'tempat_lahir' => 'required',
             'tanggal_lahir' => 'required',
             'lokasi_usaha' => 'required',
             'jenis_usaha' => 'required',
+            'status_pernikahan' => 'required',
             'email' => 'required|email'
           ], $message);
 
@@ -146,12 +193,13 @@ class DaftarAnggotaController extends Controller
             return redirect()->route('anggota.ubah', ['id' => $request->anggota_id])->withErrors($validator)->withInput();
           }
 
-          $update = BmtAnggota::findOrFail($request->anggota_id);
+
+          $update = Anggota::findOrFail($request->id);
           $input = $request->all();
           $update->fill($input)->save();
 
           $logAkses = LogAkses::create([
-            'aksi'  => Auth::user()->bmt_id.' | '.Auth::user()->nama.' | Mengubah Data Anggota BMT',
+            'aksi'  => Auth::user()->nama.' | Mengubah Data Anggota '.$request->nama_anggota,
             'aktor' => Auth::user()->id,
           ]);
 

@@ -25,23 +25,23 @@
       <div class="menu_section">
         <h3>General</h3>
         <ul class="nav side-menu">
-          <li class="{{ Route::currentRouteNamed('dashboard') ? 'active' : '' }}">
+          <li class="{{ Route::is('dashboard') ? 'active' : '' }}">
             <a href="{{ route('dashboard') }}"><i class="fa fa-home"></i> Beranda </a>
           </li>
-          <li class="">
+          <li class="{{ Route::is('daftar*') ? 'active' : '' }}{{ Route::is('anggota*') ? 'active' : '' }}">
             <a>
               <i class="fa fa-beer"></i> Menu Transaksi <span class="fa fa-chevron-down"></span>
             </a>
-            <ul class="nav child_menu" style="">
+            <ul class="nav child_menu" style="{{ Route::is('daftar*') ? 'display: block;' : '' }}{{ Route::is('anggota*') ? 'display: block;' : '' }}">
               @if (session('status') == 'pbmt')
-              <li class="">
+              <li class="{{ Route::is('daftar*') ? 'current-page' : '' }}">
                 <a href="{{ route('daftar.index') }}">Daftar BMT</a>
-              </li>
-              <li class="">
-                <a href="{{ route('anggota.index') }}">Daftar Anggota</a>
               </li>
               @endif
               @if (session('status') == 'bmt' || session('status') == 'pbmt')
+              <li class="{{ Route::is('anggota*') ? 'current-page' : '' }}">
+                <a href="{{ route('anggota.index') }}">Daftar Anggota</a>
+              </li>
               <li class="">
                 <a href="index.html">Daftar Peserta</a>
               </li>
@@ -73,15 +73,15 @@
       <div class="menu_section">
         <h3>Master</h3>
         <ul class="nav side-menu">
-          <li class="">
+          <li class="{{ Route::is('bidang*') ? 'active' : '' }}{{ Route::is('posisi*') ? 'active' : '' }}">
             <a>
               <i class="fa fa-gear"></i> Master Data <span class="fa fa-chevron-down"></span>
             </a>
-            <ul class="nav child_menu" style="">
-              <li class="">
+            <ul class="nav child_menu" style="{{ Route::is('bidang*') ? 'display: block;' : '' }}{{ Route::is('posisi*') ? 'display: block;' : '' }}">
+              <li class="{{ Route::is('bidang*') ? 'current-page' : '' }}">
                 <a href="{{ route('bidang.index') }}">Bidang</a>
               </li>
-              <li class="">
+              <li class="{{ Route::is('posisi*') ? 'current-page' : '' }}">
                 <a href="{{ route('posisi.index') }}">Posisi</a>
               </li>
               <li class="">

@@ -70,9 +70,9 @@
             @foreach ($getAnggota as $key)
             <tr>
               <td>{{ $no }}</td>
-              <td>{{ $key->bmt->no_induk }} | {{ $key->bmt->nama }}</td>
+              <td>{{ $key->bmt->no_induk_bmt }} | {{ $key->bmt->nama_bmt }}</td>
               <td>{{ $key->no_ktp }}</td>
-              <td>{{ $key->nama }}</td>
+              <td>{{ $key->nama_anggota }}</td>
               <td>{{ ($key->email) ? $key->email : '-' }}</td>
               <td>{{ $key->alamat }}</td>
               <td>{{ $key->tempat_lahir }}</td>
