@@ -8,5 +8,5 @@ class Plafon extends Model
 {
     protected $table = 'bmt_plafon';
 
-    protected $fillable = ['no_plafon','besar','deskripsi','id_aktor','flag_status'];
+    protected $fillable = ['jenis_plafon','jumlah_pembiayaan','bulan','iuran','deskripsi','id_aktor','flag_status'];
 }

@@ -71,7 +71,7 @@
               @endif
             </div>
           </div>
-          <div class="item form-group {{ $errors->has('telp') ? 'has-error' : ''}}">
+          <div class="item form-group {{ $errors->has('no_ktp') ? 'has-error' : ''}}">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">No Ktp <span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">

@@ -28,11 +28,11 @@
           <li class="{{ Route::is('dashboard') ? 'active' : '' }}">
             <a href="{{ route('dashboard') }}"><i class="fa fa-home"></i> Beranda </a>
           </li>
-          <li class="{{ Route::is('daftar*') ? 'active' : '' }}{{ Route::is('anggota*') ? 'active' : '' }}">
+          <li class="{{ Route::is('daftar*') ? 'active' : '' }}{{ Route::is('anggota*') ? 'active' : '' }}{{ Route::is('akad*') ? 'active' : '' }}">
             <a>
               <i class="fa fa-beer"></i> Menu Transaksi <span class="fa fa-chevron-down"></span>
             </a>
-            <ul class="nav child_menu" style="{{ Route::is('daftar*') ? 'display: block;' : '' }}{{ Route::is('anggota*') ? 'display: block;' : '' }}">
+            <ul class="nav child_menu" style="{{ Route::is('daftar*') ? 'display: block;' : '' }}{{ Route::is('anggota*') ? 'display: block;' : '' }}{{ Route::is('akad*') ? 'display: block;' : '' }}">
               @if (session('status') == 'pbmt')
               <li class="{{ Route::is('daftar*') ? 'current-page' : '' }}">
                 <a href="{{ route('daftar.index') }}">Daftar BMT</a>
@@ -46,8 +46,8 @@
                 <a href="index.html">Daftar Peserta</a>
               </li>
               @endif
-              <li class="">
-                <a href="index.html">Bayar Iuran</a>
+              <li class="{{ Route::is('akad*') ? 'current-page' : '' }}">
+                <a href="{{ route('akad.index') }}">Akad</a>
               </li>
             </ul>
           </li>
@@ -73,7 +73,7 @@
       <div class="menu_section">
         <h3>Master</h3>
         <ul class="nav side-menu">
-          <li class="{{ Route::is('bidang*') ? 'active' : '' }}{{ Route::is('posisi*') ? 'active' : '' }}">
+          <li class="{{ Route::is('bidang*') ? 'active' : '' }}{{ Route::is('posisi*') ? 'active' : '' }}{{ Route::is('plafon*') ? 'active' : '' }}">
             <a>
               <i class="fa fa-gear"></i> Master Data <span class="fa fa-chevron-down"></span>
             </a>
@@ -84,8 +84,8 @@
               <li class="{{ Route::is('posisi*') ? 'current-page' : '' }}">
                 <a href="{{ route('posisi.index') }}">Posisi</a>
               </li>
-              <li class="">
-                <a href="index.html">Plafon</a>
+              <li class="{{ Route::is('plafon*') ? 'current-page' : '' }}">
+                <a href="{{ route('plafon.index')}}">Plafon</a>
               </li>
             </ul>
           </li>
