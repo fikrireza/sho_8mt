@@ -18,36 +18,31 @@
       </div>
       <div class="x_content">
         <h2>Data Plafon</h2>
-        <form action="{{ route('plafon.store') }}" method="POST" class="form-horizontal form-label-left">
+        <form action="{{ route('plafon.edit') }}" method="POST" class="form-horizontal form-label-left">
           {{ csrf_field() }}
-          <input name="jenis_plafon" type="hidden" value="{{ $jenis_plafon }}">
+          <input name="jenis_plafon" type="hidden" value="{{ $getPlafon[0]->jenis_plafon }}">
           <div class="ln_solid"></div>
           <div class="item form-group {{ $errors->has('jumlah_pembiayaan') ? 'has-error' : ''}}">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Jumlah Pembiayaan <span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input id="jumlah_pembiayaan" class="form-control col-md-7 col-xs-12" name="jumlah_pembiayaan" placeholder="Contoh : 1000000" required="required" type="text" value="{{ old('jumlah_pembiayaan') }}">
+              <input id="jumlah_pembiayaan" class="form-control col-md-7 col-xs-12" name="jumlah_pembiayaan" placeholder="Contoh : 1000000" required="required" type="text" value="{{ old('jumlah_pembiayaan', $getPlafon[0]->jumlah_pembiayaan) }}">
               @if($errors->has('jumlah_pembiayaan'))
                 <code><span style="color:red; font-size:12px;">{{ $errors->first('jumlah_pembiayaan')}}</span></code>
               @endif
             </div>
           </div>
-          @php
-          $callBack = 0;
-          @endphp
-          @for ($i=3; $i <=36; $i++)
+          @foreach ($getPlafon as $key)
           <div class="item form-group {{ $errors->has('bulan') ? 'has-error' : ''}}">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name"></label>
+            <input type="hidden" name="cicilan[id][]" value="{{ $key->id }}">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12"> <span class="required"></span></label>
             <div class="col-md-3 col-sm-3 col-xs-12">
-              <input id="bulan" class="form-control col-md-4 col-xs-6" name="bulan[]" type="text" value="{{ $i }}" readonly="">
+              <input id="bulan" class="form-control col-md-4 col-xs-6" name="cicilan[bulan][]" type="text" value="{{ $key->bulan }}" readonly="">
             </div>
             <div class="col-md-3 col-sm-3 col-xs-12">
-              <input id="iuran" class="form-control col-md-4 col-xs-12" name="iuran[]" placeholder="Contoh : Rupiah" type="text" value="{{ old('iuran.'.$callBack) }}" required="">
+              <input id="iuran" class="form-control col-md-4 col-xs-12" name="cicilan[iuran][]" placeholder="Contoh : Rupiah" data-validate-length-range="3,7" type="tel" value="{{ old('iuran', $key->iuran ) }}" required="">
             </div>
           </div>
-          @php
-            $callBack++;
-          @endphp
-          @endfor
+          @endforeach
           <div class="ln_solid"></div>
           <div class="form-group">
             <div class="col-md-6 col-md-offset-3">

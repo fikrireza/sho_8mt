@@ -13,8 +13,8 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
       DB::table('bmt_users')->insert(array(
-        array('nama'=>'PBMT', 'email'=>'pbmt@gmail.com', 'password'=>bcrypt('12345678'), 'role_id'=> 1, 'confirmed'=>1, 'login_count'=>1),
-        array('nama'=>'BMT', 'email'=>'bmt@gmail.com', 'password'=>bcrypt('12345678'), 'role_id'=> 2, 'confirmed'=>1, 'login_count'=>1),
+        array('nama'=>'PBMT', 'email'=>'pbmt@gmail.com', 'password'=>bcrypt('12345678'), 'role_id'=> 1, 'id_bmt' => 1, 'confirmed'=>1, 'login_count'=>1),
+        array('nama'=>'BMT', 'email'=>'bmt@gmail.com', 'password'=>bcrypt('12345678'), 'role_id'=> 2, 'id_bmt' => 1, 'confirmed'=>1, 'login_count'=>1),
       ));
 
     }

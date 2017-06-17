@@ -53,11 +53,15 @@ Route::group(['middleware' => ['administrator']], function () {
   Route::post('posisi/ubah', 'PosisiController@edit')->name('posisi.edit');
   Route::get('posisi/publish/{id}', 'PosisiController@publish')->name('posisi.publish');
 
-  // Akad
+  // Plafon
   Route::get('plafon', 'PlafonController@index')->name('plafon.index');
   Route::get('plafon/tambah/jiwa', 'PlafonController@tambahJiwa')->name('plafon.tambah.jiwa');
   Route::get('plafon/tambah/kebakaran', 'PlafonController@tambahKebakaran')->name('plafon.tambah.kebakaran');
+  Route::get('plafon/getPlafonList/{jenis_plafon}', 'PlafonController@plafonList');
+  Route::get('plafon/getPlafonList/{jenis_plafon}/{jumlah_pembiayaan}', 'PlafonController@plafonListBulan');
   Route::post('plafon/tambah', 'PlafonController@store')->name('plafon.store');
+  Route::get('plafon/ubah/{jenis_plafon}/{jumlah_pembiayaan}', 'PlafonController@ubah')->name('plafon.ubah');
+  Route::post('plafon/ubah/', 'PlafonController@edit')->name('plafon.edit');
 
   // Akad
   Route::get('akad', 'AkadController@index')->name('akad.index');

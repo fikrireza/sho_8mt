@@ -73,7 +73,7 @@ class BidangController extends Controller
 
         $log = new LogAkses;
         $log->aksi = 'Menambahkan Bidang Baru '.$request->nama_bidang;
-        $log->aktor = 1;
+        $log->aktor = Auth::user()->id;
         $log->save();
 
         return redirect()->route('bidang.index')->with('berhasil', 'Berhasil Menambahkan Bidang Baru');
@@ -121,7 +121,7 @@ class BidangController extends Controller
 
         $log = new LogAkses;
         $log->aksi = 'Mengubah Bidang '.$request->edit_nama_bidang;
-        $log->aktor = 1;
+        $log->aktor = Auth::user()->id;
         $log->save();
 
         return redirect()->route('bidang.index')->with('berhasil', 'Berhasil Mengubah Bidang');
@@ -142,7 +142,7 @@ class BidangController extends Controller
 
           $log = new LogAkses;
           $log->aksi = 'Unpublish Bidang '.$getBidang->nama_bidang;
-          $log->aktor = 1;
+          $log->aktor = Auth::user()->id;
           $log->save();
 
           return redirect()->route('bidang.index')->with('berhasil', 'Berhasil Unpublish '.$getBidang->nama_bidang);
@@ -152,7 +152,7 @@ class BidangController extends Controller
 
           $log = new LogAkses;
           $log->aksi = 'Publish Bidang '.$getBidang->nama_bidang;
-          $log->aktor = 1;
+          $log->aktor = Auth::user()->id;
           $log->save();
 
           return redirect()->route('bidang.index')->with('berhasil', 'Berhasil Publish '.$getBidang->nama_bidang);

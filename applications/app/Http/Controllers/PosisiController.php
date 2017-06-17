@@ -76,7 +76,7 @@ class PosisiController extends Controller
 
         $log = new LogAkses;
         $log->aksi = 'Menambahkan Posisi Baru '.$request->nama_posisi;
-        $log->aktor = 1;
+        $log->aktor = Auth::user()->id;
         $log->save();
 
         return redirect()->route('posisi.index')->with('berhasil', 'Berhasil Menambahkan Posisi Baru');
@@ -125,7 +125,7 @@ class PosisiController extends Controller
 
         $log = new LogAkses;
         $log->aksi = 'Mengubah Posisi '.$request->edit_nama_posisi;
-        $log->aktor = 1;
+        $log->aktor = Auth::user()->id;
         $log->save();
 
         return redirect()->route('posisi.index')->with('berhasil', 'Berhasil Mengubah Posisi');
@@ -147,7 +147,7 @@ class PosisiController extends Controller
 
           $log = new LogAkses;
           $log->aksi = 'Unpublish Posisi '.$getPosisi->nama_posisi;
-          $log->aktor = 1;
+          $log->aktor = Auth::user()->id;
           $log->save();
 
           return redirect()->route('posisi.index')->with('berhasil', 'Berhasil Unpublish '.$getPosisi->nama_posisi);
@@ -157,7 +157,7 @@ class PosisiController extends Controller
 
           $log = new LogAkses;
           $log->aksi = 'Publish Posisi '.$getPosisi->nama_posisi;
-          $log->aktor = 1;
+          $log->aktor = Auth::user()->id;
           $log->save();
 
           return redirect()->route('posisi.index')->with('berhasil', 'Berhasil Publish '.$getPosisi->nama_posisi);

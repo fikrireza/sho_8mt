@@ -73,7 +73,7 @@
               <td>Rp. {{ number_format($bulan->iuran, 0, ',', '.') }}</td>
               @endif
               @endforeach
-              <td><a href="" class="ubah" data-value="{{ $key->id }}" data-toggle="modal" data-target=".modal-ubah"><span class="btn btn-xs btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-pencil"></i></span></a></td>
+              <td><a href="{{ route('plafon.ubah', ['jenis_plafon' => $getPlafonJiwa[0]->jenis_plafon, 'jumlah_pembiayaan' => $key->jumlah_pembiayaan]) }}"><span class="btn btn-xs btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-pencil"></i></span></a></td>
             </tr>
             @php
               $no++;
@@ -116,7 +116,7 @@
               <td>Rp. {{ number_format($bulan->iuran, 0, ',', '.') }}</td>
               @endif
               @endforeach
-              <td><a href="" class="ubah" data-value="{{ $key->id }}" data-toggle="modal" data-target=".modal-ubah"><span class="btn btn-xs btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-pencil"></i></span></a></td>
+              <td><a href="{{ route('plafon.ubah', ['jenis_plafon' => $getPlafonKebakaran[0]->jenis_plafon, 'jumlah_pembiayaan' => $key->jumlah_pembiayaan]) }}"><span class="btn btn-xs btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-pencil"></i></span></a></td>
             </tr>
             @php
               $no++;

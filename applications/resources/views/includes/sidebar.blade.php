@@ -42,16 +42,13 @@
               <li class="{{ Route::is('anggota*') ? 'current-page' : '' }}">
                 <a href="{{ route('anggota.index') }}">Daftar Anggota</a>
               </li>
-              <li class="">
-                <a href="index.html">Daftar Peserta</a>
-              </li>
               @endif
               <li class="{{ Route::is('akad*') ? 'current-page' : '' }}">
-                <a href="{{ route('akad.index') }}">Akad</a>
+                <a href="{{ route('akad.index') }}">Daftar Akad</a>
               </li>
             </ul>
           </li>
-          <li class="">
+          {{-- <li class="">
             <a>
               <i class="fa fa-desktop"></i> Menu Informasi <span class="fa fa-chevron-down"></span>
             </a>
@@ -63,7 +60,7 @@
                 <a href="index.html">Info Tagihan</a>
               </li>
             </ul>
-          </li>
+          </li> --}}
           <li class="">
             <a href="index.html"><i class="fa fa-inbox"></i> Laporan </a>
           </li>
