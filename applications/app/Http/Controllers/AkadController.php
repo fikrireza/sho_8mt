@@ -126,5 +126,20 @@ class AkadController extends Controller
 
     }
 
+    public function approve($id)
+    {
+        $getAkad = Akad::find($id);
+
+        if(!$getAkad){
+          abort(404);
+        }
+
+        $getAkad->approved_by = Auth::user()->id;
+        $getAkad->approved_date = date('Y-m-d');
+        $getAkad->update();
+
+        return redirect()->route('akad.index')->with('berhasil', 'Akad berhasil disetujui');
+    }
+
 
 }

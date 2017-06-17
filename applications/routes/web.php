@@ -67,4 +67,7 @@ Route::group(['middleware' => ['administrator']], function () {
   Route::get('akad', 'AkadController@index')->name('akad.index');
   Route::get('akad/tambah', 'AkadController@tambah')->name('akad.tambah');
   Route::post('akad/tambah', 'AkadController@store')->name('akad.store');
+  Route::get('akad/approve/{id}', 'AkadController@approve')->name('akad.approve');
+
+
 });

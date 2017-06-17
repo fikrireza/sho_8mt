@@ -31,6 +31,26 @@
 </div>
 @endif
 
+@if (session('status') == 'pbmt')
+<div class="modal fade modal-approve" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel2">Setujui Akad</h4>
+      </div>
+      <div class="modal-body">
+        <h4>Yakin ?</h4>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary" id="setApproved">Ya</a>
+      </div>
+    </div>
+  </div>
+</div>
+@endif
+
 
 <div class="page-title">
   <div class="title_left">
@@ -77,7 +97,17 @@
               <td>{{ ($key->jenis_pembayaran == 1) ? 'Cash' : 'Transfer' }}</td>
               <td>{{ $key->keterangan }}</td>
               <td>{!! ($key->flag_status == 1) ? '<span class="label label-primary">Aktif</span>' : '<span class="label label-danger">Hangus</span>' !!}</td>
-              <td>{!! ($key->approved_by != null) ? '<span class="label label-primary">'.$key->approveBy->nama_anggota.'</span>' : '<span class="label label-warning">Belum Disetujui</span>' !!}</td>
+              @if (session('status') == 'pbmt')
+              <td>
+                @if ($key->approved_by == null)
+                <a href="" class="approve" data-value="{{ $key->id }}" data-toggle="modal" data-target=".modal-approve"><span class="label label-warning">Belum Disetujui</span></a>
+                @else
+                {!! ($key->approved_by != null) ? '<span class="label label-primary">'.$key->approveBy->nama_anggota.'</span>' : '<span class="label label-warning">Belum Disetujui</span>' !!}
+                @endif
+              </td>
+              @else
+                <td>{!! ($key->approved_by != null) ? '<span class="label label-primary">'.$key->approveBy->nama_anggota.'</span>' : '<span class="label label-warning">Belum Disetujui</span>' !!}</td>
+              @endif
               <td>{!! ($key->approved_date != null) ? '<span class="label label-primary">'.$key->approved_date.'</span>' : '<span class="label label-warning">Belum Disetujui</span>' !!}</td>
               {{-- <td><a href="" class="btn btn-xs btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-pencil"></i> </a></td> --}}
             </tr>
@@ -102,6 +132,15 @@
 
 <script type="text/javascript">
   $('#daftartabel').DataTable();
+
+@if (session('status') == 'pbmt')
+  $(function(){
+    $('a.approve').click(function(){
+      var a = $(this).data('value');
+      $('#setApproved').attr('href', "{{ url('/') }}/akad/approve/"+a);
+    });
+  });
+  @endif
 
 </script>
 @endsection
