@@ -156,7 +156,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12">Status Pernikahan <span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <select class="form-control col-md-7 col-xs-12 status_pernikahan" name="status_pernikahan" required="">
+              <select class="form-control status_pernikahan" name="status_pernikahan" required="">
                 <option value="">-- Pilih --</option>
                 <option value="1" {{ old('status_pernikahan') == '1' ? 'selected=""' : '' }}>Kawin</option>
                 <option value="0" {{ old('status_pernikahan') == '0' ? 'selected=""' : '' }}>Belum Kawin</option>

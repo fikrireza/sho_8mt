@@ -32,4 +32,9 @@ class User extends Authenticatable
   	{
   		return $this->belongsTo('App\Models\Role');
   	}
+
+    public function bmt()
+    {
+        return $this->belongsTo('App\Models\Bmt', 'id_bmt');
+    }
 }

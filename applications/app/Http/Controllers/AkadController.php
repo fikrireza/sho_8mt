@@ -94,7 +94,7 @@ class AkadController extends Controller
                         ->where('flag_status', 1)
                         ->where('flag_lunas', 0)
                         ->first();
-// dd($cekAkad);
+
         if($cekAkad){
           return redirect()->route('akad.tambah')->withErrors($validator)->withInput()->with('gagal', 'Anggota Masih Memiliki Tanggungan '.$cekAkad->kode_akad);
         }

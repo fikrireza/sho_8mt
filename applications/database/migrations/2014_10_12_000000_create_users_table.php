@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->integer('role_id')->unsigned();
-            $table->integer('id_anggota')->unsigned()->nullable();;
+            $table->integer('id_anggota')->unsigned()->nullable();
             $table->integer('confirmed')->unsigned()->default(0);
             $table->string('confirmation_code')->nullable();
             $table->integer('login_count')->unsigned()->default(0);

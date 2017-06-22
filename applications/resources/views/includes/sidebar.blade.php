@@ -46,6 +46,9 @@
               <li class="{{ Route::is('akad*') ? 'current-page' : '' }}">
                 <a href="{{ route('akad.index') }}">Daftar Akad</a>
               </li>
+              <li class="{{ Route::is('iuran*') ? 'current-page' : '' }}">
+                <a href="{{ route('iuran.index') }}">Pembayaran Iuran</a>
+              </li>
             </ul>
           </li>
           {{-- <li class="">

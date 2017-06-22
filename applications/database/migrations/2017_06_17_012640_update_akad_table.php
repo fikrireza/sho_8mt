@@ -16,7 +16,7 @@ class UpdateAkadTable extends Migration
         Schema::table('bmt_akad', function(Blueprint $table){
           $table->dropColumn('nama_akad');
           $table->dropColumn('lama_pembayaran');
-          $table->renameColumn('no_akad', 'kode_akad')
+          $table->renameColumn('no_akad', 'kode_akad');
           $table->integer('approved_by')->unsigned()->nullable()->after('flag_status');
           $table->date('approved_date')->nullable()->after('approved_by');
           $table->boolean('flag_lunas')->default(0)->after('approved_date');
