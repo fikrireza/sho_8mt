@@ -67,7 +67,7 @@
         <div class="clearfix"></div>
       </div>
       <div class="x_content table-responsive">
-        <table id="daftartabel" class="table table-striped table-bordered" width="100%">
+        <table id="daftartabel" class="table table-striped table-bordered nowrap" width="100%">
           <thead>
             <tr role="row">
               <th>No</th>
@@ -75,6 +75,7 @@
               <th>Kode Anggota</th>
               <th>Plafon</th>
               <th>Tanggal Akad</th>
+              <th>Jatuh Tempo</th>
               <th>Jenis Pembayaran</th>
               <th>Keterangan</th>
               <th>Status Akad</th>
@@ -92,11 +93,23 @@
               <td>{{ $no }}</td>
               <td>{{ $key->kode_akad }}</td>
               <td>{{ $key->anggota->kode_anggota }} <br /> {{ $key->anggota->nama_anggota }}</td>
-              <td>Rp. {{ number_format($key->plafon->jumlah_pembiayaan, 0, ',', '.') }} <br> Bln {{ $key->plafon->bulan }} <br> Iuran Rp.{{ number_format($key->plafon->iuran, 0, ',', '.') }}</td>
+              <td>Rp. {{ number_format($key->plafon->jumlah_pembiayaan, 2, ',', '.') }} <br> Bln {{ $key->plafon->bulan }} <br> Iuran Rp.{{ number_format($key->plafon->iuran, 2, ',', '.') }}</td>
               <td>{{ $key->tanggal_akad }}</td>
+              @php
+                $tanggal_akad = $key->tanggal_akad;
+                $jumlah_bulan = "+".$key->plafon->bulan." months";
+                $due_date = strtotime($jumlah_bulan, strtotime($tanggal_akad));
+              @endphp
+              <td>{{ date('Y-m-d',$due_date) }}</td>
               <td>{{ ($key->jenis_pembayaran == 1) ? 'Cash' : 'Transfer' }}</td>
               <td>{{ $key->keterangan }}</td>
-              <td>{!! ($key->flag_status == 1) ? '<span class="label label-primary">Aktif</span>' : '<span class="label label-danger">Hangus</span>' !!}</td>
+              <td>@if ($key->flag_status == 1)
+                <span class="label label-primary">Aktif</span>
+              @elseif($key->flag_status == 2)
+                <span class="label label-success">Lunas</span>
+              @else
+                <span class="label label-danger">Hangus</span>
+              @endif</td>
               @if (session('status') == 'pbmt')
               <td>
                 @if ($key->approved_by == null)

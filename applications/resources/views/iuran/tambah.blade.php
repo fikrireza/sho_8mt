@@ -91,7 +91,7 @@
               @endif
             </div>
           </div>
-          <div class="item form-group {{ $errors->has('jenis_pembayaran') ? 'has-error' : ''}}">
+          <div class="item form-group {{ $errors->has('jenis_pembayaran') ? 'has-error' : ''}}" id="jenis_pembayaran">
             <label class="control-label col-md-3 col-sm-3 col-xs-12">Jenis Pembayaran <span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
               <select class="form-control jenis_pembayaran" name="jenis_pembayaran" required="" id="jenis_pembayaran">
@@ -113,19 +113,19 @@
               @endif
             </div>
           </div>
-          <div class="item form-group {{ $errors->has('nilai_iuran') ? 'has-error' : ''}}">
+          <div class="item form-group {{ $errors->has('nilai_iuran') ? 'has-error' : ''}}" id="nilai_iuran">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">Jumlah Iuran <span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input type="number" onkeypress="return isNumberKey(event)" id="nilai_iuran" name="nilai_iuran" required="required" data-validate-minmax="7,17" class="form-control col-md-7 col-xs-12" placeholder="Contoh : 12500" value="{{ old('nilai_iuran') }}">
+              <input type="number" onkeypress="return isNumberKey(event)" id="nilai_iuran" name="nilai_iuran" required="required" class="form-control col-md-7 col-xs-12" placeholder="Contoh : 12500" value="{{ old('nilai_iuran') }}">
               @if($errors->has('nilai_iuran'))
                 <code><span style="color:red; font-size:12px;">{{ $errors->first('nilai_iuran')}}</span></code>
               @endif
             </div>
           </div>
-          <div class="item form-group {{ $errors->has('keterangan') ? 'has-error' : ''}}">
+          <div class="item form-group {{ $errors->has('keterangan') ? 'has-error' : ''}}" id="keterangan">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea">Keterangan <span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <textarea id="keterangan" required="required" name="keterangan" class="form-control col-md-7 col-xs-12" placeholder="Contoh : Alamat">{{ old('keterangan') }}</textarea>
+              <textarea id="keterangan" required="required" name="keterangan" class="form-control col-md-7 col-xs-12" placeholder="Contoh : Iuran ke 1">{{ old('keterangan') }}</textarea>
               @if($errors->has('keterangan'))
                 <code><span style="color:red; font-size:12px;">{{ $errors->first('keterangan')}}</span></code>
               @endif
@@ -134,8 +134,8 @@
           <div class="ln_solid"></div>
           <div class="form-group">
             <div class="col-md-6 col-md-offset-3">
-              <a href="{{ route('anggota.index') }}" class="btn btn-primary">Cancel</a>
-              <button id="send" type="submit" class="btn btn-success">Submit</button>
+              <a href="{{ route('iuran.index') }}" class="btn btn-primary">Cancel</a>
+              <input id="send" type="submit" class="btn buttonDisabled" value="Submit"/>
             </div>
           </div>
         </form>
@@ -205,6 +205,9 @@
 
 <script type="text/javascript">
 $('#img_struk').hide();
+$('#jenis_pembayaran').hide();
+$('#nilai_iuran').hide();
+$('#keterangan').hide();
 $(document).ready(function() {
   $('select[name="id_akad"]').on('change', function() {
     var akadID = $(this).val();
@@ -238,6 +241,14 @@ $(document).ready(function() {
               );
               var jatuh_tempo = data.jatuh_tempo;
               var sisa_iuran = data.jumlah_pembiayaan - data.nilai_iuran;
+              if(sisa_iuran > 0){
+                console.log(sisa_iuran);
+                document.getElementById("send").classList.remove('buttonDisabled');
+                $('input[type="submit"]#send').attr('class', 'btn btn-success');
+                $('#jenis_pembayaran').show();
+                $('#nilai_iuran').show();
+                $('#keterangan').show();
+              }
               var sisa_iuran = sisa_iuran.toLocaleString(
                 undefined,
                 {
@@ -251,6 +262,7 @@ $(document).ready(function() {
               $('input[type="text"]#jumlah_bayar').attr('value', 'Rp. '+jumlah_bayar);
               $('input[type="text"]#jatuh_tempo').attr('value', jatuh_tempo);
               $('input[type="text"]#sisa_iuran').attr('value', 'Rp. '+sisa_iuran);
+
             }
         });
     }else{
