@@ -75,5 +75,4 @@ Route::group(['middleware' => ['administrator']], function () {
   Route::post('iuran/tambah', 'IuranController@store')->name('iuran.store');
   Route::get('iuran/getAkad/{id}', 'IuranController@getAkad')->name('iuran.getAkad');
 
-
 });

@@ -16,6 +16,7 @@ use Auth;
 use DB;
 use Validator;
 use Image;
+use Carbon\Carbon;
 
 class IuranController extends Controller
 {
@@ -58,8 +59,24 @@ class IuranController extends Controller
                           ->select('bmt_plafon.jumlah_pembiayaan', 'bmt_plafon.bulan', 'bmt_plafon.iuran')
                           ->where('bmt_akad.id', $id)
                           ->first();
+        $getPlafon = collect($getPlafon);
 
-        return $getPlafon;
+        $getIuran = Iuran::where('id_akad', $id)->sum('nilai_iuran');
+
+        $getSisaPlafon = Akad::join('bmt_plafon', 'bmt_plafon.id', '=', 'bmt_akad.id_plafon')
+                        ->select('bmt_plafon.bulan', 'bmt_akad.tanggal_akad')
+                        ->where('bmt_akad.id', $id)
+                        ->first();
+
+        $tanggal_akad = $getSisaPlafon->tanggal_akad;
+        $jumlah_bulan = "+".$getSisaPlafon->bulan." months";
+        $due_date = strtotime($jumlah_bulan, strtotime($tanggal_akad));
+
+
+        $get = $getPlafon->put('nilai_iuran', $getIuran);
+        $get = $getPlafon->put('jatuh_tempo', date('Y-m-d',$due_date));
+
+        return $get;
     }
 
     public function store(Request $request)
@@ -104,7 +121,7 @@ class IuranController extends Controller
           if($image){
             $salt = str_random(4);
 
-            $img_url = str_slug($request->tanggal_iuran,'-').'-'.$salt. '.' . $image->getClientOriginalExtension();
+            $img_url = $request->kode_iuran.' - '.str_slug($request->tanggal_iuran,'-').' - '.$salt. '.' . $image->getClientOriginalExtension();
             Image::make($image)->save('documents/struk_iuran/'. $img_url);
 
             $save->img_struk  = $img_url;

@@ -48,25 +48,43 @@
           </div>
           <div class="item form-group" id="jumlah_pembiayaan">
             <label class="control-label col-md-3 col-sm-3 col-xs-12">Plafon</label>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-              <input type="text" name="jumlah_pembiayaan" class="form-control" id="jumlah_pembiayaan" value="{{ old('jumlah_pembiayaan') }}" readonly>
+            <div class="col-md-3 col-sm-3 col-xs-12">
+              <input type="text" name="jumlah_pembiayaan" class="form-control" id="jumlah_pembiayaan" value="{{ old('jumlah_pembiayaan') }}" readonly style="text-align:right;">
             </div>
           </div>
           <div class="item form-group" id="bulan">
             <label class="control-label col-md-3 col-sm-3 col-xs-12">Tenor</label>
-            <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="col-md-3 col-sm-3 col-xs-12">
               <input type="text" name="bulan" class="form-control" id="bulan" value="{{ old('bulan') }}" readonly>
+            </div>
+          </div>
+          <div class="item form-group" id="jatuh_tempo">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">Jatuh Tempo</label>
+            <div class="col-md-3 col-sm-3 col-xs-12">
+              <input type="text" name="jatuh_tempo" class="form-control" id="jatuh_tempo" value="{{ old('jatuh_tempo') }}" readonly>
             </div>
           </div>
           <div class="item form-group" id="iuran">
             <label class="control-label col-md-3 col-sm-3 col-xs-12">Iuran</label>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-              <input type="text" name="iuran" class="form-control" id="iuran" value="{{ old('iuran') }}" readonly>
+            <div class="col-md-3 col-sm-3 col-xs-12">
+              <input type="text" name="iuran" class="form-control" id="iuran" value="{{ old('iuran') }}" readonly style="text-align:right;">
+            </div>
+          </div>
+          <div class="item form-group" id="jumlah_bayar">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">Jumlah Iuran</label>
+            <div class="col-md-3 col-sm-3 col-xs-12">
+              <input type="text" name="jumlah_bayar" class="form-control" id="jumlah_bayar" value="{{ old('jumlah_bayar') }}" readonly style="text-align:right;">
+            </div>
+          </div>
+          <div class="item form-group" id="sisa_iuran">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">Sisa Iuran</label>
+            <div class="col-md-3 col-sm-3 col-xs-12">
+              <input type="text" name="sisa_iuran" class="form-control" id="sisa_iuran" value="{{ old('sisa_iuran') }}" readonly style="text-align:right;">
             </div>
           </div>
           <div class="item form-group {{ $errors->has('tanggal_iuran') ? 'has-error' : ''}}">
             <label class="control-label col-md-3 col-sm-3 col-xs-12">Tanggal Iuran <span class="required">*</span></label>
-            <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="col-md-3 col-sm-3 col-xs-12">
               <input id="tanggal_iuran" name="tanggal_iuran" class="date-picker form-control" required="required" type="text" value="{{ old('tanggal_iuran') }}" readonly="">
               @if($errors->has('tanggal_iuran'))
                 <code><span style="color:red; font-size:12px;">{{ $errors->first('tanggal_iuran')}}</span></code>
@@ -98,7 +116,7 @@
           <div class="item form-group {{ $errors->has('nilai_iuran') ? 'has-error' : ''}}">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">Jumlah Iuran <span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input type="text" id="nilai_iuran" name="nilai_iuran" required="required" data-validate-minmax="7,17" class="form-control col-md-7 col-xs-12" placeholder="Contoh : 12500" value="{{ old('nilai_iuran') }}">
+              <input type="number" onkeypress="return isNumberKey(event)" id="nilai_iuran" name="nilai_iuran" required="required" data-validate-minmax="7,17" class="form-control col-md-7 col-xs-12" placeholder="Contoh : 12500" value="{{ old('nilai_iuran') }}">
               @if($errors->has('nilai_iuran'))
                 <code><span style="color:red; font-size:12px;">{{ $errors->first('nilai_iuran')}}</span></code>
               @endif
@@ -198,12 +216,41 @@ $(document).ready(function() {
 
             success:function(data) {
               var jumlah_pembiayaan = data.jumlah_pembiayaan;
+              var jumlah_pembiayaan = parseInt(jumlah_pembiayaan).toLocaleString(
+                undefined,
+                {
+                  minimumFractionDigits: 2
+                }
+              );
               var bulan = data.bulan;
               var iuran = data.iuran;
+              var iuran = parseInt(iuran).toLocaleString(
+                undefined,
+                {
+                  minimumFractionDigits: 2
+                }
+              )
+              var jumlah_bayar = data.nilai_iuran.toLocaleString(
+                undefined,
+                {
+                  minimumFractionDigits: 2
+                }
+              );
+              var jatuh_tempo = data.jatuh_tempo;
+              var sisa_iuran = data.jumlah_pembiayaan - data.nilai_iuran;
+              var sisa_iuran = sisa_iuran.toLocaleString(
+                undefined,
+                {
+                  minimumFractionDigits :2
+                }
+              );
 
               $('input[type="text"]#jumlah_pembiayaan').attr('value', 'Rp. '+jumlah_pembiayaan);
               $('input[type="text"]#bulan').attr('value', bulan+' Bulan');
               $('input[type="text"]#iuran').attr('value', 'Rp. '+iuran);
+              $('input[type="text"]#jumlah_bayar').attr('value', 'Rp. '+jumlah_bayar);
+              $('input[type="text"]#jatuh_tempo').attr('value', jatuh_tempo);
+              $('input[type="text"]#sisa_iuran').attr('value', 'Rp. '+sisa_iuran);
             }
         });
     }else{
@@ -223,5 +270,12 @@ $('select#jenis_pembayaran').on('change', function(){
     $('#img_struk').show();
   }
 });
+
+function isNumberKey(evt){
+    var charCode = (evt.which) ? evt.which : event.keyCode
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+        return false;
+    return true;
+}
 </script>
 @endsection
