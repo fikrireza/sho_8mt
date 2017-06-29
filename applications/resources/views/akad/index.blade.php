@@ -89,11 +89,12 @@
               $no = 1;
             @endphp
             @foreach ($getAkad as $key)
+              @if ($key->anggota->id_bmt == Auth::user()->id_bmt)
             <tr>
               <td>{{ $no }}</td>
               <td>{{ $key->kode_akad }}</td>
               <td>{{ $key->anggota->kode_anggota }} <br /> {{ $key->anggota->nama_anggota }}</td>
-              <td>Rp. {{ number_format($key->plafon->jumlah_pembiayaan, 2, ',', '.') }} <br> Bln {{ $key->plafon->bulan }} <br> Iuran Rp.{{ number_format($key->plafon->iuran, 2, ',', '.') }}</td>
+              <td>Rp. {{ number_format($key->plafon->jumlah_pembiayaan, 2, ',', '.') }} <br> Bln {{ $key->plafon->bulan }} <br> Iuran Rp.{{ number_format($key->plafon->iuran, 2, ',', '.') }} <br> {{ $key->plafon->jenis_plafon == 1 ? 'Jiwa' : 'Kebakaran' }}</td>
               <td>{{ $key->tanggal_akad }}</td>
               @php
                 $tanggal_akad = $key->tanggal_akad;
@@ -127,6 +128,7 @@
             @php
               $no++;
             @endphp
+            @endif
             @endforeach
           </tbody>
         </table>

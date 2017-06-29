@@ -28,11 +28,11 @@
           <li class="{{ Route::is('dashboard') ? 'active' : '' }}">
             <a href="{{ route('dashboard') }}"><i class="fa fa-home"></i> Beranda </a>
           </li>
-          <li class="{{ Route::is('daftar*') ? 'active' : '' }}{{ Route::is('anggota*') ? 'active' : '' }}{{ Route::is('akad*') ? 'active' : '' }}">
+          <li class="{{ Route::is('daftar*') ? 'active' : '' }}{{ Route::is('anggota*') ? 'active' : '' }}{{ Route::is('akad*') ? 'active' : '' }}{{ Route::is('iuran*') ? 'active' : '' }}">
             <a>
               <i class="fa fa-beer"></i> Menu Transaksi <span class="fa fa-chevron-down"></span>
             </a>
-            <ul class="nav child_menu" style="{{ Route::is('daftar*') ? 'display: block;' : '' }}{{ Route::is('anggota*') ? 'display: block;' : '' }}{{ Route::is('akad*') ? 'display: block;' : '' }}">
+            <ul class="nav child_menu" style="{{ Route::is('daftar*') ? 'display: block;' : '' }}{{ Route::is('anggota*') ? 'display: block;' : '' }}{{ Route::is('akad*') ? 'display: block;' : '' }}{{ Route::is('iuran*') ? 'display: block;' : '' }}">
               @if (session('status') == 'pbmt')
               <li class="{{ Route::is('daftar*') ? 'current-page' : '' }}">
                 <a href="{{ route('daftar.index') }}">Daftar BMT</a>

@@ -85,7 +85,7 @@
           <div class="item form-group {{ $errors->has('tanggal_iuran') ? 'has-error' : ''}}">
             <label class="control-label col-md-3 col-sm-3 col-xs-12">Tanggal Iuran <span class="required">*</span></label>
             <div class="col-md-3 col-sm-3 col-xs-12">
-              <input id="tanggal_iuran" name="tanggal_iuran" class="date-picker form-control" required="required" type="text" value="{{ old('tanggal_iuran') }}" readonly="">
+              <input id="tanggal_iuran" name="tanggal_iuran" class="date-picker form-control" required="required" type="text" value="{{ old('tanggal_iuran', date('Y-m-d')) }}" readonly="">
               @if($errors->has('tanggal_iuran'))
                 <code><span style="color:red; font-size:12px;">{{ $errors->first('tanggal_iuran')}}</span></code>
               @endif

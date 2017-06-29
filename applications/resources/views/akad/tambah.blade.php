@@ -208,7 +208,13 @@
               success:function(data) {
                   $('select[name="jumlah_pembiayaan"]').empty();
                   $.each(data, function(key, value) {
-                      $('select[name="jumlah_pembiayaan"]').append('<option value="'+ value +'">'+ value +'</option>');
+                    var nilai = parseInt(value).toLocaleString(
+                      undefined,
+                      {
+                        minimumFractionDigits: 2
+                      }
+                    );
+                      $('select[name="jumlah_pembiayaan"]').append('<option value="'+ value +'">'+ nilai +'</option>');
                   });
               }
           });
@@ -232,7 +238,14 @@
             success:function(data){
               $('select[name="bulan"]').empty();
               $.each(data, function(key, value){
-                $('select[name="bulan"]').append('<option value="'+ value +'">'+ value +' Bln, Rp. '+ key +'</option>')
+                var nilai = parseInt(key).toLocaleString(
+                  undefined,
+                  {
+                    minimumFractionDigits: 2
+                  }
+                );
+                console.log(nilai);
+                $('select[name="bulan"]').append('<option value="'+ value +'">'+ value +' Bln, Rp. '+ nilai +'</option>')
               });
             }
         });

@@ -96,7 +96,9 @@ class AkadController extends Controller
                         ->first();
 
         if($cekAkad){
-          return redirect()->route('akad.tambah')->withErrors($validator)->withInput()->with('gagal', 'Anggota Masih Memiliki Tanggungan '.$cekAkad->kode_akad);
+          if($cekAkad->plafon->jenis_plafon == $request->jenis_plafon){
+            return redirect()->route('akad.tambah')->withErrors($validator)->withInput()->with('gagal', 'Anggota Masih Memiliki Tanggungan '.$cekAkad->kode_akad);
+          }
         }
         // End Cek Validasi
 
