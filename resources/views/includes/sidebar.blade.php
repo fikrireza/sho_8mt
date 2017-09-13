@@ -51,19 +51,18 @@
               </li>
             </ul>
           </li>
-          {{-- <li class="">
+          @if (session('status') == 'bmt')
+          <li class="{{ Route::is('klaim*') ? 'active' : '' }}">
             <a>
-              <i class="fa fa-desktop"></i> Menu Informasi <span class="fa fa-chevron-down"></span>
+              <i class="fa fa-money"></i> Klaim <span class="fa fa-chevron-down"></span>
             </a>
-            <ul class="nav child_menu" style="">
-              <li class="">
-                <a href="index.html">Info Peserta</a>
-              </li>
-              <li class="">
-                <a href="index.html">Info Tagihan</a>
+            <ul class="nav child_menu" style="{{ Route::is('klaim*') ? 'display: block;' : '' }}">
+              <li class="{{ Route::is('klaim*') ? 'current-page' : '' }}">
+                <a href="{{ route('klaim.index') }}">Cek Klaim</a>
               </li>
             </ul>
-          </li> --}}
+          </li>
+          @endif
           <li class="">
             <a href="index.html"><i class="fa fa-inbox"></i> Laporan </a>
           </li>
