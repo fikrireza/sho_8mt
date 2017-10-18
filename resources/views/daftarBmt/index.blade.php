@@ -45,7 +45,9 @@
       <div class="x_title">
         <h2>Daftar BMT </h2>
         <ul class="nav panel_toolbox">
+          @can('create-daftar')
           <a href="{{ route('daftar.tambah') }}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Tambah</a>
+          @endcan
         </ul>
         <div class="clearfix"></div>
       </div>
@@ -72,7 +74,7 @@
             @endphp
             @foreach ($getBMT as $key)
             <tr>
-              <td>{{ $no }}</td>
+              <td>{{ $no++ }}</td>
               <td>{{ $key->no_induk_bmt }}</td>
               <td>{{ $key->nama_bmt }}</td>
               <td>{{ $key->alamat_bmt }}</td>
@@ -82,11 +84,12 @@
               <td>{{ $key->nama_kontak_bmt }}</td>
               <td>{{ $key->nomor_kontak_bmt }}</td>
               <td>{{ $key->email_bmt }}</td>
-              <td><a href="{{ route('daftar.ubah', $key->id) }}" class="btn btn-xs btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-pencil"></i> </a></td>
+              <td>
+                @can('update-daftar')
+                <a href="{{ route('daftar.ubah', $key->id) }}" class="btn btn-xs btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-pencil"></i></a>
+                @endcan
+              </td>
             </tr>
-            @php
-              $no++;
-            @endphp
             @endforeach
           </tbody>
         </table>

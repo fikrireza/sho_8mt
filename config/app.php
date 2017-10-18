@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'BMT Ta-Awun',
+    'name' => env('APP_NAME', 'Laravel'),
 
     /*
     |--------------------------------------------------------------------------
@@ -25,7 +25,7 @@ return [
     |
     */
 
-    'env' => 'local',
+    'env' => env('APP_ENV', 'production'),
 
     /*
     |--------------------------------------------------------------------------
@@ -38,7 +38,7 @@ return [
     |
     */
 
-    'debug' => true,
+    'debug' => env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -51,7 +51,7 @@ return [
     |
     */
 
-    'url' => 'http://localhost',
+    'url' => env('APP_URL', 'http://localhost'),
 
     /*
     |--------------------------------------------------------------------------
@@ -77,7 +77,7 @@ return [
     |
     */
 
-    'locale' => 'id',
+    'locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------
@@ -90,7 +90,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'id',
+    'fallback_locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------
@@ -177,16 +177,14 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-		    // Tag HTML providers
-        Collective\Html\HtmlServiceProvider::class,
-        // Manipulate Images
-        Intervention\Image\ImageServiceProvider::class,
-        // Report export to documents
+        // Excel
         Maatwebsite\Excel\ExcelServiceProvider::class,
-        // DOM PDF
-        Barryvdh\DomPDF\ServiceProvider::class,
-        // Yajra Datatables
-        Yajra\Datatables\DatatablesServiceProvider::class
+
+        //data table Yajra
+        Yajra\Datatables\DatatablesServiceProvider::class,
+
+        //intevention Image
+        Intervention\Image\ImageServiceProvider::class,
 
     ],
 
@@ -236,12 +234,9 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-		    'Form' => Collective\Html\FormFacade::class,
-        'HTML' => Collective\Html\HtmlFacade::class,
-        'Image' => Intervention\Image\Facades\Image::class,
-        'Str' => Illuminate\Support\Str::class,
+        'Input' => Illuminate\Support\Facades\Input::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-        'PDF' => Barryvdh\DomPDF\Facade::class
+        'Image' => Intervention\Image\Facades\Image::class,
     ],
 
 ];

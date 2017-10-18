@@ -9,14 +9,15 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    protected $table = 'bmt_users';
+    protected $table = 'fra_users';
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'nama','avatar','email','password','role_id','id_anggota','id_bmt','confirmed','confirmation_code','login_count'
+        'name', 'email', 'password', 'id_bmt', 'id_anggota', 'avatar', 'login_count', 'api_token', 'confirmed'
     ];
 
     /**
@@ -28,13 +29,31 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function role()
-  	{
-  		return $this->belongsTo('App\Models\Role');
-  	}
 
-    public function bmt()
+    public function roles()
     {
-        return $this->belongsTo('App\Models\Bmt', 'id_bmt');
+        return $this->belongsToMany('App\Models\Role', 'fra_role_users');
+    }
+
+    /**
+     *  Cek jika user punya akses ke $permission
+     */
+    public function hasAccess(array $permissions) : bool
+    {
+        foreach ($this->roles as $role) {
+          if($role->hasAccess($permissions)){
+            return true;
+          }
+        }
+
+        return false;
+    }
+
+    /**
+     *  Cek jika user punya role
+     */
+    public function inRole(string $roleSlug)
+    {
+        return $this->roles()->where('slug', $roleSlug)->count() == 1;
     }
 }

@@ -23,7 +23,7 @@
           {{ csrf_field() }}
           <h2>Data Keanggotaan</h2>
           <div class="ln_solid"></div>
-          @if (session('status') === 'pbmt')
+          @if (Auth::user()->id_bmt == null)
           <div class="item form-group {{ $errors->has('id_bmt') ? 'has-error' : ''}}">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">BMT <span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -62,10 +62,9 @@
           <input type="hidden" name="id_bmt" value="{{ Auth::user()->id_bmt }}">
           @endif
           <div class="item form-group {{ $errors->has('kode_anggota') ? 'has-error' : ''}}">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">Kode Anggota <span class="required">*</span>
-            </label>
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">Kode Anggota <span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input type="text" id="kode_anggota" name="kode_anggota" required="required" class="form-control col-md-7 col-xs-12" value="{{ old('kode_anggota') }}">
+              <input type="text" id="kode_anggota" name="kode_anggota" required="required" class="form-control col-md-7 col-xs-12" value="{{ old('kode_anggota') }}" placeholder="Contoh : Kode Anggota">
               @if($errors->has('kode_anggota'))
                 <code><span style="color:red; font-size:12px;">{{ $errors->first('kode_anggota')}}</span></code>
               @endif
@@ -158,8 +157,8 @@
             <div class="col-md-6 col-sm-6 col-xs-12">
               <select class="form-control status_pernikahan" name="status_pernikahan" required="">
                 <option value="">-- Pilih --</option>
-                <option value="1" {{ old('status_pernikahan') == '1' ? 'selected=""' : '' }}>Kawin</option>
-                <option value="0" {{ old('status_pernikahan') == '0' ? 'selected=""' : '' }}>Belum Kawin</option>
+                <option value="M" {{ old('status_pernikahan') == 'M' ? 'selected=""' : '' }}>Kawin</option>
+                <option value="S" {{ old('status_pernikahan') == 'S' ? 'selected=""' : '' }}>Belum Kawin</option>
               </select>
               @if($errors->has('status_pernikahan'))
                 <code><span style="color:red; font-size:12px;">{{ $errors->first('status_pernikahan')}}</span></code>
@@ -239,7 +238,7 @@
 
   $('#tanggal_lahir').daterangepicker({
     singleDatePicker: true,
-    calender_style: "picker_3",
+    calender_style: "picker_2",
     format: 'YYYY-MM-DD',
     showDropdowns: true
   });

@@ -14,6 +14,16 @@ use DB;
 class BidangController extends Controller
 {
 
+    /**
+    * Create a new controller instance.
+    *
+    * @return void
+    */
+    public function __construct()
+    {
+      $this->middleware('auth');
+    }
+
     public function index()
     {
         $getBidang = Bidang::get();
@@ -53,7 +63,7 @@ class BidangController extends Controller
 
         $validator = Validator::make($request->all(), [
           'kode_bidang' => 'required',
-          'nama_bidang' => 'required|unique:bmt_bidang',
+          'nama_bidang' => 'required|unique:fra_bidang',
           'deskripsi' => 'required',
         ], $message);
 
@@ -62,19 +72,20 @@ class BidangController extends Controller
           return redirect()->route('bidang.tambah')->withErrors($validator)->withInput();
         }
 
+        DB::transaction(function() use($request){
+          $save = new Bidang;
+          $save->kode_bidang = $request->kode_bidang;
+          $save->nama_bidang = $request->nama_bidang;
+          $save->deskripsi = $request->deskripsi;
+          $save->id_aktor = Auth::user()->id;
+          $save->flag_aktif = 'Y';
+          $save->save();
 
-        $save = new Bidang;
-        $save->kode_bidang = $request->kode_bidang;
-        $save->nama_bidang = $request->nama_bidang;
-        $save->deskripsi = $request->deskripsi;
-        $save->id_aktor = 1;
-        $save->flag_status = 1;
-        $save->save();
-
-        $log = new LogAkses;
-        $log->aksi = 'Menambahkan Bidang Baru '.$request->nama_bidang;
-        $log->aktor = Auth::user()->id;
-        $log->save();
+          $log = new LogAkses;
+          $log->aksi = 'Menambahkan Bidang '.$request->nama_bidang;
+          $log->id_aktor = Auth::user()->id;
+          $log->save();
+        });
 
         return redirect()->route('bidang.index')->with('berhasil', 'Berhasil Menambahkan Bidang Baru');
 
@@ -102,7 +113,7 @@ class BidangController extends Controller
 
         $validator = Validator::make($request->all(), [
           'edit_kode_bidang' => 'required',
-          'edit_nama_bidang' => 'required|unique:bmt_bidang,nama_bidang,'.$request->id,
+          'edit_nama_bidang' => 'required|unique:fra_bidang,nama_bidang,'.$request->id,
           'edit_deskripsi' => 'required',
         ], $message);
 
@@ -111,18 +122,20 @@ class BidangController extends Controller
           return redirect()->route('bidang.index')->withErrors($validator)->withInput();
         }
 
-        $update = Bidang::find($request->id);
-        $update->kode_bidang = $request->edit_kode_bidang;
-        $update->nama_bidang = $request->edit_nama_bidang;
-        $update->deskripsi = $request->edit_deskripsi;
-        $update->id_aktor = 1;
-        $update->flag_status = 1;
-        $update->update();
+        DB::transaction(function() use($request){
+          $update = Bidang::find($request->id);
+          $update->kode_bidang = $request->edit_kode_bidang;
+          $update->nama_bidang = $request->edit_nama_bidang;
+          $update->deskripsi = $request->edit_deskripsi;
+          $update->id_aktor = 1;
+          $update->flag_aktif = 'Y';
+          $update->update();
 
-        $log = new LogAkses;
-        $log->aksi = 'Mengubah Bidang '.$request->edit_nama_bidang;
-        $log->aktor = Auth::user()->id;
-        $log->save();
+          $log = new LogAkses;
+          $log->aksi = 'Mengubah Bidang '.$request->edit_nama_bidang;
+          $log->id_aktor = Auth::user()->id;
+          $log->save();
+        });
 
         return redirect()->route('bidang.index')->with('berhasil', 'Berhasil Mengubah Bidang');
 
@@ -136,23 +149,23 @@ class BidangController extends Controller
           return view('backend.errors.404');
         }
 
-        if ($getBidang->flag_status == 1) {
-          $getBidang->flag_status = 0;
+        if ($getBidang->flag_aktif == "Y") {
+          $getBidang->flag_aktif = "N";
           $getBidang->update();
 
           $log = new LogAkses;
           $log->aksi = 'Unpublish Bidang '.$getBidang->nama_bidang;
-          $log->aktor = Auth::user()->id;
+          $log->id_aktor = Auth::user()->id;
           $log->save();
 
           return redirect()->route('bidang.index')->with('berhasil', 'Berhasil Unpublish '.$getBidang->nama_bidang);
         }else{
-          $getBidang->flag_status = 1;
+          $getBidang->flag_aktif = "Y";
           $getBidang->update();
 
           $log = new LogAkses;
           $log->aksi = 'Publish Bidang '.$getBidang->nama_bidang;
-          $log->aktor = Auth::user()->id;
+          $log->id_aktor = Auth::user()->id;
           $log->save();
 
           return redirect()->route('bidang.index')->with('berhasil', 'Berhasil Publish '.$getBidang->nama_bidang);

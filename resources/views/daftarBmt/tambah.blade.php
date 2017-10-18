@@ -27,7 +27,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">No. Induk <span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input id="no_induk_bmt" class="form-control col-md-7 col-xs-12" name="no_induk_bmt" required="required" type="text" value="{{ $kode_bmt }}" readonly="">
+              <input id="no_induk_bmt" class="form-control col-md-7 col-xs-12" name="no_induk_bmt" required="required" type="text" value="{{ old('no_induk_bmt') }}" placeholder="Contoh : No Induk BMT">
               @if($errors->has('no_induk_bmt'))
                 <code><span style="color:red; font-size:12px;">{{ $errors->first('no_induk_bmt')}}</span></code>
               @endif
@@ -120,7 +120,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Kode Anggota <span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input id="kode_anggota" class="form-control col-md-7 col-xs-12" name="kode_anggota" required="required" type="text" value="{{ $kode_anggota }}" readonly="">
+              <input id="kode_anggota" class="form-control col-md-7 col-xs-12" name="kode_anggota" required="required" type="text" value="{{ old('kode_anggota') }}" placeholder="Contoh : Kode Anggota">
               @if($errors->has('kode_anggota'))
                 <code><span style="color:red; font-size:12px;">{{ $errors->first('kode_anggota')}}</span></code>
               @endif
@@ -142,13 +142,13 @@
               <select class="form-control col-md-7 col-xs-12 select2_single" name="id_posisi" id="id_posisi">
                 <option value="">--Pilih--</option>
                 @foreach($getBidang as $bidang)
-                  <optgroup label="{{ $bidang->nama_bidang }}">
-                    @foreach($getPosisi as $posisi)
-                      @if($posisi->id_bidang === $bidang->id)
-                        <option value="{{ $posisi->id }}" {{ old('id_posisi') == $posisi->id ? 'selected=""' : ''}}>{{ $posisi->nama_posisi }}</option>
-                      @endif
-                    @endforeach
-                  </optgroup>
+                <optgroup label="{{ $bidang->nama_bidang }}">
+                  @foreach($getPosisi as $posisi)
+                    @if($posisi->id_bidang === $bidang->id)
+                      <option value="{{ $posisi->id }}" {{ old('id_posisi') == $posisi->id ? 'selected=""' : ''}}>{{ $posisi->nama_posisi }}</option>
+                    @endif
+                  @endforeach
+                </optgroup>
                 @endforeach
               </select>
               @if($errors->has('id_posisi'))
@@ -233,8 +233,8 @@
             <div class="col-md-6 col-sm-6 col-xs-12">
               <select class="form-control col-md-7 col-xs-12 status_pernikahan" name="status_pernikahan">
                 <option value="">-- Pilih --</option>
-                <option value="1" {{ old('status_pernikahan') == '1' ? 'selected=""' : '' }}>Kawin</option>
-                <option value="0" {{ old('status_pernikahan') == '0' ? 'selected=""' : '' }}>Belum Kawin</option>
+                <option value="M" {{ old('status_pernikahan') == 'M' ? 'selected=""' : '' }}>Kawin</option>
+                <option value="S" {{ old('status_pernikahan') == 'S' ? 'selected=""' : '' }}>Belum Kawin</option>
               </select>
               @if($errors->has('status_pernikahan'))
                 <code><span style="color:red; font-size:12px;">{{ $errors->first('status_pernikahan')}}</span></code>
@@ -309,7 +309,7 @@
 
   $('#tanggal_lahir').daterangepicker({
     singleDatePicker: true,
-    calender_style: "picker_3",
+    calender_style: "picker_2",
     format: 'YYYY-MM-DD',
     showDropdowns: true
   });

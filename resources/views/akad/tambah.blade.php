@@ -1,7 +1,7 @@
 @extends('layout.master')
 
 @section('title')
-  <title>BMT Taawun | Akad</title>
+  <title>BMT Ta'Awun | Akad</title>
 @endsection
 
 @section('headscript')
@@ -36,7 +36,7 @@
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-          <a href="{{ route('akad.index') }}" class="btn btn-primary btn-sm">Kembali</a>
+        <a href="{{ route('akad.index') }}" class="btn btn-primary btn-sm">Kembali</a>
         <div class="clearfix"></div>
       </div>
       <div class="x_content">
@@ -48,7 +48,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">Kode Akad <span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input type="text" id="kode_anggota" name="kode_akad" required="required" class="form-control col-md-7 col-xs-12" value="{{ old('kode_akad') }}">
+              <input type="text" id="kode_anggota" name="kode_akad" required="required" class="form-control col-md-7 col-xs-12" value="{{ old('kode_akad') }}" placeholder="Contoh : Kode Akad">
               @if($errors->has('kode_akad'))
                 <code><span style="color:red; font-size:12px;">{{ $errors->first('kode_akad')}}</span></code>
               @endif
@@ -84,8 +84,8 @@
             <div class="col-md-6 col-sm-6 col-xs-12">
               <select class="form-control select2_jenis2" name="jenis_plafon" id="jenis_plafon">
                 <option value="">--Pilih--</option>
-                <option value="1">Jiwa</option>
-                <option value="0">Kebakaran & Jiwa</option>
+                <option value="JIWA">Jiwa</option>
+                <option value="KEBAKARAN">Kebakaran & Jiwa</option>
               </select>
               @if($errors->has('jenis_plafon'))
                 <code><span style="color:red; font-size:12px;">{{ $errors->first('jenis_plafon')}}</span></code>
@@ -96,7 +96,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">Plafon <span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
               <select name="jumlah_pembiayaan" class="form-control select2_plafon" style="width:350px" id="jumlah_pembiayaan">
-                <option value="">-- Pilih Plafon</option>
+                <option value="">-- Pilih Plafon --</option>
               </select>
               @if($errors->has('jumlah_pembiayaan'))
                 <code><span style="color:red; font-size:12px;">{{ $errors->first('jumlah_pembiayaan')}}</span></code>
@@ -107,7 +107,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">Iuran <span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
               <select name="bulan" class="form-control select2_plafon_bulan" style="width:350px">
-
+                <option value="">-- Pilih Iuran --</option>
               </select>
               @if($errors->has('bulan'))
                 <code><span style="color:red; font-size:12px;">{{ $errors->first('bulan')}}</span></code>
@@ -120,8 +120,8 @@
             <div class="col-md-6 col-sm-6 col-xs-12">
               <select class="form-control col-md-7 col-xs-12 select2_jenis" name="jenis_pembayaran" required="">
                 <option value="">-- Pilih --</option>
-                <option value="1" {{ old('jenis_pembayaran') == '1' ? 'selected=""' : '' }}>Cash</option>
-                <option value="0" {{ old('jenis_pembayaran') == '0' ? 'selected=""' : '' }}>Transfer</option>
+                <option value="CASH" {{ old('jenis_pembayaran') == 'CASH' ? 'selected=""' : '' }}>Cash</option>
+                <option value="TRANSFER" {{ old('jenis_pembayaran') == 'TRANSFER' ? 'selected=""' : '' }}>Transfer</option>
               </select>
               @if($errors->has('jenis_pembayaran'))
                 <code><span style="color:red; font-size:12px;">{{ $errors->first('jenis_pembayaran')}}</span></code>
@@ -141,7 +141,7 @@
           <div class="ln_solid"></div>
           <div class="form-group">
             <div class="col-md-6 col-md-offset-3">
-              <a href="{{ route('anggota.index') }}" class="btn btn-primary">Cancel</a>
+              <a href="{{ route('akad.index') }}" class="btn btn-primary">Cancel</a>
               <button id="send" type="submit" class="btn btn-success">Submit</button>
             </div>
           </div>
@@ -206,17 +206,15 @@
               dataType: "json",
 
               success:function(data) {
-                console.log(data);
-                  $('select[name="jumlah_pembiayaan"]').empty();
-                  $.each(data, function(key, value) {
-                    var nilai = parseInt(value).toLocaleString(
-                      undefined,
-                      {
-                        minimumFractionDigits: 2
-                      }
-                    );
-                      $('select[name="jumlah_pembiayaan"]').append('<option value="'+ value +'">'+ nilai +'</option>');
-                  });
+                $.each(data, function(key, value) {
+                  var nilai = parseInt(value).toLocaleString(
+                    undefined,
+                    {
+                      minimumFractionDigits: 2
+                    }
+                  );
+                    $('select[name="jumlah_pembiayaan"]').append('<option value="'+ value +'">'+ nilai +'</option>');
+                });
               }
           });
       }else{
@@ -237,7 +235,6 @@
             dataType: 'json',
 
             success:function(data){
-              $('select[name="bulan"]').empty();
               $.each(data, function(key, value){
                 var nilai = parseInt(key).toLocaleString(
                   undefined,

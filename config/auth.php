@@ -94,7 +94,7 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
-            'table' => 'bmt_password_resets',
+            'table' => 'fra_password_resets',
             'expire' => 60,
         ],
     ],

@@ -6,7 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Bidang extends Model
 {
-    protected $table = 'bmt_bidang';
+    protected $table = 'fra_bidang';
 
-    protected $fillable = ['kode_bidang','nama_bidang','deskripsi', 'id_aktor','flag_status'];
+    protected $fillable = ['kode_bidang','nama_bidang','deskripsi','flag_aktif','id_aktor'];
+
+    public function aktor()
+    {
+      return $this->belongsTo(User::class, 'id_aktor');
+    }
 }

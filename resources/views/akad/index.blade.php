@@ -1,7 +1,7 @@
 @extends('layout.master')
 
 @section('title')
-  <title>BMT Taawun | Daftar Akad</title>
+  <title>BMT Ta'Awun | Daftar Akad</title>
 @endsection
 
 @section('headscript')
@@ -31,7 +31,7 @@
 </div>
 @endif
 
-@if (session('status') == 'pbmt')
+@can('approve-akad')
 <div class="modal fade modal-approve" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
@@ -49,7 +49,7 @@
     </div>
   </div>
 </div>
-@endif
+@endcan
 
 
 <div class="page-title">
@@ -63,7 +63,12 @@
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <a href="{{ route('akad.tambah') }}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Tambah</a>
+        <h2>List Akad</h2>
+        <div class="nav panel_toolbox">
+          @can ('create-akad')
+          <a href="{{ route('akad.tambah') }}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Tambah</a>
+          @endcan
+        </div>
         <div class="clearfix"></div>
       </div>
       <div class="x_content table-responsive">
@@ -81,7 +86,9 @@
               <th>Status Akad</th>
               <th>Disetujui Oleh</th>
               <th>Tanggal Disetujui</th>
-              {{-- <th>Aksi</th> --}}
+              @can('approve-akad')
+              <th>Aksi</th>
+              @endcan
             </tr>
           </thead>
           <tbody>
@@ -89,12 +96,11 @@
               $no = 1;
             @endphp
             @foreach ($getAkad as $key)
-              @if ($key->anggota->id_bmt == Auth::user()->id_bmt)
             <tr>
-              <td>{{ $no }}</td>
+              <td>{{ $no++ }}</td>
               <td>{{ $key->kode_akad }}</td>
               <td>{{ $key->anggota->kode_anggota }} <br /> {{ $key->anggota->nama_anggota }}</td>
-              <td>Rp. {{ number_format($key->plafon->jumlah_pembiayaan, 2, ',', '.') }} <br> Bln {{ $key->plafon->bulan }} <br> Iuran Rp.{{ number_format($key->plafon->iuran, 2, ',', '.') }} <br> {{ $key->plafon->jenis_plafon == 1 ? 'Jiwa' : 'Kebakaran' }}</td>
+              <td>Rp. {{ number_format($key->plafon->jumlah_pembiayaan, 2, ',', '.') }} <br> {{ $key->plafon->bulan }} Bulan <br> Iuran Rp.{{ number_format($key->plafon->iuran, 2, ',', '.') }} <br> {{ $key->plafon->jenis_plafon }}</td>
               <td>{{ $key->tanggal_akad }}</td>
               @php
                 $tanggal_akad = $key->tanggal_akad;
@@ -102,33 +108,30 @@
                 $due_date = strtotime($jumlah_bulan, strtotime($tanggal_akad));
               @endphp
               <td>{{ date('Y-m-d',$due_date) }}</td>
-              <td>{{ ($key->jenis_pembayaran == 1) ? 'Cash' : 'Transfer' }}</td>
+              <td>{{ $key->jenis_pembayaran }}</td>
               <td>{{ $key->keterangan }}</td>
-              <td>@if ($key->flag_status == 1)
-                <span class="label label-primary">Aktif</span>
-              @elseif($key->flag_status == 2)
-                <span class="label label-success">Lunas</span>
-              @else
-                <span class="label label-danger">Hangus</span>
-              @endif</td>
-              @if (session('status') == 'pbmt')
-              <td>
-                @if ($key->approved_by == null)
-                <a href="" class="approve" data-value="{{ $key->id }}" data-toggle="modal" data-target=".modal-approve"><span class="label label-warning">Belum Disetujui</span></a>
-                @else
-                {!! ($key->approved_by != null) ? '<span class="label label-primary">'.$key->approveBy->nama_anggota.'</span>' : '<span class="label label-warning">Belum Disetujui</span>' !!}
-                @endif
+              <td>@if ($key->flag_status == 'BA')
+                    <span class="label label-warning">Belum Disetujui</span>
+                  @elseif($key->flag_status == 'A')
+                    <span class="label label-success">Disetujui</span>
+                  @elseif($key->flag_status == 'C')
+                    <span class="label label-danger">Batal</span>
+                  @else
+                    <span class="label label-primary">Lunas</span>
+                  @endif
               </td>
-              @else
-                <td>{!! ($key->approved_by != null) ? '<span class="label label-primary">'.$key->approveBy->nama_anggota.'</span>' : '<span class="label label-warning">Belum Disetujui</span>' !!}</td>
-              @endif
-              <td>{!! ($key->approved_date != null) ? '<span class="label label-primary">'.$key->approved_date.'</span>' : '<span class="label label-warning">Belum Disetujui</span>' !!}</td>
-              {{-- <td><a href="" class="btn btn-xs btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-pencil"></i> </a></td> --}}
+              <td>
+                {!! ($key->approved_by != null) ? '<span class="label label-primary">'.$key->approveBy->name.'</span>' : '<span class="label label-warning">Belum Disetujui</span>' !!}
+              </td>
+              <td>
+                {!! ($key->approved_date != null) ? '<span class="label label-primary">'.$key->approved_date.'</span>' : '<span class="label label-warning">Belum Disetujui</span>' !!}
+              </td>
+              @can('approve-akad')
+              <td>
+                <a href="{{ route('akad.approve', $key->id) }}" class="btn btn-sm btn-warning"> Lihat</span></a>
+              </td>
+              @endcan
             </tr>
-            @php
-              $no++;
-            @endphp
-            @endif
             @endforeach
           </tbody>
         </table>
@@ -147,15 +150,5 @@
 
 <script type="text/javascript">
   $('#daftartabel').DataTable();
-
-@if (session('status') == 'pbmt')
-  $(function(){
-    $('a.approve').click(function(){
-      var a = $(this).data('value');
-      $('#setApproved').attr('href', "{{ url('/') }}/akad/approve/"+a);
-    });
-  });
-  @endif
-
 </script>
 @endsection

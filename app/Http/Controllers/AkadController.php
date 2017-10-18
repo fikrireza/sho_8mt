@@ -23,7 +23,16 @@ class AkadController extends Controller
 
     public function index()
     {
-        $getAkad = Akad::get();
+        $id_bmt = Auth::user()->id_bmt;
+
+        if(Auth::user()->id_bmt == null){
+          $getAkad = Akad::get();
+        }else{
+          $getAkad = Akad::whereHas('anggota.bmt', function($query) use($id_bmt){
+                                  $query->where('id_bmt',$id_bmt);
+                                })
+                          ->get();
+        }
 
         return view('akad.index', compact('getAkad'));
     }
@@ -32,17 +41,13 @@ class AkadController extends Controller
     {
         $id_bmt = Auth::user()->id_bmt;
 
-        if(session('status') == 'pbmt'){
+        if(Auth::user()->id_bmt == null){
           $getAnggota = Anggota::get();
         }else{
           $getAnggota = Anggota::where('id_bmt', $id_bmt)->get();
         }
 
-        $getPlafon = Plafon::get();
-
-        $getBmt = BMT::where('id', $id_bmt)->first();
-
-        return view('akad.tambah', compact('getAnggota', 'getPlafon'));
+        return view('akad.tambah', compact('getAnggota'));
     }
 
     public function store(Request $request)
@@ -50,6 +55,7 @@ class AkadController extends Controller
 
         $message = [
           'kode_akad.required' => 'Wajib di isi',
+          'kode_akad.unique' => 'Kode Sudah Dipakai',
           'id_anggota.required' => 'Wajib di isi',
           'tanggal_akad.required' => 'Wajib di isi',
           'jenis_plafon.required' => 'Wajib di isi',
@@ -60,7 +66,7 @@ class AkadController extends Controller
         ];
 
         $validator = Validator::make($request->all(), [
-          'kode_akad' => 'required',
+          'kode_akad' => 'required|unique:fra_akad',
           'id_anggota' => 'required',
           'tanggal_akad' => 'required',
           'jenis_plafon' => 'required',
@@ -77,38 +83,42 @@ class AkadController extends Controller
 
         // Cek Validasi Akad Anggota
         $cekAkad = Akad::where('id_anggota', $request->id_anggota)
-                        ->where('flag_status', 1)
-                        ->where('flag_lunas', 0)
+                        ->where('flag_status', 'A')
+                        ->where('tanggal_lunas', null)
                         ->first();
 
         if($cekAkad){
           if($cekAkad->plafon->jenis_plafon == $request->jenis_plafon){
-            return redirect()->route('akad.tambah')->withErrors($validator)->withInput()->with('gagal', 'Anggota Masih Memiliki Tanggungan '.$cekAkad->kode_akad);
+            return redirect()->route('akad.tambah')->withErrors($validator)->withInput()->with('gagal', 'Anggota Masih Memiliki Tanggungan '.$cekAkad->kode_akad.' Dan Belum Lunas');
           }
         }
         // End Cek Validasi
 
-        $getPlafon = Plafon::where('jenis_plafon', $request->jenis_plafon)
-                            ->where('jumlah_pembiayaan', $request->jumlah_pembiayaan)
-                            ->where('bulan', $request->bulan)
-                            ->first();
 
-        $save = new Akad;
-        $save->id_plafon = $getPlafon->id;
-        $save->id_anggota = $request->id_anggota;
-        $save->kode_akad = $request->kode_akad;
-        $save->tanggal_akad = $request->tanggal_akad;
-        $save->keterangan = $request->keterangan;
-        $save->jenis_pembayaran  = $request->jenis_pembayaran;
-        $save->id_aktor = Auth::user()->id;
-        // 1 = akif
-        $save->flag_status = 1;
-        $save->save();
+        DB::transaction(function() use($request){
 
-        $log = new LogAkses;
-        $log->aksi = 'Membuat Akad baru '.$request->no_akad;
-        $log->aktor = Auth::user()->id;
-        $log->save();
+          $getPlafon = Plafon::where('jenis_plafon', $request->jenis_plafon)
+                                ->where('jumlah_pembiayaan', $request->jumlah_pembiayaan)
+                                ->where('bulan', $request->bulan)
+                                ->first();
+
+          $save = new Akad;
+          $save->id_plafon = $getPlafon->id;
+          $save->id_anggota = $request->id_anggota;
+          $save->kode_akad = $request->kode_akad;
+          $save->tanggal_akad = $request->tanggal_akad;
+          $save->keterangan = $request->keterangan;
+          $save->jenis_pembayaran  = $request->jenis_pembayaran;
+          $save->id_aktor = Auth::user()->id;
+          // Belum Approve = BA; Approve = A; Cancel = C; Lunas = L;
+          $save->flag_status = 'BA';
+          $save->save();
+
+          $log = new LogAkses;
+          $log->aksi = 'Membuat Akad baru '.$request->no_akad;
+          $log->id_aktor = Auth::user()->id;
+          $log->save();
+        });
 
 
         return redirect()->route('akad.index')->with('berhasil', 'Berhasi Membuat Akad Baru');
@@ -123,40 +133,61 @@ class AkadController extends Controller
           abort(404);
         }
 
-        DB::transaction(function () use($getAkad) {
+        return view('akad.approve', compact('getAkad'));
+    }
+
+    public function approveStore(Request $request)
+    {
+
+        $getAkad = Akad::find($request->id);
+
+        if(!$getAkad){
+          abort(404);
+        }
+
+        // Cek Validasi Akad Anggota
+        $cekAkad = Akad::where('id_anggota', $request->id_anggota)
+                        ->where('flag_status', 'A')
+                        ->where('tanggal_lunas', null)
+                        ->first();
+
+        if($cekAkad && ($request->approval == 'A')){
+          if($cekAkad->plafon->jenis_plafon == $request->jenis_plafon){
+            return redirect()->route('akad.approve', $request->id)->withInput()->with('gagal', 'Anggota Masih Memiliki Tanggungan '.$cekAkad->kode_akad.' Dan Belum Lunas');
+          }
+        }
+        // End Cek Validasi
+
+        DB::transaction(function () use($getAkad, $request) {
 
           $tahun = date('y');
           $bulan = date('m');
           $hari = date('d');
           $rand = rand(1000,9999);
 
-          $no_persetujuan = Auth::user()->bmt->no_induk_bmt.'/APP/'.$tahun.'/'.$bulan.'/'.$hari.'/'.$rand;
-          // $cek_no_persetujuan = Persetujuan::where('no_persetujuan', $no_persetujuan)->first();
-
-          // if(!$cek_no_persetujuan){
-          //   $no_persetujuan;
-          // }else{
-          //   $no_persetujuan = 'Kode Approve Akad BMT Habis - Contact Fikri Please';
-          // }
+          $no_persetujuan = 'APP/'.$tahun.'/'.$bulan.'/'.$hari.'/'.$rand;
 
           $save = new Persetujuan;
+          $save->id_akad = $getAkad->id;
           $save->no_persetujuan = $no_persetujuan;
           $save->tangal_persetujuan = date('Y-m-d');
+          $save->status_persetujuan = $request->approval;
           $save->keterangan = 'Self Approved';
-          $save->id_akad = $getAkad->id;
-          $save->status_akad = 1;
-          $save->flag_status = 1;
-          $save->id_anggota = Auth::user()->id;
           $save->id_aktor = Auth::user()->id;
           $save->save();
 
           $getAkad->approved_by = Auth::user()->id;
           $getAkad->approved_date = date('Y-m-d');
+          $getAkad->flag_status = $request->approval;
           $getAkad->update();
 
           $log = new LogAkses;
-          $log->aksi = 'Menyetujui Akad '.$getAkad->kode_akad;
-          $log->aktor = Auth::user()->id;
+          if($request->approval == 'A'){
+            $log->aksi = 'Menyetujui Akad '.$getAkad->kode_akad;
+          }else{
+            $log->aksi = 'Membatalkan Akad '.$getAkad->kode_akad;
+          }
+          $log->id_aktor = Auth::user()->id;
           $log->save();
 
         });

@@ -1,7 +1,7 @@
 @extends('layout.master')
 
 @section('title')
-  <title>BMT Taawun | Input Iuran</title>
+  <title>BMT Ta'Awun | Input Iuran</title>
 @endsection
 
 @section('headscript')
@@ -15,7 +15,10 @@
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
+
+        <div class="nav panel_toolbox">
           <a href="{{ route('iuran.index') }}" class="btn btn-primary btn-sm">Kembali</a>
+        </div>
         <div class="clearfix"></div>
       </div>
       <div class="x_content">
@@ -96,8 +99,8 @@
             <div class="col-md-6 col-sm-6 col-xs-12">
               <select class="form-control jenis_pembayaran" name="jenis_pembayaran" required="" id="jenis_pembayaran">
                 <option value="">-- Pilih --</option>
-                <option value="1" {{ old('jenis_pembayaran') == '1' ? 'selected=""' : '' }}>Cash</option>
-                <option value="0" {{ old('jenis_pembayaran') == '0' ? 'selected=""' : '' }}>Transfer</option>
+                <option value="CASH" {{ old('jenis_pembayaran') == 'CASH' ? 'selected=""' : '' }}>Cash</option>
+                <option value="TRANSFER" {{ old('jenis_pembayaran') == 'TRANSFER' ? 'selected=""' : '' }}>Transfer</option>
               </select>
               @if($errors->has('jenis_pembayaran'))
                 <code><span style="color:red; font-size:12px;">{{ $errors->first('jenis_pembayaran')}}</span></code>
@@ -155,6 +158,7 @@
 <script src="{{ asset('vendors/select2/dist/js/select2.full.min.js')}}"></script>
 <script src="{{ asset('js/moment/moment.min.js') }}"></script>
 <script src="{{ asset('js/datepicker/daterangepicker.js') }}"></script>
+{{-- <script src="{{ asset('vendors/formatNumber.js') }}"></script> --}}
 
 <script>
   $(".select2_akad").select2({
@@ -169,7 +173,7 @@
 
   $('#tanggal_iuran').daterangepicker({
     singleDatePicker: true,
-    calender_style: "picker_3",
+    calender_style: "picker_2",
     format: 'YYYY-MM-DD',
     showDropdowns: true
   });
@@ -276,9 +280,9 @@ $('select#jenis_pembayaran').on('change', function(){
   var optionSelected = $("option:selected", this);
   var valueSelected = this.value;
 
-  if (valueSelected==1) {
+  if (valueSelected=='CASH') {
     $('#img_struk').hide();
-  } else if (valueSelected==0) {
+  } else if (valueSelected=='TRANSFER') {
     $('#img_struk').show();
   }
 });

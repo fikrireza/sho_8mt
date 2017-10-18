@@ -1,7 +1,7 @@
 @extends('layout.master')
 
 @section('title')
-  <title>BMT Taawun | Daftar Anggota</title>
+<title>BMT Ta'Awun | Daftar Anggota</title>
 @endsection
 
 @section('headscript')
@@ -43,7 +43,12 @@
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <a href="{{ route('anggota.tambah') }}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Tambah</a>
+        <h2>Anggota BMT</h2>
+        <div class="nav panel_toolbox">
+          @can('create-anggota')
+            <a href="{{ route('anggota.tambah') }}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Tambah</a>
+          @endcan
+        </div>
         <div class="clearfix"></div>
       </div>
       <div class="x_content table-responsive">
@@ -56,10 +61,10 @@
               <th>Nama</th>
               <th>Email</th>
               <th>Alamat</th>
-              <th>Tempat Lahir</th>
               <th>Tanggal Lahir</th>
               <th>Lokasi Usaha</th>
               <th>Jenis Usaha</th>
+              <th>Status</th>
               <th>Aksi</th>
             </tr>
           </thead>
@@ -69,21 +74,22 @@
             @endphp
             @foreach ($getAnggota as $key)
             <tr>
-              <td>{{ $no }}</td>
+              <td>{{ $no++ }}</td>
               <td>{{ $key->bmt->no_induk_bmt }} | {{ $key->bmt->nama_bmt }}</td>
               <td>{{ $key->no_ktp }}</td>
               <td>{{ $key->nama_anggota }}</td>
               <td>{{ ($key->email) ? $key->email : '-' }}</td>
               <td>{{ $key->alamat }}</td>
-              <td>{{ $key->tempat_lahir }}</td>
               <td>{{ $key->tanggal_lahir }}</td>
               <td>{{ $key->lokasi_usaha }}</td>
               <td>{{ $key->jenis_usaha }}</td>
-              <td><a href="{{ route('anggota.ubah', $key->id) }}" class="btn btn-xs btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-pencil"></i> </a></td>
+              <td>{{ $key->flag_aktif }}</td>
+              <td>
+                @can('update-anggota')
+                <a href="{{ route('anggota.ubah', $key->id) }}" class="btn btn-xs btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-pencil"></i></a>
+                @endcan
+              </td>
             </tr>
-            @php
-              $no++;
-            @endphp
             @endforeach
           </tbody>
         </table>

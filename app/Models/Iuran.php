@@ -6,14 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Iuran extends Model
 {
-    protected $table = 'bmt_iuran';
+    protected $table = 'fra_iuran';
 
-    protected $fillable = ['kode_iuran','tanggal_iuran','keterangan','jenis_pembayaran',
-                          'nilai_iuran','id_akad','id_aktor','flag_status'];
-
+    protected $fillable = ['id_akad','kode_iuran','tanggal_iuran','keterangan','jenis_pembayaran','img_struk','nilai_iuran','id_aktor'];
 
     public function akad()
     {
-        return $this->belongsTo('App\Models\Akad', 'id_akad');
+      return $this->belongsTo(Akad::class, 'id_akad');
+    }
+
+    public function aktor()
+    {
+      return $this->belongsTo(User::class, 'id_aktor');
     }
 }

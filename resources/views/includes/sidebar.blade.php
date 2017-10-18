@@ -1,4 +1,4 @@
-<div class="col-md-3 left_col menu_fixed">
+<div class="col-md-3 left_col">
   <div class="left_col scroll-view">
     <div class="navbar nav_title" style="border: 0;">
       <a href="" class="site_title"> <span>BMT Ta'Awun</span></a>
@@ -6,21 +6,18 @@
 
     <div class="clearfix"></div>
 
-    <!-- menu profile quick info -->
     <div class="profile">
       <div class="profile_pic">
         <img src="{{ asset('images/avatar').'/'.Auth::user()->avatar}}" alt="..." class="img-circle profile_img">
       </div>
       <div class="profile_info">
-        <span>Welcome, {{ Auth::user()->nama }}</span>
+        <span>Welcome, {{ Auth::user()->name }}</span>
         <h2></h2>
       </div>
     </div>
-    <!-- /menu profile quick info -->
 
     <br />
 
-    <!-- sidebar menu -->
     <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
       <div class="menu_section">
         <h3>General</h3>
@@ -28,85 +25,114 @@
           <li class="{{ Route::is('dashboard') ? 'active' : '' }}">
             <a href="{{ route('dashboard') }}"><i class="fa fa-home"></i> Beranda </a>
           </li>
-          <li class="{{ Route::is('daftar*') ? 'active' : '' }}{{ Route::is('anggota*') ? 'active' : '' }}{{ Route::is('akad*') ? 'active' : '' }}{{ Route::is('iuran*') ? 'active' : '' }}">
-            <a>
-              <i class="fa fa-beer"></i> Menu Transaksi <span class="fa fa-chevron-down"></span>
-            </a>
-            <ul class="nav child_menu" style="{{ Route::is('daftar*') ? 'display: block;' : '' }}{{ Route::is('anggota*') ? 'display: block;' : '' }}{{ Route::is('akad*') ? 'display: block;' : '' }}{{ Route::is('iuran*') ? 'display: block;' : '' }}">
-              @if (session('status') == 'pbmt')
-              <li class="{{ Route::is('daftar*') ? 'current-page' : '' }}">
-                <a href="{{ route('daftar.index') }}">Daftar BMT</a>
-              </li>
-              @endif
-              @if (session('status') == 'bmt' || session('status') == 'pbmt')
-              <li class="{{ Route::is('anggota*') ? 'current-page' : '' }}">
-                <a href="{{ route('anggota.index') }}">Daftar Anggota</a>
-              </li>
-              @endif
-              <li class="{{ Route::is('akad*') ? 'current-page' : '' }}">
-                <a href="{{ route('akad.index') }}">Daftar Akad</a>
-              </li>
-              <li class="{{ Route::is('iuran*') ? 'current-page' : '' }}">
-                <a href="{{ route('iuran.index') }}">Pembayaran Iuran</a>
-              </li>
-            </ul>
-          </li>
-          @if (session('status') == 'bmt')
-          <li class="{{ Route::is('klaim*') ? 'active' : '' }}">
-            <a>
-              <i class="fa fa-money"></i> Klaim <span class="fa fa-chevron-down"></span>
-            </a>
-            <ul class="nav child_menu" style="{{ Route::is('klaim*') ? 'display: block;' : '' }}">
-              <li class="{{ Route::is('klaim*') ? 'current-page' : '' }}">
-                <a href="{{ route('klaim.index') }}">Cek Klaim</a>
-              </li>
-            </ul>
-          </li>
-          @endif
-          <li class="">
-            <a href="index.html"><i class="fa fa-inbox"></i> Laporan </a>
-          </li>
         </ul>
       </div>
-      @if (session('status') == 'pbmt')
+
+      @if(Auth::user()->can('read-anggota') || Auth::user()->can('read-akad') || Auth::user()->can('read-pembayaran') || Auth::user()->can('read-klaim') || Auth::user()->can('read-laporan'))
       <div class="menu_section">
-        <h3>Master</h3>
+        <h3>Transaksi</h3>
         <ul class="nav side-menu">
-          <li class="{{ Route::is('bidang*') ? 'active' : '' }}{{ Route::is('posisi*') ? 'active' : '' }}{{ Route::is('plafon*') ? 'active' : '' }}">
-            <a>
-              <i class="fa fa-gear"></i> Master Data <span class="fa fa-chevron-down"></span>
-            </a>
-            <ul class="nav child_menu" style="{{ Route::is('bidang*') ? 'display: block;' : '' }}{{ Route::is('posisi*') ? 'display: block;' : '' }}">
-              <li class="{{ Route::is('bidang*') ? 'current-page' : '' }}">
-                <a href="{{ route('bidang.index') }}">Bidang</a>
-              </li>
-              <li class="{{ Route::is('posisi*') ? 'current-page' : '' }}">
-                <a href="{{ route('posisi.index') }}">Posisi</a>
-              </li>
-              <li class="{{ Route::is('plafon*') ? 'current-page' : '' }}">
-                <a href="{{ route('plafon.index')}}">Plafon</a>
-              </li>
-            </ul>
+          @can('read-anggota')
+          <li class="{{ Route::is('anggota*') ? 'active' : '' }}">
+            <a href="{{ route('anggota.index') }}"><i class="fa fa-edit"></i> Daftar Anggota</a>
           </li>
+          @endcan
+          @can('read-akad')
+          <li class="{{ Route::is('akad*') ? 'current-page' : '' }}">
+            <a href="{{ route('akad.index') }}"><i class="fa fa-edit"></i> Daftar Akad</a>
+          </li>
+          @endcan
+          @can('read-pembayaran')
+          <li class="{{ Route::is('iuran*') ? 'current-page' : '' }}">
+            <a href="{{ route('iuran.index') }}"><i class="fa fa-edit"></i> Pembayaran Iuran</a>
+          </li>
+          @endcan
+          @can('read-klaim')
+          <li class="{{ Route::is('klaim*') ? 'current-page' : '' }}">
+            <a href="{{ route('klaim.index') }}"><i class="fa fa-edit"></i> Klaim</a>
+          </li>
+          @endcan
+          @can ('read-jurnal')
+          <li class="{{ Route::is('jurnal*') ? 'current-page' : '' }}">
+            <a href="{{ route('jurnal.index') }}"><i class="fa fa-edit"></i> Jurnal</a>            
+          </li>
+          @endcan
+          @can('read-laporan')
+          <li class="">
+            <a href="index.html"><i class="fa fa-newspaper"></i> Laporan </a>
+          </li>
+          @endcan
         </ul>
       </div>
       @endif
+
+      @if (Auth::user()->can('read-bidang') || Auth::user()->can('read-daftar') || Auth::user()->can('read-posisi') || Auth::user()->can('read-plafon'))
+      <div class="menu_section">
+        <h3>Master</h3>
+        <ul class="nav side-menu">
+          @can('read-daftar')
+          <li class="{{ Route::is('daftar*') ? 'current-page' : '' }}">
+            <a href="{{ route('daftar.index') }}"><i class="fa fa-inbox"></i> Daftar BMT </a>
+          </li>
+          @endcan
+          @can('read-bidang')
+          <li class="{{ Route::is('bidang*') ? 'current-page' : '' }}">
+            <a href="{{ route('bidang.index') }}"><i class="fa fa-inbox"></i> Bidang</a>
+          </li>
+          @endcan
+          @can('read-posisi')
+          <li class="{{ Route::is('posisi*') ? 'current-page' : '' }}">
+            <a href="{{ route('posisi.index') }}"><i class="fa fa-inbox"></i> Posisi</a>
+          </li>
+          @endcan
+          @can('read-plafon')
+          <li class="{{ Route::is('plafon*') ? 'active' : '' }}">
+            <a>
+              <i class="fa fa-inbox"></i> Plafon <span class="fa fa-chevron-down"></span>
+            </a>
+            <ul class="nav child_menu" style="{{ Route::is('plafon*') ? 'display: block;' : '' }}">
+              <li class="{{ Route::is('plafon.jiwa*') ? 'sub_menu' : '' }}">
+                <a href="{{ route('plafon.jiwa') }}">Jiwa</a>
+              </li>
+              <li class="{{ Route::is('plafon.kebakaran*') ? 'sub_menu' : '' }}">
+                <a href="{{ route('plafon.kebakaran') }}">Kebakaran</a>
+              </li>
+              <li class="{{ Route::is('plafon.template') ? 'sub_menu' : ''}}">
+                <a href="{{ route('plafon.template') }}">Upload</a>
+              </li>
+            </ul>
+          </li>
+          @endcan
+        </ul>
+      </div>
+      @endif
+
+      @can('management-user')
       <div class="menu_section">
         <h3>Extra</h3>
         <ul class="nav side-menu">
           <li class="">
-            <a href="index.html"><i class="fa fa-inbox"></i> Akses Log </a>
+            <a href="index.html"><i class="fa fa-area-chart"></i> Akses Log </a>
           </li>
-          <li class="">
-            <a href="index.html"><i class="fa fa-users"></i> Users </a>
+          <li class="{{ Route::is('account.*') ? 'active' : '' }}">
+            <a>
+              <i class="fa fa-users"></i> Manage User <span class="fa fa-chevron-down"></span>
+            </a>
+            <ul class="nav child_menu" style="{{ Route::is('account.*') ? 'display: block;' : '' }}">
+              <li class="{{ Route::is('account.user*') ? 'current-page' : '' }}">
+                <a href="{{ route('account.userIndex') }}">User</a>
+              </li>
+              <li class="{{ Route::is('account.role*') ? 'current-page' : '' }}">
+                <a href="{{ route('account.roleIndex') }}">Role</a>
+              </li>
+            </ul>
           </li>
         </ul>
-
       </div>
-    </div>
-    <!-- /sidebar menu -->
+      @endcan
 
-    <!-- /menu footer buttons -->
+    </div>
+
     <div class="sidebar-footer hidden-small">
       <a data-toggle="tooltip" data-placement="top" title="Settings">
         <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
@@ -115,6 +141,5 @@
         <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
       </a>
     </div>
-    <!-- /menu footer buttons -->
   </div>
 </div>

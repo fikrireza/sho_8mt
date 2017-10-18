@@ -32,11 +32,10 @@
 </div>
 @endif
 
-
+@can('update-posisi')
 <div class="modal fade modal-ubah" id="modal-ubah" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
         </button>
@@ -92,11 +91,12 @@
     </div>
   </div>
 </div>
+@endcan
 
+@can('publish-posisi')
 <div class="modal fade modal-unpublish" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-sm">
     <div class="modal-content alert-danger">
-
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
         </button>
@@ -132,7 +132,7 @@
     </div>
   </div>
 </div>
-
+@endcan
 
 <div class="page-title">
   <div class="title_left">
@@ -145,7 +145,12 @@
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <a href="{{ route('posisi.tambah') }}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Tambah</a>
+        <h2>Posisi Kerja</h2>
+        <ul class="nav panel_toolbox">
+          @can('create-posisi')
+          <a href="{{ route('posisi.tambah') }}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Tambah</a>
+          @endcan
+        </ul>
         <div class="clearfix"></div>
       </div>
       <div class="x_content table-responsive">
@@ -156,7 +161,9 @@
               <th>Bidang</th>
               <th>Kode Posisi</th>
               <th>Nama Posisi</th>
+              @can('publish-posisi')
               <th>Status</th>
+              @endcan
               <th>Aksi</th>
             </tr>
           </thead>
@@ -166,21 +173,24 @@
             @endphp
             @foreach ($getPosisi as $key)
             <tr>
-              <td>{{ $no }}</td>
+              <td>{{ $no++ }}</td>
               <td>{{ $key->bidang->nama_bidang }}</td>
               <td>{{ $key->kode_posisi }}</td>
               <td>{{ $key->nama_posisi }}</td>
-              <td>@if ($key->flag_status == 1)
-                <a href="" class="unpublish" data-value="{{ $key->id }}" data-toggle="modal" data-target=".modal-unpublish"><span class="btn btn-xs btn-success btn-sm"><i class="fa fa-thumbs-o-up"></i></span></a>
-              @else
-                <a href="" class="publish" data-value="{{ $key->id }}" data-toggle="modal" data-target=".modal-publish"><span class="btn btn-xs btn-danger btn-sm"><i class="fa fa-thumbs-o-down"></i></span></a>
-              @endif
+              @can('publish-posisi')
+              <td>@if ($key->flag_aktif == "Y")
+                    <a href="" class="unpublish" data-value="{{ $key->id }}" data-toggle="modal" data-target=".modal-unpublish" title="Aktif"><span class="btn btn-xs btn-success btn-sm"><i class="fa fa-thumbs-o-up"></i></span></a>
+                  @else
+                    <a href="" class="publish" data-value="{{ $key->id }}" data-toggle="modal" data-target=".modal-publish" title="Tidak Aktif"><span class="btn btn-xs btn-danger btn-sm"><i class="fa fa-thumbs-o-down"></i></span></a>
+                  @endif
               </td>
-              <td><a href="" class="ubah" data-value="{{ $key->id }}" data-toggle="modal" data-target=".modal-ubah"><span class="btn btn-xs btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-pencil"></i></span></a></td>
+              @endcan
+              <td>
+                @can('update-posisi')
+                <a href="" class="ubah" data-value="{{ $key->id }}" data-toggle="modal" data-target=".modal-ubah"><span class="btn btn-xs btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-pencil"></i></span></a>
+                @endcan
+              </td>
             </tr>
-            @php
-              $no++;
-            @endphp
             @endforeach
           </tbody>
         </table>
@@ -202,10 +212,11 @@
   $('#daftartabel').DataTable();
 
   $(".select2").select2({
-    placeholder: "Pilih Kategori",
+    placeholder: "Pilih Bidang",
     allowClear: true
   });
 
+  @can('update-posisi')
   $('#daftartabel').on('click','.ubah', function(){
     var a = $(this).data('value');
     $.ajax({
@@ -224,7 +235,9 @@
       }
     });
   });
+  @endcan
 
+  @can('publish-posisi')
   $('#daftartabel').on('click','.unpublish', function(){
     var a = $(this).data('value');
     $('#setUnpublish').attr('href', "{{ url('/') }}/posisi/publish/"+a);
@@ -236,6 +249,7 @@
       $('#setPublish').attr('href', "{{ url('/') }}/posisi/publish/"+a);
     });
   });
+  @endcan
 
 </script>
 

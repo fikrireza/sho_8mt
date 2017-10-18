@@ -6,24 +6,29 @@ use Illuminate\Database\Eloquent\Model;
 
 class Akad extends Model
 {
-    protected $table = 'bmt_akad';
+    protected $table = 'fra_akad';
 
-    protected $fillable = ['id_plafon','id_anggota','kode_akad','tanggal_akad','keterangan',
-                          'jenis_pembayaran','id_aktor','flag_status','approved_by','approved_date','flag_lunas','tanggal_lunas'];
+    protected $fillable = ['kode_akad','id_plafon','id_anggota','tanggal_akad','keterangan','jenis_pembayaran',
+                      'approved_by','approved_date','tanggal_lunas','flag_status','id_aktor'];
 
 
     public function anggota()
     {
-        return $this->belongsTo('App\Models\Anggota', 'id_anggota');
+      return $this->belongsTo(Anggota::class, 'id_anggota');
+    }
+
+    public function aktor()
+    {
+      return $this->belongsTo(User::class, 'id_aktor');
     }
 
     public function plafon()
     {
-        return $this->belongsTo('App\Models\Plafon', 'id_plafon');
+      return $this->belongsTo(Plafon::class, 'id_plafon');
     }
 
     public function approveBy()
     {
-        return $this->belongsTo('App\Models\Anggota', 'approved_by');
+      return $this->belongsTo(User::class, 'approved_by');
     }
 }

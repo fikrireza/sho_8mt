@@ -31,7 +31,7 @@
 </div>
 @endif
 
-
+@can('update-bidang')
 <div class="modal fade modal-ubah" id="modal-ubah" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -71,7 +71,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea">Deskripsi <span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <textarea id="edit_deskripsi" required="required" name="edit_deskripsi" class="form-control col-md-7 col-xs-12" placeholder="Contoh : Menangani Seluruh Pegawai">{{ old('edit_deskripsi') }}</textarea>
+              <textarea id="edit_deskripsi" required="required" name="edit_deskripsi" class="form-control col-md-7 col-xs-12">{{ old('edit_deskripsi') }}</textarea>
               @if($errors->has('edit_deskripsi'))
                 <code><span style="color:red; font-size:12px;">{{ $errors->first('edit_deskripsi')}}</span></code>
               @endif
@@ -86,11 +86,12 @@
     </div>
   </div>
 </div>
+@endcan
 
+@can('publish-bidang')
 <div class="modal fade modal-unpublish" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-sm">
     <div class="modal-content alert-danger">
-
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
         </button>
@@ -110,7 +111,6 @@
 <div class="modal fade modal-publish" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
-
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
         </button>
@@ -122,11 +122,10 @@
       <div class="modal-footer">
         <a class="btn btn-primary" id="setPublish">Ya</a>
       </div>
-
     </div>
   </div>
 </div>
-
+@endcan
 
 <div class="page-title">
   <div class="title_left">
@@ -139,7 +138,12 @@
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <a href="{{ route('bidang.tambah') }}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Tambah</a>
+        <h2>Bidang Kerja </h2>
+        <ul class="nav panel_toolbox">
+          @can('create-bidang')
+          <a href="{{ route('bidang.tambah') }}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Tambah</a>
+          @endcan
+        </ul>
         <div class="clearfix"></div>
       </div>
       <div class="x_content table-responsive">
@@ -150,7 +154,9 @@
               <th>Kode Bidang</th>
               <th>Nama Bidang</th>
               <th>Deskripsi</th>
+              @can('publish-bidang')
               <th>Status</th>
+              @endcan
               <th>Aksi</th>
             </tr>
           </thead>
@@ -160,21 +166,24 @@
             @endphp
             @foreach ($getBidang as $key)
             <tr>
-              <td>{{ $no }}</td>
+              <td>{{ $no++ }}</td>
               <td>{{ $key->kode_bidang }}</td>
               <td>{{ $key->nama_bidang }}</td>
               <td>{{ $key->deskripsi }}</td>
-              <td>@if ($key->flag_status == 1)
-                <a href="" class="unpublish" data-value="{{ $key->id }}" data-toggle="modal" data-target=".modal-unpublish"><span class="btn btn-xs btn-success btn-sm"><i class="fa fa-thumbs-o-up"></i></span></a>
+              @can('publish-bidang')
+              <td>@if ($key->flag_aktif == "Y")
+                <a href="" class="unpublish" data-value="{{ $key->id }}" data-toggle="modal" data-target=".modal-unpublish" title="Aktif"><span class="btn btn-xs btn-success btn-sm"><i class="fa fa-thumbs-o-up"></i></span></a>
               @else
-                <a href="" class="publish" data-value="{{ $key->id }}" data-toggle="modal" data-target=".modal-publish"><span class="btn btn-xs btn-danger btn-sm"><i class="fa fa-thumbs-o-down"></i></span></a>
+                <a href="" class="publish" data-value="{{ $key->id }}" data-toggle="modal" data-target=".modal-publish" title="Tidak Aktif"><span class="btn btn-xs btn-danger btn-sm"><i class="fa fa-thumbs-o-down"></i></span></a>
               @endif
               </td>
-              <td><a href="" class="ubah" data-value="{{ $key->id }}" data-toggle="modal" data-target=".modal-ubah"><span class="btn btn-xs btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-pencil"></i></span></a></td>
+              @endcan
+              <td>
+                @can('update-bidang')
+                <a href="" class="ubah" data-value="{{ $key->id }}" data-toggle="modal" data-target=".modal-ubah"><span class="btn btn-xs btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-pencil"></i></span></a>
+                @endcan
+              </td>
             </tr>
-            @php
-              $no++;
-            @endphp
             @endforeach
           </tbody>
         </table>
@@ -194,6 +203,7 @@
 <script type="text/javascript">
   $('#daftartabel').DataTable();
 
+  @can('update-bidang')
   $('#daftartabel').on('click','.ubah', function(){
     var a = $(this).data('value');
     $.ajax({
@@ -212,7 +222,9 @@
       }
     });
   });
+  @endcan
 
+  @can('publish-bidang')
   $('#daftartabel').on('click','.unpublish', function(){
     var a = $(this).data('value');
     $('#setUnpublish').attr('href', "{{ url('/') }}/bidang/publish/"+a);
@@ -224,6 +236,7 @@
       $('#setPublish').attr('href', "{{ url('/') }}/bidang/publish/"+a);
     });
   });
+  @endcan
 
 </script>
 

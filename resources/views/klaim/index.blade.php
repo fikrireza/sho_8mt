@@ -1,15 +1,13 @@
 @extends('layout.master')
 
 @section('title')
-  <title>| Klaim</title>
+  <title>BMT Ta'Awun | Klaim</title>
 @endsection
 
 @section('headscript')
 <link href="{{ asset('vendors/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" rel="stylesheet">
 <link href="{{ asset('vendors/select2/dist/css/select2.min.css') }}" rel="stylesheet">
 <link href="{{ asset('vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css') }}" rel="stylesheet">
-<link href="{{ asset('vendors/pnotify/dist/pnotify.css') }}" rel="stylesheet">
-<link href="{{ asset('vendors/pnotify/dist/pnotify.nonblock.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -61,7 +59,7 @@
       <form action="{{ route('klaim.check') }}" method="POST" class="form-horizontal form-label-left">
       {{ csrf_field() }}
       <div class="x_content">
-        <div class="item form-group {{ $errors->has('uniqueCode') ? 'has-error' : ''}}">
+        <div class="item form-group {{ $errors->has('id_akad') ? 'has-error' : ''}}">
           <label class="control-label col-md-3 col-sm-3 col-xs-12" for="product_code">Akad</label>
           <div class="col-md-6 col-sm-6 col-xs-12">
             <select class="form-control select2_akad" name="id_akad" required="">
@@ -74,7 +72,7 @@
         </div>
         <div class="form-group">
           <div class="col-md-6 col-md-offset-3">
-            <button id="send" type="submit" class="btn btn-success btn-xs">Proses</button>
+            <button id="send" type="submit" class="btn btn-success">Proses</button>
           </div>
         </div>
       </div>
@@ -188,6 +186,7 @@
             {{ csrf_field() }}
             <input type="hidden" name="id_akad" value="{{ $getAkadnya->id }}">
             <input type="hidden" name="id_anggota" value="{{ $getAkadnya->anggota->id }}">
+            <input type="hidden" name="jumlah_pembiayaan" value="{{ $getPlafon->jumlah_pembiayaan }}">
             <div class="ln_solid"></div>
             <div class="item form-group {{ $errors->has('no_permohonan') ? 'has-error' : ''}}">
               <label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea">No Klaim <span class="required">*</span>
@@ -238,7 +237,9 @@
             <div class="form-group">
               <div class="col-md-6 col-md-offset-3">
                 <a href="{{ route('klaim.index') }}" class="btn btn-primary">Cancel</a>
+                @can ('create-klaim')
                 <button id="send" type="submit" class="btn btn-success">Submit</button>
+                @endcan
               </div>
             </div>
           </form>
