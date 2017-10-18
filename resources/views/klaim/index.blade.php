@@ -158,7 +158,7 @@
               </td>
             </tr>
           </table>
-<hr>
+          <hr>
           <table id="iuran" class="table table-striped table-bordered no-footer" width="100%">
             <thead>
               <tr role="row">
@@ -180,8 +180,8 @@
             </tbody>
           </table>
 
+          @can ('create-klaim')
           <hr>
-
           <form action="{{ route('klaim.store') }}" method="POST" class="form-horizontal">
             {{ csrf_field() }}
             <input type="hidden" name="id_akad" value="{{ $getAkadnya->id }}">
@@ -237,12 +237,11 @@
             <div class="form-group">
               <div class="col-md-6 col-md-offset-3">
                 <a href="{{ route('klaim.index') }}" class="btn btn-primary">Cancel</a>
-                @can ('create-klaim')
                 <button id="send" type="submit" class="btn btn-success">Submit</button>
-                @endcan
               </div>
             </div>
           </form>
+          @endcan
 
         </div>
       </div>

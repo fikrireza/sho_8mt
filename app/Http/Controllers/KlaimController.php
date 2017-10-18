@@ -106,7 +106,7 @@ class KlaimController extends Controller
           $save->save();
 
           $update = Akad::find($request->id_akad);
-          $update->flag_status = 'L';
+          $update->flag_status = 'K';
           $update->tanggal_lunas = date('Y-m-d');
           $update->update();
 

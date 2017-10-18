@@ -116,8 +116,10 @@
                     <span class="label label-success">Disetujui</span>
                   @elseif($key->flag_status == 'C')
                     <span class="label label-danger">Batal</span>
-                  @else
+                  @elseif($key->flag_status == 'L')
                     <span class="label label-primary">Lunas</span>
+                  @else
+                    <span class="label label-info">Klaim</span>
                   @endif
               </td>
               <td>
