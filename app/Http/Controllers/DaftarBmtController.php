@@ -38,28 +38,6 @@ class DaftarBmtController extends Controller
 
     public function tambah()
     {
-        // $tahun = date('y');
-        // $bulan = date('m');
-        // $rand = rand(100,999);
-        //
-        // $kode_bmt = 'BMT/'.$tahun.'/'.$bulan.'/'.$rand;
-        // $kode_anggota = 'BMTANG/'.$tahun.'/'.$bulan.'/'.$rand;
-        //
-        // $cek_kode_bmt = Bmt::where('no_induk_bmt', $kode_bmt)->first();
-        // $cek_kode_anggota = Anggota::where('kode_anggota', $kode_anggota)->first();
-        //
-        // if(!$cek_kode_bmt){
-        //   $kode_bmt;
-        // }else{
-        //   $kode_bmt = 'Kode BMT Habis - Contact Fikri Please';
-        // }
-        //
-        // if(!$cek_kode_anggota){
-        //   $kode_anggota;
-        // }else{
-        //   $kode_anggota = 'Kode Anggota BMT Habis - Contact Fikri Please';
-        // }
-
         $getPosisi = Posisi::get();
         $getBidang = Posisi::get();
 
@@ -170,7 +148,7 @@ class DaftarBmtController extends Controller
             'confirmed' => 1,
             'confirmation_code' => str_random(30).time(),
             'login_count' => 0,
-            'password'  => Hash::make('12345678qwer'),
+            'password'  => Hash::make('12345678qwer!'),
           ]);
 
           $logAkses = LogAkses::create([
