@@ -90,6 +90,8 @@ Route::post('klaim/store', 'KlaimController@store')->name('klaim.store')->middle
 Route::get('jurnal', 'JurnalController@index')->name('jurnal.index')->middleware('can:read-jurnal');
 Route::post('jurnal', 'JurnalController@post')->name('jurnal.post')->middleware('can:read-jurnal');
 
+// Log Akses
+Route::get('log', 'LogAksesController@index')->name('logakses.index')->middleware('can:read-logakses');
 
 // User Management
 Route::get('account', 'AccountController@index')->name('account.userIndex')->middleware('can:read-user');

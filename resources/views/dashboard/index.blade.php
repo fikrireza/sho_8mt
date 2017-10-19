@@ -40,7 +40,7 @@
 <div class="row">
 
   @can ('read-anggota')
-  <div class="col-md-4 col-sm-4 col-xs-12 red">
+  <div class="col-md-3 col-sm-3 col-xs-12 red">
     <div class="x_panel">
       <div class="x_title">
         <h2>Modul Anggota</h2>
@@ -106,7 +106,7 @@
   @endcan
 
   @can ('read-akad')
-  <div class="col-md-4 col-sm-4 col-xs-12 red">
+  <div class="col-md-3 col-sm-3 col-xs-12 red">
     <div class="x_panel">
       <div class="x_title">
         <h2>Modul Akad</h2>
@@ -179,7 +179,7 @@
   @endcan
 
   @can ('read-pembayaran')
-  <div class="col-md-4 col-sm-4 col-xs-12 red">
+  <div class="col-md-3 col-sm-3 col-xs-12 red">
     <div class="x_panel">
       <div class="x_title">
         <h2>Pembayaran Iuran</h2>
@@ -248,7 +248,7 @@
   @endcan
 
   @can ('read-klaim')
-  <div class="col-md-4 col-sm-4 col-xs-12 red">
+  <div class="col-md-3 col-sm-3 col-xs-12 red">
     <div class="x_panel">
       <div class="x_title">
         <h2>Klaim</h2>
@@ -298,7 +298,7 @@
   @endcan
 
   @can ('read-jurnal')
-  <div class="col-md-4 col-sm-4 col-xs-12 red">
+  <div class="col-md-3 col-sm-3 col-xs-12 red">
     <div class="x_panel">
       <div class="x_title">
         <h2>Jurnal</h2>
@@ -334,7 +334,7 @@
 <div class="row">
 
   @can ('read-daftar')
-  <div class="col-md-4 col-sm-4 col-xs-12 blue">
+  <div class="col-md-3 col-sm-3 col-xs-12 blue">
     <div class="x_panel">
       <div class="x_title">
         <h2>Daftar BMT</h2>
@@ -400,7 +400,7 @@
   @endcan
 
   @can ('read-bidang')
-  <div class="col-md-4 col-sm-4 col-xs-12 blue">
+  <div class="col-md-3 col-sm-3 col-xs-12 blue">
     <div class="x_panel">
       <div class="x_title">
         <h2>Bidang</h2>
@@ -481,7 +481,7 @@
   @endcan
 
   @can ('read-posisi')
-  <div class="col-md-4 col-sm-4 col-xs-12 blue">
+  <div class="col-md-3 col-sm-3 col-xs-12 blue">
     <div class="x_panel">
       <div class="x_title">
         <h2>Posisi</h2>
@@ -562,7 +562,7 @@
   @endcan
 
   @can ('read-plafon')
-  <div class="col-md-4 col-sm-4 col-xs-12 blue">
+  <div class="col-md-3 col-sm-3 col-xs-12 blue">
     <div class="x_panel">
       <div class="x_title">
         <h2>Plafon</h2>
@@ -617,6 +617,23 @@
               </div>
             </li>
             @endcan
+            @can('create-plafon')
+            <li>
+              <div class="block">
+                <div class="block_content">
+                  <h2 class="title">Upload Plafon</h2>
+                  <div class="byline">
+
+                  </div>
+                  <p class="excerpt">
+                    Upload Plafon adalah fitur yang digunakan untuk meng-upload plafon.<br>
+                    Fitur ini digunakan hanya sekali pada saat plafon belum mempunyai data.<br>
+                    Upload Plafon ini hanya untuk meng-upload skema pembiayaan yang baru, apabila ingin mengubah skema pembiayaan harap menggunakan fitur "Ubah Plafon".
+                  </p>
+                </div>
+              </div>
+            </li>
+            @endcan
           </ul>
         </div>
       </div>
@@ -626,8 +643,182 @@
 
 </div>
 
+@can('management-user')
 <div class="row">
-  
+
+  <div class="col-md-3 col-sm-3 col-xs-12 black">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>Log Akses</h2>
+        <div class="nav panel_toolbox">
+          <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <div class="dashboard-widget-content">
+          <ul class="list-unstyled timeline widget">
+            <li>
+              <div class="block">
+                <div class="block_content">
+                  <h2 class="title">Log Akses</h2>
+                  <div class="byline">
+
+                  </div>
+                  <p class="excerpt">
+                    Fitur ini berisikan aktifitas user pengguna website.<br>
+                  </p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3 col-sm-3 col-xs-12 black">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>User</h2>
+        <div class="nav panel_toolbox">
+          <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <div class="dashboard-widget-content">
+          <ul class="list-unstyled timeline widget">
+            <li>
+              <div class="block">
+                <div class="block_content">
+                  <h2 class="title">User</h2>
+                  <div class="byline">
+
+                  </div>
+                  <p class="excerpt">
+                    Management User ini berisikan data dari pengguna website.<br>
+                  </p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="block">
+                <div class="block_content">
+                  <h2 class="title">Tambah User</h2>
+                  <div class="byline">
+
+                  </div>
+                  <p class="excerpt">
+                    Tambah User, fitur ini adalah untuk menambahkan user pengguna website.<br>
+                    Dapat terdiri lebih dari 1 role akses.
+                  </p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="block">
+                <div class="block_content">
+                  <h2 class="title">Ubah User</h2>
+                  <div class="byline">
+
+                  </div>
+                  <p class="excerpt">
+                    Ubah User, fitur ini adalah untuk mengubah data user pengguna website.<br>
+                  </p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="block">
+                <div class="block_content">
+                  <h2 class="title">Status User</h2>
+                  <div class="byline">
+
+                  </div>
+                  <p class="excerpt">
+                    Status User, fitur ini adalah untuk mengubah status user pengguna website.<br>
+                  </p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="block">
+                <div class="block_content">
+                  <h2 class="title">Reset Password</h2>
+                  <div class="byline">
+
+                  </div>
+                  <p class="excerpt">
+                    Reset Password, fitur ini adalah untuk mereset password user pengguna website ke password default.<br>
+                  </p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3 col-sm-3 col-xs-12 black">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>Role Task</h2>
+        <div class="nav panel_toolbox">
+          <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <div class="dashboard-widget-content">
+          <ul class="list-unstyled timeline widget">
+            <li>
+              <div class="block">
+                <div class="block_content">
+                  <h2 class="title">Role Task</h2>
+                  <div class="byline">
+
+                  </div>
+                  <p class="excerpt">
+                    Fitur ini adalah untuk mengatur hak akses (role task) apa saja yang boleh di akses oleh user pengguna website.<br>
+                  </p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="block">
+                <div class="block_content">
+                  <h2 class="title">Tambah Role</h2>
+                  <div class="byline">
+
+                  </div>
+                  <p class="excerpt">
+                    Fitur ini adalah untuk menambah hak akses (role task).<br>
+                  </p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="block">
+                <div class="block_content">
+                  <h2 class="title">Ubah Role</h2>
+                  <div class="byline">
+
+                  </div>
+                  <p class="excerpt">
+                    Fitur ini adalah untuk mengubah hak akses (role task).<br>
+                  </p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </div>
+@endcan
+
 @endsection

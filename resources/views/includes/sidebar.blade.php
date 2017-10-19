@@ -54,7 +54,7 @@
           @endcan
           @can ('read-jurnal')
           <li class="{{ Route::is('jurnal*') ? 'current-page' : '' }}">
-            <a href="{{ route('jurnal.index') }}"><i class="fa fa-edit"></i> Jurnal</a>            
+            <a href="{{ route('jurnal.index') }}"><i class="fa fa-edit"></i> Jurnal</a>
           </li>
           @endcan
           @can('read-laporan')
@@ -111,20 +111,26 @@
       <div class="menu_section">
         <h3>Extra</h3>
         <ul class="nav side-menu">
+          @can ('read-logakses')
           <li class="">
-            <a href="index.html"><i class="fa fa-area-chart"></i> Akses Log </a>
+            <a href="{{ route('logakses.index') }}"><i class="fa fa-area-chart"></i> Akses Log </a>
           </li>
+          @endcan
           <li class="{{ Route::is('account.*') ? 'active' : '' }}">
             <a>
               <i class="fa fa-users"></i> Manage User <span class="fa fa-chevron-down"></span>
             </a>
             <ul class="nav child_menu" style="{{ Route::is('account.*') ? 'display: block;' : '' }}">
+              @can ('read-user')
               <li class="{{ Route::is('account.user*') ? 'current-page' : '' }}">
                 <a href="{{ route('account.userIndex') }}">User</a>
               </li>
+              @endcan
+              @can ('read-role')
               <li class="{{ Route::is('account.role*') ? 'current-page' : '' }}">
                 <a href="{{ route('account.roleIndex') }}">Role</a>
               </li>
+              @endcan
             </ul>
           </li>
         </ul>

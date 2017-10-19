@@ -51,7 +51,7 @@
       <form action="{{route('account.rolePost')}}" method="post" class="form-horizontal form-label-left" novalidate>
         {{ csrf_field() }}
       <div class="item form-group {{ $errors->has('name') ? 'has-error' : ''}}">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Role Name <span class="required">*</span></label>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Role Name <span class="required">*</span></label>
         <div class="col-md-9 col-sm-9 col-xs-12">
           <input type="text" name="name" class="form-control" value="{{ old('name') }}">
           @if($errors->has('name'))
@@ -61,7 +61,7 @@
       </div>
       <div class="ln_solid"></div>
       <div class="item form-group">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Bidang Kerja</label>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Bidang Kerja</label>
         <div class="col-md-6 col-sm-6 col-xs-12">
           <label>
             <input type="checkbox" class="flat" name="permissions[read-bidang]" {{ (collect(old('permissions'))->contains('read-bidang')) ? 'checked="checked"' : '' }} value="true" /> Read
@@ -79,7 +79,7 @@
       </div>
       <div class="ln_solid"></div>
       <div class="item form-group">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Posisi Kerja</label>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Posisi Kerja</label>
         <div class="col-md-6 col-sm-6 col-xs-12">
           <label>
             <input type="checkbox" class="flat" name="permissions[read-posisi]" {{ (collect(old('permissions'))->contains('read-posisi')) ? 'checked="checked"' : '' }} value="true" /> Read
@@ -97,7 +97,7 @@
       </div>
       <div class="ln_solid"></div>
       <div class="item form-group">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Plafon Pinjaman</label>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Plafon Pinjaman</label>
         <div class="col-md-6 col-sm-6 col-xs-12">
           <label>
             <input type="checkbox" class="flat" name="permissions[read-plafon]" {{ (collect(old('permissions'))->contains('read-plafon')) ? 'checked="checked"' : '' }} value="true" /> Read
@@ -112,7 +112,7 @@
       </div>
       <div class="ln_solid"></div>
       <div class="item form-group">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Daftar BMT</label>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Daftar BMT</label>
         <div class="col-md-6 col-sm-6 col-xs-12">
           <label>
             <input type="checkbox" class="flat" name="permissions[read-daftar]" {{ (collect(old('permissions'))->contains('read-daftar')) ? 'checked="checked"' : '' }} value="true" /> Read
@@ -127,7 +127,7 @@
       </div>
       <div class="ln_solid"></div>
       <div class="item form-group">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Anggota</label>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Anggota</label>
         <div class="col-md-6 col-sm-6 col-xs-12">
           <label>
             <input type="checkbox" class="flat" name="permissions[read-anggota]" {{ (collect(old('permissions'))->contains('read-anggota')) ? 'checked="checked"' : '' }} value="true" /> Read
@@ -145,7 +145,7 @@
       </div>
       <div class="ln_solid"></div>
       <div class="item form-group">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Akad</label>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Akad</label>
         <div class="col-md-6 col-sm-6 col-xs-12">
           <label>
             <input type="checkbox" class="flat" name="permissions[read-akad]" {{ (collect(old('permissions'))->contains('read-akad')) ? 'checked="checked"' : '' }} value="true" /> Read
@@ -160,7 +160,7 @@
       </div>
       <div class="ln_solid"></div>
       <div class="item form-group">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Pembayaran/Iuran</label>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Pembayaran/Iuran</label>
         <div class="col-md-6 col-sm-6 col-xs-12">
           <label>
             <input type="checkbox" class="flat" name="permissions[read-pembayaran]" {{ (collect(old('permissions'))->contains('read-pembayaran')) ? 'checked="checked"' : '' }} value="true" /> Read
@@ -175,7 +175,7 @@
       </div>
       <div class="ln_solid"></div>
       <div class="item form-group">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Klaim</label>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Klaim</label>
         <div class="col-md-6 col-sm-6 col-xs-12">
           <label>
             <input type="checkbox" class="flat" name="permissions[read-klaim]" {{ (collect(old('permissions'))->contains('read-klaim')) ? 'checked="checked"' : '' }} value="true" /> Read
@@ -187,7 +187,7 @@
       </div>
       <div class="ln_solid"></div>
       <div class="item form-group">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Jurnal</label>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Jurnal</label>
         <div class="col-md-6 col-sm-6 col-xs-12">
           <label>
             <input type="checkbox" class="flat" name="permissions[read-jurnal]" {{ (collect(old('permissions'))->contains('read-jurnal')) ? 'checked="checked"' : '' }} value="true" /> Read
@@ -196,7 +196,16 @@
       </div>
       <div class="ln_solid"></div>
       <div class="item form-group">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Users</label>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Log Akses</label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <label>
+            <input type="checkbox" class="flat" name="permissions[read-logakses]" {{ (collect(old('permissions'))->contains('read-logakses')) ? 'checked="checked"' : '' }} value="true" /> Read
+          </label>
+        </div>
+      </div>
+      <div class="ln_solid"></div>
+      <div class="item form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Users</label>
         <div class="col-md-6 col-sm-6 col-xs-12">
           <label>
             <input type="checkbox" class="flat" name="permissions[read-user]" {{ (collect(old('permissions'))->contains('read-user')) ? 'checked="checked"' : '' }} value="true" /> Read
@@ -217,7 +226,7 @@
       </div>
       <div class="ln_solid"></div>
       <div class="item form-group">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Roles</label>
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Roles</label>
         <div class="col-md-6 col-sm-6 col-xs-12">
           <label>
             <input type="checkbox" class="flat" name="permissions[read-role]" {{ (collect(old('permissions'))->contains('read-role')) ? 'checked="checked"' : '' }} value="true" /> Read

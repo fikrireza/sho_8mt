@@ -34,6 +34,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPembayaranPolicies();
         $this->registerKlaimPolicies();
         $this->registerJurnalPolicies();
+        $this->registerLogAksesPolicies();
         $this->registerUsersPolicies();
     }
 
@@ -174,6 +175,13 @@ class AuthServiceProvider extends ServiceProvider
     {
         Gate::define('read-jurnal', function($user){
           return $user->hasAccess(['read-jurnal']);
+        });
+    }
+
+    public function registerLogAksesPolicies()
+    {
+        Gate::define('read-logakses', function($user){
+          return $user->hasAccess(['read-logakses']);
         });
     }
 

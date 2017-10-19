@@ -1,7 +1,7 @@
 @extends('layout.master')
 
 @section('title')
-  <title>BMT Taawun | Ubah Data BMT</title>
+  <title>BMT Ta'Awun | Ubah Data BMT</title>
 @endsection
 
 @section('headscript')

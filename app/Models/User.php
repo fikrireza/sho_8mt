@@ -30,6 +30,12 @@ class User extends Authenticatable
     ];
 
 
+    public function bmt()
+    {
+        return $this->belongsTo(Bmt::class, 'id_bmt');
+    }
+
+
     public function roles()
     {
         return $this->belongsToMany('App\Models\Role', 'fra_role_users');
