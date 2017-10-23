@@ -21,20 +21,45 @@ use Auth;
 class AkadController extends Controller
 {
 
-    public function index()
+    /**
+    * Create a new controller instance.
+    *
+    * @return void
+    */
+    public function __construct()
+    {
+      $this->middleware('auth');
+    }
+
+
+    public function index(Request $request)
     {
         $id_bmt = Auth::user()->id_bmt;
+        $request = $request->status_akad;
 
-        if(Auth::user()->id_bmt == null){
-          $getAkad = Akad::get();
+        if($request == null){
+          if(Auth::user()->id_bmt == null){
+            $getAkad = Akad::get();
+          }else{
+            $getAkad = Akad::whereHas('anggota.bmt', function($query) use($id_bmt){
+              $query->where('id_bmt',$id_bmt);
+            })
+            ->get();
+          }
         }else{
-          $getAkad = Akad::whereHas('anggota.bmt', function($query) use($id_bmt){
-                                  $query->where('id_bmt',$id_bmt);
-                                })
-                          ->get();
+          if(Auth::user()->id_bmt == null){
+            $getAkad = Akad::where('flag_status', $request)->get();
+          }else{
+            $getAkad = Akad::where('flag_status', $request)
+                            ->whereHas('anggota.bmt', function($query) use($id_bmt){
+                              $query->where('id_bmt',$id_bmt);
+                            })
+                            ->get();
+          }
         }
 
-        return view('akad.index', compact('getAkad'));
+
+        return view('akad.index', compact('getAkad','request'));
     }
 
     public function tambah()

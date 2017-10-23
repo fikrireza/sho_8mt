@@ -72,6 +72,17 @@
         <div class="clearfix"></div>
       </div>
       <div class="x_content table-responsive">
+        <form class="form-inline text-center">
+          <select name="status_akad" class="form-control status_akad" onchange="this.form.submit()">
+            <option value="">Pilih Status Akad</option>
+            <option value="BA" {{ $request == 'BA' ? 'selected=""' : ''}}>Belum Approve</option>
+            <option value="A" {{ $request == 'A' ? 'selected=""' : ''}}>Approve</option>
+            <option value="C" {{ $request == 'C' ? 'selected=""' : ''}}>Cancel</option>
+            <option value="L" {{ $request == 'L' ? 'selected=""' : ''}}>Lunas</option>
+            <option value="K" {{ $request == 'K' ? 'selected=""' : ''}}>Klaim</option>
+          </select>
+        </form>
+        <div class="ln_solid"></div>
         <table id="daftartabel" class="table table-striped table-bordered nowrap" width="100%">
           <thead>
             <tr role="row">

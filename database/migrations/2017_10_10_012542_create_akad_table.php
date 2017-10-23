@@ -25,7 +25,7 @@ class CreateAkadTable extends Migration
           $table->integer('approved_by')->unsigned()->nullable();
           $table->date('approved_date')->nullable();
           $table->date('tanggal_lunas')->nullable();
-          // Belum Approve = BA; Approve = A; Cancel = C; Lunas = L;
+          // Belum Approve = BA; Approve = A; Cancel = C; Lunas = L; Klaim = K;
           $table->string('flag_status', 3)->default('BA');
           $table->integer('id_aktor')->unsigned();
           $table->timestamps();
