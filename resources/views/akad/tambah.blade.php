@@ -191,7 +191,7 @@
 
   $('#tanggal_akad').daterangepicker({
     singleDatePicker: true,
-    calender_style: "picker_3",
+    calender_style: "picker_2",
     format: 'YYYY-MM-DD',
     showDropdowns: true
   });

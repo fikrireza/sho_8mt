@@ -6,6 +6,7 @@
 
 @section('headscript')
 <link href="{{ asset('vendors/select2/dist/css/select2.min.css') }}" rel="stylesheet">
+<link href="{{ asset('vendors/datepicker/datepicker3.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -66,7 +67,7 @@
           <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12">Tahun Bulan</label>
             <div class="col-md-8 col-sm-8 col-xs-12">
-              <input id="tanggal_jurnal" name="tanggal_jurnal" class="date-picker form-control" required="required" type="text" value="{{ old('tanggal_jurnal') }}" readonly="">
+              <input id="pilih_bulan" name="tanggal_jurnal" class="form-control" required="required" type="text" value="{{ old('tanggal_jurnal') }}" readonly="">
             </div>
           </div>
           <div class="form-group">
@@ -186,7 +187,7 @@
 @section('script')
 <script src="{{ asset('vendors/select2/dist/js/select2.full.min.js')}}"></script>
 <script src="{{ asset('js/moment/moment.min.js') }}"></script>
-<script src="{{ asset('js/datepicker/daterangepicker.js') }}"></script>
+<script src="{{ asset('vendors/datepicker/bootstrap-datepicker.js')}}"></script>
 
 <script type="text/javascript">
   $(".select2_bmt").select2({
@@ -194,11 +195,14 @@
     allowClear: true
   });
 
-  $('#tanggal_jurnal').daterangepicker({
-    singleDatePicker: true,
-    calender_style: "picker_2",
-    format: 'YYYY-MM',
-    showDropdowns: true
-  });
+  $('#pilih_bulan').datepicker({
+    autoclose: true,
+    format: 'yyyy-mm',
+    changeMonth: true,
+    changeYear: true,
+    showButtonPanel: true,
+    viewMode: "months",
+    minViewMode: "months"
+   });
 </script>
 @endsection

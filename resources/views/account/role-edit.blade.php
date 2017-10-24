@@ -217,6 +217,15 @@
       </div>
       <div class="ln_solid"></div>
       <div class="item form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Laporan</label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <label>
+            <input type="checkbox" class="flat" name="permissions[read-laporan]" {{ in_array('read-laporan',$can) ? 'checked="checked"' : '' }} value="true" /> Read
+          </label>
+        </div>
+      </div>
+      <div class="ln_solid"></div>
+      <div class="item form-group">
         <label class="control-label col-md-3 col-sm-3 col-xs-12">Log Akses</label>
         <div class="col-md-6 col-sm-6 col-xs-12">
           <label>

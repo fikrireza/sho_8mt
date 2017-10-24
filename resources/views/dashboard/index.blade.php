@@ -46,7 +46,7 @@
         <h2>Modul Anggota</h2>
         <div class="nav panel_toolbox">
           @can ('create-anggota')
-          <a href="{{ route('anggota.tambah') }}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> </a>
+          <a href="{{ route('anggota.tambah') }}" class="btn btn-success btn-xs"><i class="fa fa-plus"></i> </a>
           @endcan
           <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
         </div>
@@ -112,7 +112,7 @@
         <h2>Modul Akad</h2>
         <div class="nav panel_toolbox">
           @can ('create-akad')
-          <a href="{{ route('akad.tambah') }}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> </a>
+          <a href="{{ route('akad.tambah') }}" class="btn btn-success btn-xs"><i class="fa fa-plus"></i> </a>
           @endcan
           <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
         </div>
@@ -182,10 +182,10 @@
   <div class="col-md-3 col-sm-3 col-xs-12 red">
     <div class="x_panel">
       <div class="x_title">
-        <h2>Pembayaran Iuran</h2>
+        <h2>Bayar Iuran</h2>
         <div class="nav panel_toolbox">
           @can ('create-pembayaran')
-          <a href="{{ route('iuran.tambah') }}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> </a>
+          <a href="{{ route('iuran.tambah') }}" class="btn btn-success btn-xs"><i class="fa fa-plus"></i> </a>
           @endcan
           <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
         </div>
@@ -329,6 +329,39 @@
     </div>
   </div>
   @endcan
+
+  @can ('read-laporan')
+  <div class="col-md-3 col-sm-3 col-xs-12 red">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>Laporan</h2>
+        <div class="nav panel_toolbox">
+          <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <div class="dashboard-widget-content">
+          <ul class="list-unstyled timeline widget">
+            <li>
+              <div class="block">
+                <div class="block_content">
+                  <h2 class="title">Laporan</h2>
+                  <div class="byline">
+
+                  </div>
+                  <p class="excerpt">
+                    Export(cetak) Laporan BMT Perbulan.<br>
+                  </p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  @endcan
 </div>
 
 <div class="row">
@@ -340,7 +373,7 @@
         <h2>Daftar BMT</h2>
         <div class="nav panel_toolbox">
           @can ('create-daftar')
-          <a href="{{ route('daftar.tambah') }}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> </a>
+          <a href="{{ route('daftar.tambah') }}" class="btn btn-success btn-xs"><i class="fa fa-plus"></i> </a>
           @endcan
           <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
         </div>
@@ -406,7 +439,7 @@
         <h2>Bidang</h2>
         <div class="nav panel_toolbox">
           @can ('create-bidang')
-          <a href="{{ route('bidang.tambah') }}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> </a>
+          <a href="{{ route('bidang.tambah') }}" class="btn btn-success btn-xs"><i class="fa fa-plus"></i> </a>
           @endcan
           <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
         </div>
@@ -487,7 +520,7 @@
         <h2>Posisi</h2>
         <div class="nav panel_toolbox">
           @can ('create-posisi')
-          <a href="{{ route('posisi.tambah') }}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> </a>
+          <a href="{{ route('posisi.tambah') }}" class="btn btn-success btn-xs"><i class="fa fa-plus"></i> </a>
           @endcan
           <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
         </div>

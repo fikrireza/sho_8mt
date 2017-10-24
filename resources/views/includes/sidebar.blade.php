@@ -58,8 +58,8 @@
           </li>
           @endcan
           @can('read-laporan')
-          <li class="">
-            <a href="index.html"><i class="fa fa-newspaper"></i> Laporan </a>
+          <li class="{{ Route::is('laporan*') ? 'current-page' : '' }}">
+            <a href="{{ route('laporan.index') }}"><i class="fa fa-edit"></i> Laporan </a>
           </li>
           @endcan
         </ul>
