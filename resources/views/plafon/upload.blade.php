@@ -109,13 +109,6 @@
     </div>
   </div>
 
-  @if (isset($collectJiwa))
-
-  @endif
-
-  @if (isset($collectKebakaran))
-
-  @endif
 
 @endsection
 

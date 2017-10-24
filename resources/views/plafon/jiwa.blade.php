@@ -59,7 +59,7 @@
               <th>No</th>
               <th>Jumlah Pembiayaan</th>
               @for ($i=3; $i <= 36; $i++)
-                <th>{{ $i }} Bln</th>
+                <th>{{ $i }}</th>
               @endfor
               <th>Aksi</th>
             </tr>
