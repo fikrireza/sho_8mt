@@ -61,42 +61,6 @@
       </div>
       <div class="ln_solid"></div>
       <div class="item form-group">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12">Bidang Kerja</label>
-        <div class="col-md-6 col-sm-6 col-xs-12">
-          <label>
-            <input type="checkbox" class="flat" name="permissions[read-bidang]" {{ (collect(old('permissions'))->contains('read-bidang')) ? 'checked="checked"' : '' }} value="true" /> Read
-          </label><br>
-          <label>
-            <input type="checkbox" class="flat" name="permissions[create-bidang]" {{ (collect(old('permissions'))->contains('create-bidang')) ? 'checked="checked"' : '' }} value="true" /> Create
-          </label><br>
-          <label>
-            <input type="checkbox" class="flat" name="permissions[update-bidang]" {{ (collect(old('permissions'))->contains('update-bidang')) ? 'checked="checked"' : '' }} value="true" /> Update
-          </label><br>
-          <label>
-            <input type="checkbox" class="flat" name="permissions[publish-bidang]" {{ (collect(old('permissions'))->contains('publish-bidang')) ? 'checked="checked"' : '' }} value="true" /> Publish
-          </label>
-        </div>
-      </div>
-      <div class="ln_solid"></div>
-      <div class="item form-group">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12">Posisi Kerja</label>
-        <div class="col-md-6 col-sm-6 col-xs-12">
-          <label>
-            <input type="checkbox" class="flat" name="permissions[read-posisi]" {{ (collect(old('permissions'))->contains('read-posisi')) ? 'checked="checked"' : '' }} value="true" /> Read
-          </label><br>
-          <label>
-            <input type="checkbox" class="flat" name="permissions[create-posisi]" {{ (collect(old('permissions'))->contains('create-posisi')) ? 'checked="checked"' : '' }} value="true" /> Create
-          </label><br>
-          <label>
-            <input type="checkbox" class="flat" name="permissions[update-posisi]" {{ (collect(old('permissions'))->contains('update-posisi')) ? 'checked="checked"' : '' }} value="true" /> Update
-          </label><br>
-          <label>
-            <input type="checkbox" class="flat" name="permissions[publish-posisi]" {{ (collect(old('permissions'))->contains('publish-posisi')) ? 'checked="checked"' : '' }} value="true" /> Publish
-          </label>
-        </div>
-      </div>
-      <div class="ln_solid"></div>
-      <div class="item form-group">
         <label class="control-label col-md-3 col-sm-3 col-xs-12">Plafon Pinjaman</label>
         <div class="col-md-6 col-sm-6 col-xs-12">
           <label>

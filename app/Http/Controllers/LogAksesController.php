@@ -27,7 +27,7 @@ class LogAksesController extends Controller
           $tahun = $request->tahun;
         }
 
-        $getLog = LogAkses::where('created_at', 'like', '%'.$tahun.'%')->get();
+        $getLog = LogAkses::where('created_at', 'like', '%'.$tahun.'%')->orderBy('created_at', 'desc')->get();
 
         $request = $request->tahun;
 

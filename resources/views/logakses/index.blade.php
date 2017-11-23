@@ -84,7 +84,10 @@
     allowClear: true
   });
 
-  $('#logtabel').DataTable();
+  $('#logtabel').DataTable({
+    "ordering": false,
+    "pageLength": 50
+  });
 
 </script>
 @endsection

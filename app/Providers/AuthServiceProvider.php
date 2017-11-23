@@ -25,8 +25,6 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        $this->registerBidangPolicies();
-        $this->registerPosisiPolicies();
         $this->registerPlafonPolicies();
         $this->registerDaftarPolicies();
         $this->registerAnggotaPolicies();
@@ -37,44 +35,6 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerLaporanPolicies();
         $this->registerLogAksesPolicies();
         $this->registerUsersPolicies();
-    }
-
-    public function registerBidangPolicies()
-    {
-        Gate::define('read-bidang', function($user){
-          return $user->hasAccess(['read-bidang']);
-        });
-
-        Gate::define('create-bidang', function($user){
-          return $user->hasAccess(['create-bidang']);
-        });
-
-        Gate::define('update-bidang', function($user){
-          return $user->hasAccess(['update-bidang']);
-        });
-
-        Gate::define('publish-bidang', function($user){
-          return $user->hasAccess(['publish-bidang']);
-        });
-    }
-
-    public function registerPosisiPolicies()
-    {
-        Gate::define('read-posisi', function($user){
-          return $user->hasAccess(['read-posisi']);
-        });
-
-        Gate::define('create-posisi', function($user){
-          return $user->hasAccess(['create-posisi']);
-        });
-
-        Gate::define('update-posisi', function($user){
-          return $user->hasAccess(['update-posisi']);
-        });
-
-        Gate::define('publish-posisi', function($user){
-          return $user->hasAccess(['publish-posisi']);
-        });
     }
 
     public function registerPlafonPolicies()

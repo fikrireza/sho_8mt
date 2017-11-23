@@ -385,7 +385,7 @@
             <li>
               <div class="block">
                 <div class="block_content">
-                  <h2 class="title">Daftar Akad</h2>
+                  <h2 class="title">Daftar BMT</h2>
                   <div class="byline">
 
                   </div>
@@ -404,7 +404,7 @@
 
                   </div>
                   <p class="excerpt">
-                    Tambah BMT adalah fitur untuk menambahkan data BMT dan sekaligus menambahkan data anggota. Jadi dimana ada BMT baru maka akan terbentuk data anggota baru. Data anggota ini juga akan menjadi akun untuk mengakses website BMT dengan bantuan tambahan dari <b>Administrator Web</b>.
+                    Tambah BMT adalah fitur untuk menambahkan data BMT. Data ini juga akan menjadi akun untuk mengakses website BMT dengan akses role <b>Admin BMT</b> dengan bantuan <b>Administrator</b> untuk mengaktifkan role di module <b>Manage User</b>.
                   </p>
                 </div>
               </div>
@@ -419,169 +419,7 @@
 
                   </div>
                   <p class="excerpt">
-                    Ubah BMT adalah fitur yang digunakan untuk mengubah data BMT saja.
-                  </p>
-                </div>
-              </div>
-            </li>
-            @endcan
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-  @endcan
-
-  @can ('read-bidang')
-  <div class="col-md-3 col-sm-3 col-xs-12 blue">
-    <div class="x_panel">
-      <div class="x_title">
-        <h2>Bidang</h2>
-        <div class="nav panel_toolbox">
-          @can ('create-bidang')
-          <a href="{{ route('bidang.tambah') }}" class="btn btn-success btn-xs"><i class="fa fa-plus"></i> </a>
-          @endcan
-          <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-        </div>
-        <div class="clearfix"></div>
-      </div>
-      <div class="x_content">
-        <div class="dashboard-widget-content">
-          <ul class="list-unstyled timeline widget">
-            <li>
-              <div class="block">
-                <div class="block_content">
-                  <h2 class="title">Bidang</h2>
-                  <div class="byline">
-
-                  </div>
-                  <p class="excerpt">
-                    Terdapat list bidang yang sudah terdaftar.<br>
-                  </p>
-                </div>
-              </div>
-            </li>
-            @can('create-bidang')
-            <li>
-              <div class="block">
-                <div class="block_content">
-                  <h2 class="title">Tambah Bidang</h2>
-                  <div class="byline">
-
-                  </div>
-                  <p class="excerpt">
-                    Tambah Bidang adalah fitur untuk menambahkan data bidang.
-                  </p>
-                </div>
-              </div>
-            </li>
-            @endcan
-            @can('update-bidang')
-            <li>
-              <div class="block">
-                <div class="block_content">
-                  <h2 class="title">Ubah Bidang</h2>
-                  <div class="byline">
-
-                  </div>
-                  <p class="excerpt">
-                    Ubah Bidang adalah fitur yang digunakan untuk mengubah data bidang.
-                  </p>
-                </div>
-              </div>
-            </li>
-            @endcan
-            @can('publish-bidang')
-            <li>
-              <div class="block">
-                <div class="block_content">
-                  <h2 class="title">Status Bidang</h2>
-                  <div class="byline">
-
-                  </div>
-                  <p class="excerpt">
-                    Status Bidang adalah fitur yang digunakan untuk mengubah status bidang.
-                  </p>
-                </div>
-              </div>
-            </li>
-            @endcan
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-  @endcan
-
-  @can ('read-posisi')
-  <div class="col-md-3 col-sm-3 col-xs-12 blue">
-    <div class="x_panel">
-      <div class="x_title">
-        <h2>Posisi</h2>
-        <div class="nav panel_toolbox">
-          @can ('create-posisi')
-          <a href="{{ route('posisi.tambah') }}" class="btn btn-success btn-xs"><i class="fa fa-plus"></i> </a>
-          @endcan
-          <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-        </div>
-        <div class="clearfix"></div>
-      </div>
-      <div class="x_content">
-        <div class="dashboard-widget-content">
-          <ul class="list-unstyled timeline widget">
-            <li>
-              <div class="block">
-                <div class="block_content">
-                  <h2 class="title">Posisi</h2>
-                  <div class="byline">
-
-                  </div>
-                  <p class="excerpt">
-                    Terdapat list posisi yang sudah terdaftar.<br>
-                  </p>
-                </div>
-              </div>
-            </li>
-            @can('create-posisi')
-            <li>
-              <div class="block">
-                <div class="block_content">
-                  <h2 class="title">Tambah Posisi</h2>
-                  <div class="byline">
-
-                  </div>
-                  <p class="excerpt">
-                    Tambah Posisi adalah fitur untuk menambahkan data posisi.
-                  </p>
-                </div>
-              </div>
-            </li>
-            @endcan
-            @can('update-posisi')
-            <li>
-              <div class="block">
-                <div class="block_content">
-                  <h2 class="title">Ubah Posisi</h2>
-                  <div class="byline">
-
-                  </div>
-                  <p class="excerpt">
-                    Ubah Posisi adalah fitur yang digunakan untuk mengubah data posisi.
-                  </p>
-                </div>
-              </div>
-            </li>
-            @endcan
-            @can('publish-posisi')
-            <li>
-              <div class="block">
-                <div class="block_content">
-                  <h2 class="title">Status Posisi</h2>
-                  <div class="byline">
-
-                  </div>
-                  <p class="excerpt">
-                    Status Posisi adalah fitur yang digunakan untuk mengubah status posisi.
+                    Ubah BMT adalah fitur yang digunakan untuk mengubah data BMT.
                   </p>
                 </div>
               </div>

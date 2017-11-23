@@ -38,10 +38,8 @@ class DaftarBmtController extends Controller
 
     public function tambah()
     {
-        $getPosisi = Posisi::get();
-        $getBidang = Posisi::get();
 
-        return view('daftarBmt.tambah', compact('getPosisi', 'getBidang'));
+        return view('daftarBmt.tambah');
     }
 
     public function store(Request $request)
@@ -57,20 +55,7 @@ class DaftarBmtController extends Controller
           'nama_kontak_bmt.required' => 'Wajib Di isi',
           'nomor_kontak_bmt.required' => 'Wajib Di isi',
           'email_bmt.required' => 'Wajib Di isi',
-          'email_bmt.email' => 'Format Email',
-          'kode_anggota.required' => 'Wajib Di isi',
-          'no_ktp.required' => 'Wajib Di isi',
-          'no_ktp.unique' => 'No Ktp Sudah Terdaftar',
-          'no_ktp.min' => 'Terlalu Pendek',
-          'no_ktp.numeric' => 'Nomor Ktp',
-          'nama_anggota.required' => 'Wajib Di isi',
-          'alamat.required' => 'Wajib Di isi',
-          'tempat_lahir.required' => 'Wajib Di isi',
-          'tanggal_lahir.required' => 'Wajib Di isi',
-          'lokasi_usaha.required' => 'Wajib Di isi',
-          'jenis_usaha.required' => 'Wajib Di isi',
-          'email.required' => 'Wajib Di isi',
-          'email.email' => 'Format Email',
+          'email_bmt.email' => 'Format Email'
         ];
 
         $validator = Validator::make($request->all(), [
@@ -83,20 +68,6 @@ class DaftarBmtController extends Controller
           'nama_kontak_bmt' => 'required',
           'nomor_kontak_bmt' => 'required',
           'email_bmt' => 'required|email',
-          'kode_anggota' => 'required',
-          'no_ktp' => 'required|numeric|min:15|unique:fra_anggota',
-          'id_posisi' =>  'required',
-          'nama_anggota' => 'required',
-          'jenis_kelamin' => 'required',
-          'kode_pos'  => 'required',
-          'alamat' => 'required',
-          'no_telp' => 'required',
-          'tempat_lahir' => 'required',
-          'tanggal_lahir' => 'required',
-          'status_pernikahan' => 'required',
-          'lokasi_usaha' => 'required',
-          'jenis_usaha' => 'required',
-          'email' => 'required|email'
         ], $message);
 
         if($validator->fails())
@@ -120,30 +91,9 @@ class DaftarBmtController extends Controller
             'flag_aktif' => 'Y',
           ]);
 
-          $anggota = Anggota::create([
-            'id_bmt' => $bmt->id,
-            'kode_anggota'  => $request->kode_anggota,
-            'no_ktp' => $request->no_ktp,
-            'id_posisi' => $request->id_posisi,
-            'nama_anggota' => $request->nama_anggota,
-            'jenis_kelamin' => $request->jenis_kelamin,
-            'kode_pos'  => $request->kode_pos,
-            'alamat' => $request->alamat,
-            'no_telp' => $request->no_telp,
-            'tempat_lahir' => $request->tempat_lahir,
-            'tanggal_lahir' => $request->tanggal_lahir,
-            'status_pernikahan' => $request->status_pernikahan,
-            'lokasi_usaha' => $request->lokasi_usaha,
-            'jenis_usaha' => $request->jenis_usaha,
-            'email' => $request->email,
-            'id_aktor' => Auth::user()->id,
-            'flag_aktif' => 'Y',
-          ]);
-
           $user = User::create([
-            'name' => $request->nama_anggota,
-            'email' => $request->email,
-            'id_anggota'  => $anggota->id,
+            'name' => $request->nama_bmt,
+            'email' => $request->email_bmt,
             'id_bmt' => $bmt->id,
             'confirmed' => 1,
             'confirmation_code' => str_random(30).time(),
@@ -152,7 +102,7 @@ class DaftarBmtController extends Controller
           ]);
 
           $logAkses = LogAkses::create([
-            'aksi'  => 'Menambahkan BMT '.$request->nama_bmt.' Dan Anggota Baru '.$request->nama_anggota,
+            'aksi'  => 'Menambahkan BMT '.$request->nama_bmt,
             'id_aktor' => Auth::user()->id,
           ]);
 

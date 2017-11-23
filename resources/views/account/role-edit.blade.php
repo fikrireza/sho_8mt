@@ -82,42 +82,6 @@
       </div>
       <div class="ln_solid"></div>
       <div class="item form-group">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12">Bidang Kerja</label>
-        <div class="col-md-6 col-sm-6 col-xs-12">
-          <label>
-            <input type="checkbox" class="flat" name="permissions[read-bidang]" {{ in_array('read-bidang',$can) ? 'checked="checked"' : '' }} value="true" /> Read
-          </label><br>
-          <label>
-            <input type="checkbox" class="flat" name="permissions[create-bidang]" {{ in_array('create-bidang',$can) ? 'checked="checked"' : '' }} value="true" /> Create
-          </label><br>
-          <label>
-            <input type="checkbox" class="flat" name="permissions[update-bidang]" {{ in_array('update-bidang',$can) ? 'checked="checked"' : '' }} value="true" /> Update
-          </label><br>
-          <label>
-            <input type="checkbox" class="flat" name="permissions[publish-bidang]" {{ in_array('publish-bidang',$can) ? 'checked="checked"' : '' }} value="true" /> Publish
-          </label>
-        </div>
-      </div>
-      <div class="ln_solid"></div>
-      <div class="item form-group">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12">Posisi Kerja</label>
-        <div class="col-md-6 col-sm-6 col-xs-12">
-          <label>
-            <input type="checkbox" class="flat" name="permissions[read-posisi]" {{ in_array('read-posisi',$can) ? 'checked="checked"' : '' }} value="true" /> Read
-          </label><br>
-          <label>
-            <input type="checkbox" class="flat" name="permissions[create-posisi]" {{ in_array('create-posisi',$can) ? 'checked="checked"' : '' }} value="true" /> Create
-          </label><br>
-          <label>
-            <input type="checkbox" class="flat" name="permissions[update-posisi]" {{ in_array('update-posisi',$can) ? 'checked="checked"' : '' }} value="true" /> Update
-          </label><br>
-          <label>
-            <input type="checkbox" class="flat" name="permissions[publish-posisi]" {{ in_array('publish-posisi',$can) ? 'checked="checked"' : '' }} value="true" /> Publish
-          </label>
-        </div>
-      </div>
-      <div class="ln_solid"></div>
-      <div class="item form-group">
         <label class="control-label col-md-3 col-sm-3 col-xs-12">Plafon Pinjaman</label>
         <div class="col-md-6 col-sm-6 col-xs-12">
           <label>

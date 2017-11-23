@@ -12,7 +12,12 @@
       </div>
       <div class="profile_info">
         <span>Welcome, {{ Auth::user()->name }}</span>
-        <h2></h2>
+        @if(Auth::user()->id_bmt == null)
+        <h2>Administrator</h2>
+        @else
+        <h2>Admin BMT</h2>
+        @endif
+        
       </div>
     </div>
 
@@ -73,16 +78,6 @@
           @can('read-daftar')
           <li class="{{ Route::is('daftar*') ? 'current-page' : '' }}">
             <a href="{{ route('daftar.index') }}"><i class="fa fa-inbox"></i> Daftar BMT </a>
-          </li>
-          @endcan
-          @can('read-bidang')
-          <li class="{{ Route::is('bidang*') ? 'current-page' : '' }}">
-            <a href="{{ route('bidang.index') }}"><i class="fa fa-inbox"></i> Bidang</a>
-          </li>
-          @endcan
-          @can('read-posisi')
-          <li class="{{ Route::is('posisi*') ? 'current-page' : '' }}">
-            <a href="{{ route('posisi.index') }}"><i class="fa fa-inbox"></i> Posisi</a>
           </li>
           @endcan
           @can('read-plafon')

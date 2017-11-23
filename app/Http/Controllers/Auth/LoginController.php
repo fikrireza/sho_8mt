@@ -70,7 +70,13 @@ class LoginController extends Controller
           $set->login_count = $getCounter + 1;
           $set->update();
 
-          return redirect()->intended('home');
+          if($set->login_count > 1){
+            return redirect()->intended('home');
+          }else{
+            return redirect()->intended('account/profile')->with('gantiPassword', 'Harap Ganti Password Anda');
+          }
+
+          
         }
         else
         {

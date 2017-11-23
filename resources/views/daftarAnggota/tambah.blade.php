@@ -38,26 +38,6 @@
               @endif
             </div>
           </div>
-          <div class="item form-group {{ $errors->has('id_posisi') ? 'has-error' : ''}}">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">Posisi/Jabatan <span class="required">*</span></label>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-              <select class="form-control select2_posisi" name="id_posisi" required="">
-                <option value=""></option>
-                @foreach($getBidang as $bidang)
-                  <optgroup label="{{ $bidang->nama_bidang }}">
-                    @foreach($getPosisi as $posisi)
-                      @if($posisi->id_bidang === $bidang->id)
-                        <option value="{{ $posisi->id }}" {{ old('id_posisi') == $posisi->id ? 'selected=""' : ''}}>{{ $posisi->nama_posisi }}</option>
-                      @endif
-                    @endforeach
-                  </optgroup>
-                @endforeach
-              </select>
-              @if($errors->has('id_posisi'))
-                <code><span style="color:red; font-size:12px;">{{ $errors->first('id_posisi')}}</span></code>
-              @endif
-            </div>
-          </div>
           @else
           <input type="hidden" name="id_bmt" value="{{ Auth::user()->id_bmt }}">
           @endif

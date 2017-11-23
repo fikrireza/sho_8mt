@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\RoleUser;
+use App\Models\BMT;
+use App\Models\LogAkses;
 
 use DB;
 use Auth;
@@ -38,8 +40,12 @@ class AccountController extends Controller
     public function tambah()
     {
         $getRole = Role::get();
+        
+        if(Auth::user()->id_bmt == null){
+          $getBMT = Bmt::where('flag_aktif', 'Y')->get();
+        }
 
-        return view('account.tambah', compact('getRole'));
+        return view('account.tambah', compact('getBMT','getRole'));
     }
 
     public function store(Request $request)
@@ -56,6 +62,7 @@ class AccountController extends Controller
 
         $validator = Validator::make($request->all(), [
           'name' => 'required|unique:fra_users',
+          'id_bmt' => 'nullable',
           'email' => 'required|email|unique:fra_users',
           'avatar' => 'image|mimes:jpeg,bmp,png|max:1000'
         ], $message);
@@ -74,12 +81,19 @@ class AccountController extends Controller
             $img_url = 'user.png';
           }
 
+          if($request->id_bmt == null) {
+            $password = Hash::make('12345678');
+          }else{
+            $password = Hash::make('12345678qwert!');
+          }
+
           $confirmation_code = str_random(30).time();
           $userSave = User::create([
             'name' => $request->name,
             'avatar' => $img_url,
             'email' => $request->email,
-            'password' => Hash::make('12345678'),
+            'id_bmt'  => $request->id_bmt,
+            'password' => $password,
             'confirmed' => $request->active,
             'login_count' => 0,
             'confirmation_code' => $confirmation_code,
@@ -102,6 +116,11 @@ class AccountController extends Controller
           } catch (\Exception $e) {
             return redirect()->route('account.userIndex')->with('berhasil', 'New Account has been created, email '.$request->email.' cannot reached');
           }
+
+          $logAkses = LogAkses::create([
+            'aksi'  => 'Menambah User Akun '.$request->name,
+            'id_aktor' => Auth::user()->id,
+          ]);
 
         });
 
@@ -169,6 +188,11 @@ class AccountController extends Controller
         foreach ($request->role as $key) {
           $role = RoleUser::firstOrCreate(['user_id' => $request->id, 'role_id' => $key]);
         }
+
+        $logAkses = LogAkses::create([
+          'aksi'  => 'Mengubah Data User Akun '.$request->name,
+          'id_aktor' => Auth::user()->id,
+        ]);
       });
 
 
@@ -245,6 +269,11 @@ class AccountController extends Controller
         $new->permissions = $request->input('permissions');
         $new->save();
 
+        $logAkses = LogAkses::create([
+          'aksi'  => 'Menambah Role Akses '.$request->name,
+          'id_aktor' => Auth::user()->id,
+        ]);
+
         return redirect()->route('account.roleIndex')->with('berhasil', 'Data Role has been successfully create');
     }
 
@@ -284,6 +313,11 @@ class AccountController extends Controller
         $update = Role::find($request->id);
         $update->permissions = $request->input('permissions');
         $update->update();
+
+        $logAkses = LogAkses::create([
+          'aksi'  => 'Mengubah Role Akses '.$update->name,
+          'id_aktor' => Auth::user()->id,
+        ]);
 
         return redirect()->route('account.roleIndex')->with('berhasil', 'Data Role has been successfully updated');
     }
@@ -340,6 +374,11 @@ class AccountController extends Controller
           $update->update();
         }
 
+        $logAkses = LogAkses::create([
+          'aksi'  => 'Mengubah Profil '.Auth::user()->name,
+          'id_aktor' => Auth::user()->id,
+        ]);
+
         return redirect()->route('account.profile')->with('berhasil', 'Your Profile Has Been Changes');
     }
 
@@ -369,6 +408,11 @@ class AccountController extends Controller
         {
           $getUser->password = Hash::make($request->newpass);
           $getUser->save();
+
+          $logAkses = LogAkses::create([
+            'aksi'  => 'Mengubah Password '.$getUser->name,
+            'id_aktor' => Auth::user()->id,
+          ]);
 
           return redirect()->route('account.profile')->with('berhasil', 'Your password has been changed');
         }

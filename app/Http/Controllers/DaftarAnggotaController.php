@@ -45,10 +45,8 @@ class DaftarAnggotaController extends Controller
     public function tambah()
     {
         $getBmt = BMT::where('flag_aktif', 'Y')->get();
-        $getPosisi = Posisi::where('flag_aktif', 'Y')->get();
-        $getBidang = Bidang::where('flag_aktif', 'Y')->get();
 
-        return view('daftarAnggota.tambah', compact('getBmt', 'getPosisi', 'getBidang'));
+        return view('daftarAnggota.tambah', compact('getBmt'));
     }
 
     public function store(Request $request)
@@ -75,7 +73,6 @@ class DaftarAnggotaController extends Controller
 
         $validator = Validator::make($request->all(), [
           'id_bmt' => 'required',
-          'id_posisi' => 'nullable',
           'kode_anggota'  => 'required|unique:fra_anggota',
           'no_ktp' => 'required|numeric|min:15|unique:fra_anggota',
           'nama_anggota' => 'required',
@@ -101,7 +98,6 @@ class DaftarAnggotaController extends Controller
 
           $anggota = Anggota::create([
             'id_bmt' => $request->id_bmt,
-            'id_posisi' => $request->id_posisi,
             'kode_anggota' => $request->kode_anggota,
             'no_ktp' => $request->no_ktp,
             'nama_anggota' => $request->nama_anggota,
@@ -133,13 +129,11 @@ class DaftarAnggotaController extends Controller
     {
         if(Auth::user()->id_bmt == null){
           $getBMT = Bmt::where('flag_aktif', 'Y')->get();
-          $getPosisi = Posisi::where('flag_aktif', 'Y')->get();
-          $getBidang = Bidang::where('flag_aktif', 'Y')->get();
         }
 
         $getAnggota = Anggota::find($id);
 
-        return view('daftarAnggota.ubah', compact('getBMT', 'getAnggota', 'getPosisi', 'getBidang'));
+        return view('daftarAnggota.ubah', compact('getBMT', 'getAnggota'));
     }
 
     public function edit(Request $request)

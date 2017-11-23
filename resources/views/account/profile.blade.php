@@ -48,6 +48,25 @@
 </div>
 @endif
 
+@if(Session::has('gantiPassword'))
+<script>
+  window.setTimeout(function() {
+    $(".alert-danger").fadeTo(700, 0).slideUp(700, function(){
+        $(this).remove();
+    });
+  }, 10000);
+</script>
+<div class="row">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="alert alert-danger alert-dismissible fade in" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+      </button>
+      <strong>{{ Session::get('gantiPassword') }}</strong>
+    </div>
+  </div>
+</div>
+@endif
+
 <div class="col-md-6 col-sm-6 col-xs-6">
   <div class="x_panel">
     <div class="x_title">
